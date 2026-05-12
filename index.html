@@ -1,7 +1,7 @@
 <script>
 const PATHS = {
-  districts: "data/district-representatives.csv",
-  overview: "data/congress-overview.csv",
+  districts: "data/district-representatives.xlsx%20-%20reps.csv",
+  overview: "data/roster-legislators-expanded.xlsx%20-%20overview.csv",
   partylist: "data/partylist.csv"
 };
 
@@ -13,8 +13,6 @@ let DB = {
   partylists: [],
   partylistNotes: []
 };
-
-let current = "reps";
 
 const $ = id => document.getElementById(id);
 
@@ -28,41 +26,21 @@ function esc(v){
   }[c]));
 }
 
+function clean(v){
+  return String(v ?? "").replace(/\s+/g," ").trim();
+}
+
 function slug(v){
-  return String(v ?? "")
+  return clean(v)
     .toLowerCase()
     .replace(/["']/g,"")
     .replace(/[^a-z0-9]+/g,"-")
     .replace(/^-+|-+$/g,"");
 }
 
-function clean(v){
-  return String(v ?? "").replace(/\s+/g," ").trim();
-}
-
 function num(v){
   const n = Number(String(v ?? "").replace(/,/g,"").trim());
   return Number.isFinite(n) ? n : 0;
-}
-
-function val(row, names, fallback = ""){
-  for(const name of names){
-    if(row[name] !== undefined && clean(row[name]) !== ""){
-      return clean(row[name]);
-    }
-  }
-
-  const lowerMap = {};
-  Object.keys(row).forEach(k => lowerMap[k.toLowerCase().trim()] = k);
-
-  for(const name of names){
-    const found = lowerMap[name.toLowerCase().trim()];
-    if(found && clean(row[found]) !== ""){
-      return clean(row[found]);
-    }
-  }
-
-  return fallback;
 }
 
 function getSurname(name){
@@ -77,24 +55,24 @@ function parseCSV(text){
   const rows = [];
   let row = [];
   let cell = "";
-  let insideQuotes = false;
+  let quoted = false;
 
   for(let i = 0; i < text.length; i++){
     const char = text[i];
     const next = text[i + 1];
 
-    if(char === '"' && insideQuotes && next === '"'){
+    if(char === '"' && quoted && next === '"'){
       cell += '"';
       i++;
     } else if(char === '"'){
-      insideQuotes = !insideQuotes;
-    } else if(char === "," && !insideQuotes){
+      quoted = !quoted;
+    } else if(char === "," && !quoted){
       row.push(cell);
       cell = "";
-    } else if((char === "\n" || char === "\r") && !insideQuotes){
+    } else if((char === "\n" || char === "\r") && !quoted){
       if(char === "\r" && next === "\n") i++;
       row.push(cell);
-      if(row.some(x => clean(x) !== "")) rows.push(row);
+      if(row.some(x => clean(x))) rows.push(row);
       row = [];
       cell = "";
     } else {
@@ -103,11 +81,12 @@ function parseCSV(text){
   }
 
   row.push(cell);
-  if(row.some(x => clean(x) !== "")) rows.push(row);
+  if(row.some(x => clean(x))) rows.push(row);
 
   if(!rows.length) return [];
 
   const headers = rows[0].map(h => clean(h));
+
   return rows.slice(1).map(r => {
     const obj = {};
     headers.forEach((h, i) => obj[h] = r[i] ?? "");
@@ -162,16 +141,9 @@ function congressToElectionYear(congress){
   return map[n] || "";
 }
 
-function parseProvinceFromDistrict(district){
-  const d = clean(district);
-  if(!d) return "";
-  return clean(d.split(",")[0]);
-}
-
 function splitNames(cell){
   const text = clean(cell);
   if(!text) return [];
-
   if(/^(n\/a|na|none|null|vacant|-|—)$/i.test(text)) return [];
 
   return text
@@ -181,20 +153,27 @@ function splitNames(cell){
     .filter(x => !/^(n\/a|na|none|null|vacant|-|—)$/i.test(x));
 }
 
+function parseProvinceFromDistrict(district){
+  const d = clean(district);
+  return d.includes(",") ? clean(d.split(",")[0]) : d;
+}
+
 function convertWideDistrictCSV(rows){
   if(!rows.length) return [];
 
   const keys = Object.keys(rows[0]);
 
+  const regionKey =
+    keys.find(k => /^region$/i.test(k)) ||
+    keys.find(k => /region/i.test(k)) ||
+    keys[0];
+
   const districtKey =
+    keys.find(k => /^district$/i.test(k)) ||
     keys.find(k => /district/i.test(k)) ||
     keys[1];
 
   const congressKeys = keys.filter(k => /congress/i.test(k));
-
-  const regionKey =
-    keys.find(k => k !== districtKey && !/congress/i.test(k)) ||
-    keys[0];
 
   const terms = [];
 
@@ -207,7 +186,6 @@ function convertWideDistrictCSV(rows){
 
     congressKeys.forEach(cKey => {
       const congress = normalizeCongressName(cKey);
-      const electionYear = congressToElectionYear(congress);
       const names = splitNames(row[cKey]);
 
       names.forEach(name => {
@@ -221,7 +199,7 @@ function convertWideDistrictCSV(rows){
           district_id: slug(region + "-" + district),
           congress,
           congress_no: congressNumber(congress),
-          election_year: electionYear,
+          election_year: congressToElectionYear(congress),
           seat_type: "District"
         });
       });
@@ -283,20 +261,29 @@ function buildPartylistData(rows){
   const notes = [];
 
   rows.forEach(row => {
-    const id =
-      val(row, ["partylist_id", "id"]) ||
-      slug(val(row, ["partylist_name", "main_name", "name", "partylist"]));
+    const keys = Object.keys(row);
+    const get = names => {
+      for(const name of names){
+        const key = keys.find(k => k.toLowerCase().trim() === name.toLowerCase().trim());
+        if(key && clean(row[key])) return clean(row[key]);
+      }
+      return "";
+    };
 
     const name =
-      val(row, ["partylist_name", "main_name", "name", "partylist"]) ||
-      id;
+      get(["partylist_name","main_name","name","partylist"]) ||
+      "";
+
+    const id =
+      get(["partylist_id","id"]) ||
+      slug(name);
 
     if(!id) return;
 
     if(!map.has(id)){
       map.set(id, {
         partylist_id: id,
-        name,
+        name: name || id,
         aliases: new Set(),
         results: [],
         representatives: [],
@@ -306,42 +293,42 @@ function buildPartylistData(rows){
 
     const p = map.get(id);
 
-    const alias = val(row, ["alias", "aka", "also_known_as", "name_variation"]);
+    const alias = get(["alias","aka","also_known_as","name_variation"]);
     if(alias) p.aliases.add(alias);
 
-    const congress = val(row, ["congress"]);
-    const electionYear = val(row, ["election_year", "year"]);
-    const seats = num(val(row, ["seats_won", "seats", "latest_seats"]));
+    const congress = get(["congress"]);
+    const electionYear = get(["election_year","year"]);
+    const seats = num(get(["seats_won","seats","latest_seats"]));
 
     if(congress || electionYear || seats){
       p.results.push({
         congress,
         election_year: electionYear,
         seats_won: seats,
-        status: val(row, ["status"]),
-        general_notes: val(row, ["general_notes", "notes", "remarks"])
+        status: get(["status"]),
+        general_notes: get(["general_notes","notes","remarks"])
       });
     }
 
-    const repName = val(row, ["representative_name", "nominee_name", "representative", "nominee"]);
+    const repName = get(["representative_name","nominee_name","representative","nominee"]);
     if(repName){
       p.representatives.push({
         congress,
         election_year: electionYear,
-        seat_no: val(row, ["seat_no", "seat_number", "nominee_no"]),
+        seat_no: get(["seat_no","seat_number","nominee_no"]),
         representative_name: repName
       });
     }
 
-    const noteType = val(row, ["note_type", "type", "category"]);
-    const noteTitle = val(row, ["note_title", "title"]);
-    const noteDesc = val(row, ["note_description", "description", "details"]);
+    const noteType = get(["note_type","type","category"]);
+    const noteTitle = get(["note_title","title"]);
+    const noteDesc = get(["note_description","description","details"]);
 
     if(noteType || noteTitle || noteDesc){
       const note = {
         partylist_id: id,
-        partylist_name: name,
-        date: val(row, ["date", "note_date"]),
+        partylist_name: name || id,
+        date: get(["date","note_date"]),
         type: noteType,
         title: noteTitle,
         description: noteDesc
@@ -354,7 +341,7 @@ function buildPartylistData(rows){
 
   const partylists = Array.from(map.values()).map(p => {
     p.aliases = Array.from(p.aliases);
-    p.total_seat_terms = p.results.reduce((sum, r) => sum + num(r.seats_won), 0);
+    p.total_seat_terms = p.results.reduce((s,r) => s + num(r.seats_won), 0);
     p.latest_result = p.results
       .slice()
       .sort((a,b) => num(b.election_year) - num(a.election_year))[0] || null;
@@ -373,17 +360,8 @@ function buildPartylistData(rows){
 
 function allCongresses(){
   const set = new Set();
-
-  DB.terms.forEach(t => {
-    if(t.congress) set.add(t.congress);
-  });
-
-  DB.partylists.forEach(p => {
-    p.results.forEach(r => {
-      if(r.congress) set.add(r.congress);
-    });
-  });
-
+  DB.terms.forEach(t => t.congress && set.add(t.congress));
+  DB.partylists.forEach(p => p.results.forEach(r => r.congress && set.add(r.congress)));
   return Array.from(set).sort((a,b) => congressNumber(a) - congressNumber(b));
 }
 
@@ -416,16 +394,16 @@ function setKpis(items){
   `).join("");
 }
 
-function showModule(module){
-  current = module;
-
-  document.querySelectorAll(".nav-btn").forEach(btn => {
-    btn.classList.remove("active");
-  });
+function activateNav(module){
+  document.querySelectorAll(".nav-btn").forEach(btn => btn.classList.remove("active"));
 
   const order = ["reps", "districts", "dynasties", "partylists", "partyNotes"];
   const index = order.indexOf(module);
   document.querySelectorAll(".nav-btn")[index]?.classList.add("active");
+}
+
+function showModule(module){
+  activateNav(module);
 
   if(module === "reps") renderReps();
   if(module === "districts") renderDistricts();
@@ -438,9 +416,7 @@ function getTopSurname(){
   const freq = {};
 
   DB.terms.forEach(t => {
-    if(t.surname){
-      freq[t.surname] = (freq[t.surname] || 0) + 1;
-    }
+    if(t.surname) freq[t.surname] = (freq[t.surname] || 0) + 1;
   });
 
   return Object.entries(freq).sort((a,b) => b[1] - a[1])[0] || ["—", 0];
@@ -450,46 +426,19 @@ function renderReps(){
   const latest = latestCongress();
   const latestTerms = DB.terms.filter(t => t.congress === latest);
 
-  const topRep = DB.reps
-    .slice()
-    .sort((a,b) => b.terms.length - a.terms.length)[0];
+  const topRep = DB.reps.slice().sort((a,b) => b.terms.length - a.terms.length)[0];
 
   const returning = latestTerms.filter(t =>
     DB.terms.some(x => x.rep_id === t.rep_id && x.congress !== latest)
   ).length;
 
-  const retention = latestTerms.length
-    ? Math.round((returning / latestTerms.length) * 100)
-    : 0;
+  const retention = latestTerms.length ? Math.round((returning / latestTerms.length) * 100) : 0;
 
   setKpis([
-    {
-      label: "Total reps tracked",
-      value: DB.reps.length,
-      sub: "Unique district representatives",
-      accent: "var(--gold)"
-    },
-    {
-      label: "Longest-serving rep",
-      value: topRep?.surname || "—",
-      sub: `${topRep?.terms.length || 0} tracked congress appearance(s)`,
-      accent: "var(--blue)",
-      bar: Math.min((topRep?.terms.length || 0) * 10, 100)
-    },
-    {
-      label: "Returning latest reps",
-      value: returning,
-      sub: `Returned in ${latest || "latest congress"}`,
-      accent: "var(--green)",
-      bar: retention
-    },
-    {
-      label: "Latest retention rate",
-      value: retention + "%",
-      sub: "Latest reps with prior tracked terms",
-      accent: "var(--purple)",
-      bar: retention
-    }
+    {label:"Total reps tracked",value:DB.reps.length,sub:"Unique district representatives",accent:"var(--gold)"},
+    {label:"Longest-serving rep",value:topRep?.surname || "—",sub:`${topRep?.terms.length || 0} tracked congress appearance(s)`,accent:"var(--blue)",bar:Math.min((topRep?.terms.length || 0) * 10,100)},
+    {label:"Returning latest reps",value:returning,sub:`Returned in ${latest || "latest congress"}`,accent:"var(--green)",bar:retention},
+    {label:"Latest retention rate",value:retention + "%",sub:"Latest reps with prior tracked terms",accent:"var(--purple)",bar:retention}
   ]);
 
   $("content").innerHTML = `
@@ -532,9 +481,9 @@ function renderReps(){
 }
 
 function drawRepCards(){
-  const q = clean($("repQ").value).toLowerCase();
-  const c = $("repC").value;
-  const f = $("repF").value;
+  const q = clean($("repQ")?.value || "").toLowerCase();
+  const c = $("repC")?.value || "";
+  const f = $("repF")?.value || "";
   const latest = latestCongress();
 
   const rows = DB.reps.filter(rep => {
@@ -550,9 +499,7 @@ function drawRepCards(){
 
     return (!q || text.includes(q)) &&
       hasCongress &&
-      (!f ||
-        (f === "returning" && isReturning) ||
-        (f === "multi" && isMulti));
+      (!f || (f === "returning" && isReturning) || (f === "multi" && isMulti));
   });
 
   $("repCards").innerHTML = `
@@ -561,15 +508,15 @@ function drawRepCards(){
     <div class="grid">
       ${rows.map(rep => {
         const first = rep.terms.slice().sort((a,b) => a.congress_no - b.congress_no)[0];
-        const latest = rep.terms[0];
+        const latestTerm = rep.terms[0];
 
         return `
           <div class="card">
             <div class="card-name">${esc(rep.full_name)}</div>
-            <div class="card-sub">${esc(latest?.district || "")}</div>
+            <div class="card-sub">${esc(latestTerm?.district || "")}</div>
 
             <div class="tags">
-              <span class="tag tag-blue">${esc(latest?.region || "—")}</span>
+              <span class="tag tag-blue">${esc(latestTerm?.region || "—")}</span>
               ${rep.terms.length > 1 ? `<span class="tag tag-gold">Returning / Multi-Term</span>` : ""}
             </div>
 
@@ -580,7 +527,7 @@ function drawRepCards(){
               </div>
               <div style="flex:1;font-size:11px;color:var(--text3)">
                 First: ${esc(first?.congress || "—")}<br>
-                Latest: ${esc(latest?.congress || "—")}
+                Latest: ${esc(latestTerm?.congress || "—")}
               </div>
             </div>
           </div>
@@ -598,48 +545,21 @@ function renderDistricts(){
     return reps.size === 1 && d.terms.length > 1;
   }).length;
 
-  const latestDistricts = DB.districts.filter(d =>
-    d.terms.some(t => t.congress === latest)
-  );
+  const latestDistricts = DB.districts.filter(d => d.terms.some(t => t.congress === latest));
 
   const changed = latestDistricts.filter(d => {
     const latestTerm = d.terms.find(t => t.congress === latest);
     return d.terms.some(t => t.congress !== latest && t.rep_id !== latestTerm?.rep_id);
   }).length;
 
-  const turnover = latestDistricts.length
-    ? Math.round((changed / latestDistricts.length) * 100)
-    : 0;
-
+  const turnover = latestDistricts.length ? Math.round((changed / latestDistricts.length) * 100) : 0;
   const topSurname = getTopSurname();
 
   setKpis([
-    {
-      label: "Districts tracked",
-      value: DB.districts.length,
-      sub: "Unique district records",
-      accent: "var(--gold)"
-    },
-    {
-      label: "Stable districts",
-      value: stable,
-      sub: "Same rep across multiple congresses",
-      accent: "var(--green)",
-      bar: DB.districts.length ? Math.round(stable / DB.districts.length * 100) : 0
-    },
-    {
-      label: "Latest turnover rate",
-      value: turnover + "%",
-      sub: `Changed holder in ${latest || "latest congress"}`,
-      accent: "var(--red)",
-      bar: turnover
-    },
-    {
-      label: "Most repeated surname",
-      value: topSurname[0],
-      sub: `Appears ${topSurname[1]} time(s)`,
-      accent: "var(--purple)"
-    }
+    {label:"Districts tracked",value:DB.districts.length,sub:"Unique district records",accent:"var(--gold)"},
+    {label:"Stable districts",value:stable,sub:"Same rep across multiple congresses",accent:"var(--green)",bar:DB.districts.length ? Math.round(stable / DB.districts.length * 100) : 0},
+    {label:"Latest turnover rate",value:turnover + "%",sub:`Changed holder in ${latest || "latest congress"}`,accent:"var(--red)",bar:turnover},
+    {label:"Most repeated surname",value:topSurname[0],sub:`Appears ${topSurname[1]} time(s)`,accent:"var(--purple)"}
   ]);
 
   const congresses = allCongresses().sort((a,b) => congressNumber(b) - congressNumber(a));
@@ -665,11 +585,7 @@ function renderDistricts(){
               <td>${esc(d.region)}</td>
               <td>${esc(d.district)}</td>
               ${congresses.map(c => {
-                const names = d.terms
-                  .filter(t => t.congress === c)
-                  .map(t => t.full_name)
-                  .join("; ");
-
+                const names = d.terms.filter(t => t.congress === c).map(t => t.full_name).join("; ");
                 return `<td>${esc(names || "—")}</td>`;
               }).join("")}
             </tr>
@@ -696,31 +612,10 @@ function renderDynasties(){
   const top = recurring[0] || ["—", []];
 
   setKpis([
-    {
-      label: "Recurring surnames",
-      value: recurring.length,
-      sub: "Surnames appearing 2+ times",
-      accent: "var(--gold)"
-    },
-    {
-      label: "Most repeated surname",
-      value: top[0],
-      sub: `${top[1].length || 0} tracked appearance(s)`,
-      accent: "var(--red)",
-      bar: Math.min((top[1].length || 0) * 10, 100)
-    },
-    {
-      label: "Possible dynasty signal",
-      value: recurring.length,
-      sub: "Based only on repeated surname, not confirmed family relation",
-      accent: "var(--purple)"
-    },
-    {
-      label: "Total surname records",
-      value: DB.terms.length,
-      sub: "District-congress seat entries",
-      accent: "var(--blue)"
-    }
+    {label:"Recurring surnames",value:recurring.length,sub:"Surnames appearing 2+ times",accent:"var(--gold)"},
+    {label:"Most repeated surname",value:top[0],sub:`${top[1].length || 0} tracked appearance(s)`,accent:"var(--red)",bar:Math.min((top[1].length || 0) * 10,100)},
+    {label:"Possible dynasty signal",value:recurring.length,sub:"Based on repeated surname, not confirmed family relation",accent:"var(--purple)"},
+    {label:"Total surname records",value:DB.terms.length,sub:"District-congress seat entries",accent:"var(--blue)"}
   ]);
 
   $("content").innerHTML = `
@@ -745,11 +640,7 @@ function renderDynasties(){
             </div>
           `).join("")}
         </div>
-      `).join("") || `
-        <div class="error">
-          No recurring surnames found yet.
-        </div>
-      `}
+      `).join("") || `<div class="error">No recurring surnames found yet.</div>`}
     </div>
   `;
 }
@@ -757,17 +648,17 @@ function renderDynasties(){
 function renderPartylists(){
   if(!DB.partylists.length){
     setKpis([
-      {label:"Partylists tracked", value:0, sub:"No partylist.csv uploaded yet", accent:"var(--gold)"},
-      {label:"Most consistent", value:"—", sub:"Waiting for partylist data", accent:"var(--green)"},
-      {label:"Latest seat leader", value:"—", sub:"Waiting for partylist data", accent:"var(--blue)"},
-      {label:"With AKA/name variants", value:0, sub:"Waiting for partylist data", accent:"var(--purple)"}
+      {label:"Partylists tracked",value:0,sub:"No partylist.csv uploaded yet",accent:"var(--gold)"},
+      {label:"Most consistent",value:"—",sub:"Waiting for partylist data",accent:"var(--green)"},
+      {label:"Latest seat leader",value:"—",sub:"Waiting for partylist data",accent:"var(--blue)"},
+      {label:"With AKA/name variants",value:0,sub:"Waiting for partylist data",accent:"var(--purple)"}
     ]);
 
     $("content").innerHTML = `
       <div class="panel">
         <div class="panel-title">🧾 Partylist Data Not Uploaded Yet</div>
         <div style="color:var(--text3);font-size:14px;line-height:1.6">
-          This is okay. The House Reps and District pages will still work.
+          House Reps and District pages are already working.
           <br><br>
           Later, upload your partylist file as:
           <br>
@@ -785,43 +676,15 @@ function renderPartylists(){
   );
 
   const latestResults = allResults.filter(r => num(r.election_year) === num(latestYear));
-
-  const seatLeader = latestResults
-    .slice()
-    .sort((a,b) => num(b.seats_won) - num(a.seats_won))[0];
-
-  const mostConsistent = DB.partylists
-    .slice()
-    .sort((a,b) => b.total_seat_terms - a.total_seat_terms)[0];
-
+  const seatLeader = latestResults.slice().sort((a,b) => num(b.seats_won) - num(a.seats_won))[0];
+  const mostConsistent = DB.partylists.slice().sort((a,b) => b.total_seat_terms - a.total_seat_terms)[0];
   const withAKA = DB.partylists.filter(p => p.aliases.length > 0).length;
 
   setKpis([
-    {
-      label: "Partylists tracked",
-      value: DB.partylists.length,
-      sub: "Unique partylist IDs",
-      accent: "var(--gold)"
-    },
-    {
-      label: "Most consistent",
-      value: mostConsistent?.name || "—",
-      sub: `${mostConsistent?.total_seat_terms || 0} total seat-term(s)`,
-      accent: "var(--green)"
-    },
-    {
-      label: "Latest seat leader",
-      value: seatLeader?.partylist_name || "—",
-      sub: `${seatLeader?.seats_won || 0} seat(s) in ${latestYear}`,
-      accent: "var(--blue)"
-    },
-    {
-      label: "With AKA/name variants",
-      value: withAKA,
-      sub: "Partylists with aliases",
-      accent: "var(--purple)",
-      bar: DB.partylists.length ? Math.round(withAKA / DB.partylists.length * 100) : 0
-    }
+    {label:"Partylists tracked",value:DB.partylists.length,sub:"Unique partylist IDs",accent:"var(--gold)"},
+    {label:"Most consistent",value:mostConsistent?.name || "—",sub:`${mostConsistent?.total_seat_terms || 0} total seat-term(s)`,accent:"var(--green)"},
+    {label:"Latest seat leader",value:seatLeader?.partylist_name || "—",sub:`${seatLeader?.seats_won || 0} seat(s) in ${latestYear}`,accent:"var(--blue)"},
+    {label:"With AKA/name variants",value:withAKA,sub:"Partylists with aliases",accent:"var(--purple)",bar:DB.partylists.length ? Math.round(withAKA / DB.partylists.length * 100) : 0}
   ]);
 
   $("content").innerHTML = `
@@ -845,12 +708,7 @@ function drawPartylistCards(){
   const q = clean($("plQ")?.value || "").toLowerCase();
 
   const rows = DB.partylists.filter(p => {
-    const text = `
-      ${p.name}
-      ${p.aliases.join(" ")}
-      ${p.representatives.map(r => r.representative_name).join(" ")}
-    `.toLowerCase();
-
+    const text = `${p.name} ${p.aliases.join(" ")} ${p.representatives.map(r => r.representative_name).join(" ")}`.toLowerCase();
     return !q || text.includes(q);
   });
 
@@ -889,10 +747,10 @@ function drawPartylistCards(){
 function renderPartyNotes(){
   if(!DB.partylistNotes.length){
     setKpis([
-      {label:"Total notes logged", value:0, sub:"No partylist notes yet", accent:"var(--gold)"},
-      {label:"AKA/name notes", value:0, sub:"Waiting for partylist.csv", accent:"var(--purple)"},
-      {label:"Legal/status flags", value:0, sub:"Waiting for partylist.csv", accent:"var(--red)"},
-      {label:"Total aliases tracked", value:0, sub:"Waiting for partylist.csv", accent:"var(--blue)"}
+      {label:"Total notes logged",value:0,sub:"No partylist notes yet",accent:"var(--gold)"},
+      {label:"AKA/name notes",value:0,sub:"Waiting for partylist.csv",accent:"var(--purple)"},
+      {label:"Legal/status flags",value:0,sub:"Waiting for partylist.csv",accent:"var(--red)"},
+      {label:"Total aliases tracked",value:0,sub:"Waiting for partylist.csv",accent:"var(--blue)"}
     ]);
 
     $("content").innerHTML = `
@@ -919,30 +777,10 @@ function renderPartyNotes(){
   const aliases = DB.partylists.reduce((sum, p) => sum + p.aliases.length, 0);
 
   setKpis([
-    {
-      label: "Total notes logged",
-      value: DB.partylistNotes.length,
-      sub: "Across partylist records",
-      accent: "var(--gold)"
-    },
-    {
-      label: "AKA/name notes",
-      value: akaNotes.length,
-      sub: "Name variation notes",
-      accent: "var(--purple)"
-    },
-    {
-      label: "Legal/status flags",
-      value: legalNotes.length,
-      sub: "Cancellation, case, or registration issues",
-      accent: "var(--red)"
-    },
-    {
-      label: "Total aliases tracked",
-      value: aliases,
-      sub: "AKA names in partylist.csv",
-      accent: "var(--blue)"
-    }
+    {label:"Total notes logged",value:DB.partylistNotes.length,sub:"Across partylist records",accent:"var(--gold)"},
+    {label:"AKA/name notes",value:akaNotes.length,sub:"Name variation notes",accent:"var(--purple)"},
+    {label:"Legal/status flags",value:legalNotes.length,sub:"Cancellation, case, or registration issues",accent:"var(--red)"},
+    {label:"Total aliases tracked",value:aliases,sub:"AKA names in partylist.csv",accent:"var(--blue)"}
   ]);
 
   $("content").innerHTML = `
@@ -1002,6 +840,10 @@ async function init(){
       partylistNotes: partyData.notes
     };
 
+    if(!terms.length){
+      throw new Error("The district CSV loaded, but no Congress columns were detected. Check that the headers include columns like 20th Congress, 19th Congress, etc.");
+    }
+
     showModule("reps");
 
   } catch(err){
@@ -1012,14 +854,11 @@ async function init(){
       <div class="error">
         <b>Database loading failed.</b><br><br>
         ${esc(err.message)}<br><br>
-        Required file:
+        This code is currently looking for:
         <br>
-        <code>data/district-representatives.csv</code>
-        <br><br>
-        Optional files:
-        <br>
-        <code>data/congress-overview.csv</code><br>
-        <code>data/partylist.csv</code>
+        <code>${esc(PATHS.districts)}</code><br>
+        <code>${esc(PATHS.overview)}</code><br><br>
+        Your GitHub screenshot shows these files, so make sure the file names match exactly.
       </div>
     `;
   }
