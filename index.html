@@ -484,6 +484,8 @@ tbody td:first-child{color:var(--text);font-weight:500}
             <option value="pl-rep">Party-list ↔ Representative</option>
             <option value="dynasty-pl">Dynasty ↔ Party-list</option>
             <option value="dynasty-rep">Dynasty ↔ Representative</option>
+            <option value="pl-congress">Party-list ↔ Congress</option>
+            <option value="rep-district">Representative ↔ District</option>
           </select>
         </div>
         <div class="field-group">
@@ -1325,18 +1327,25 @@ function buildPartylistModel(){
   const map = new Map();
 
   DB.plRaw.forEach(row => {
-    const key =
-      csvValue(row,["partyKey","partylist_id","id"]) ||
-      keySlug(csvValue(row,["canonicalName","name","partylist_name","partylist"]));
+    /*
+      MERGE RULE:
+      Use the party-list NAME as the main merging key.
+      This allows the relationship page to connect:
+      party-list name → party-list reps → matching district/congress reps.
+      partyKey is still kept only as a readable source field, not the merge key.
+    */
+    const rawName =
+      csvValue(row,["mergeName","canonicalName","name","partylist_name","partylist"]) ||
+      csvValue(row,["partyKey","partylist_id","id"]);
 
-    const name =
-      csvValue(row,["canonicalName","name","partylist_name","partylist"]) ||
-      key;
+    const name = rawName || "Unknown Party-list";
+    const key = keySlug(name);
 
     if(!map.has(key)){
       map.set(key,{
         id:key,
         key,
+        partyKey:csvValue(row,["partyKey","partylist_id","id"]) || key,
         name,
         abbrev:"",
         aka:[],
@@ -1357,14 +1366,16 @@ function buildPartylistModel(){
     p.status = csvValue(row,["status"]) || p.status;
     p.source = csvValue(row,["source_url","source"]) || p.source;
 
-    const aka = splitList(csvValue(row,["aka","alias","also_known_as","othernames","other_names"]));
-    aka.forEach(a => {
-      if(a && !p.aka.includes(a)) p.aka.push(a);
+    const aliases = splitList(csvValue(row,["aka","alias","also_known_as","othernames","other_names"]));
+    aliases.forEach(a => {
+      if(a && norm(a) !== norm(p.name) && !p.aka.some(existing => norm(existing) === norm(a))){
+        p.aka.push(a);
+      }
     });
 
     const year = csvValue(row,["year","election_year"]);
     const congress = csvValue(row,["congress"]);
-    const seats = Number(csvValue(row,["seats","seats_won","latest_seats"]) || 0);
+    const seats = Number(String(csvValue(row,["seats","seats_won","latest_seats"]) || 0).replace(/,/g,""));
     const votes = Number(String(csvValue(row,["votes"])).replace(/,/g,"") || 0);
 
     if(year || congress || seats || votes){
@@ -1372,21 +1383,40 @@ function buildPartylistModel(){
         year,
         congress,
         seats,
-        votes
+        votes,
+        status:csvValue(row,["status"]),
+        notes:csvValue(row,["notes","note","remarks","general_notes"])
       });
     }
 
-    const repNames = splitList(
-      csvValue(row,["reps","representatives","representative_name","nomineeNames","nominee_names"])
-    );
+    const repFields = [
+      "reps","representatives","representative_name","nomineeNames","nominee_names",
+      "rep1","rep2","rep3","representative1","representative2","representative3",
+      "first_representative","second_representative","third_representative"
+    ];
+
+    const repNames = [];
+    repFields.forEach(field => {
+      splitList(csvValue(row,[field])).forEach(name => {
+        if(name && !repNames.some(existing => norm(existing) === norm(name))){
+          repNames.push(name);
+        }
+      });
+    });
 
     repNames.forEach((repName,i) => {
-      if(!p.reps.some(r => norm(r.name) === norm(repName))){
+      const duplicate = p.reps.some(r =>
+        norm(r.name) === norm(repName) &&
+        (!congress || !r.congress || r.congress === congress)
+      );
+
+      if(!duplicate){
         p.reps.push({
           name:repName,
           congress,
           year,
-          seatNo:i+1
+          seatNo:i+1,
+          partylistName:p.name
         });
       }
     });
@@ -1394,9 +1424,11 @@ function buildPartylistModel(){
     const noteText = csvValue(row,["notes","note","remarks","general_notes"]);
     if(noteText){
       p.notes.push({
-        type:/disqual|cancel|registration|delist/i.test(noteText + " " + p.status) ? "Legal / Status Note" : "General Note",
+        type:/disqual|cancel|registration|delist|removed|vacated/i.test(noteText + " " + p.status) ? "Legal / Status Note" : "General Note",
         title:p.status || "Note",
-        description:noteText
+        description:noteText,
+        congress,
+        year
       });
     }
   });
@@ -1406,7 +1438,7 @@ function buildPartylistModel(){
     p.latest = p.results[0] || {};
     p.totalSeats = p.results.reduce((s,r) => s + Number(r.seats || 0),0);
     p.elections = p.results.length;
-    p.isDisqualified = /disqual|cancel|registration|delist/i.test(`${p.status} ${p.notes.map(n=>n.description).join(" ")}`);
+    p.isDisqualified = /disqual|cancel|registration|delist|removed|vacated/i.test(`${p.status} ${p.notes.map(n=>n.description).join(" ")}`);
     return p;
   }).sort((a,b) => a.name.localeCompare(b.name));
 }
@@ -1585,6 +1617,26 @@ function buildRelationshipModel(){
   const edges = [];
 
   DB.pl.forEach(pl => {
+    const partylistName = pl.name;
+
+    // Party-list ↔ Congress seat records
+    pl.results.forEach(r => {
+      if(r.congress){
+        edges.push({
+          type:"pl-congress",
+          from:partylistName,
+          to:r.congress,
+          label:"Party-list ↔ Congress",
+          congress:r.congress || "",
+          plId:pl.id,
+          personId:"",
+          dynastyName:"",
+          partylistName
+        });
+      }
+    });
+
+    // Party-list ↔ Party-list representatives
     pl.reps.forEach(rep => {
       const matchedPerson = findPersonByName(rep.name);
       const repSurname = surnameOf(rep.name);
@@ -1592,30 +1644,51 @@ function buildRelationshipModel(){
 
       edges.push({
         type:"pl-rep",
-        from:pl.name,
+        from:partylistName,
         to:rep.name,
         label:"Party-list ↔ Representative",
         congress:rep.congress || pl.latest?.congress || "",
         plId:pl.id,
         personId:matchedPerson?.id || "",
-        dynastyName:dynasty?.name || ""
+        dynastyName:dynasty?.name || "",
+        partylistName
       });
 
+      // If party-list rep also appears in district data, make a direct district-link edge.
+      if(matchedPerson){
+        matchedPerson.districts.forEach(dist => {
+          edges.push({
+            type:"rep-district",
+            from:rep.name,
+            to:dist,
+            label:"Representative ↔ District",
+            congress:rep.congress || matchedPerson.last || "",
+            plId:pl.id,
+            personId:matchedPerson.id,
+            dynastyName:matchedPerson.cl || "",
+            partylistName
+          });
+        });
+      }
+
+      // Dynasty ↔ Party-list signal through surname matching
       if(dynasty){
         edges.push({
           type:"dynasty-pl",
           from:dynasty.name + " family",
-          to:pl.name,
+          to:partylistName,
           label:"Dynasty ↔ Party-list",
           congress:rep.congress || pl.latest?.congress || "",
           plId:pl.id,
           personId:matchedPerson?.id || "",
-          dynastyName:dynasty.name
+          dynastyName:dynasty.name,
+          partylistName
         });
       }
     });
   });
 
+  // Dynasty ↔ District representative links from district CSV
   DB.dynasties.forEach(d => {
     d.members.forEach(m => {
       edges.push({
@@ -1626,14 +1699,15 @@ function buildRelationshipModel(){
         congress:m.last || "",
         plId:"",
         personId:m.id,
-        dynastyName:d.name
+        dynastyName:d.name,
+        partylistName:""
       });
     });
   });
 
   const seen = new Set();
   DB.relationships = edges.filter(e => {
-    const key = [e.type,e.from,e.to,e.congress].map(norm).join("|");
+    const key = [e.type,e.from,e.to,e.congress,e.partylistName].map(norm).join("|");
     if(seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -1645,14 +1719,15 @@ function buildRelationshipKPIs(edges){
   const plRep = all.filter(e => e.type === "pl-rep").length;
   const dynPl = all.filter(e => e.type === "dynasty-pl").length;
   const dynRep = all.filter(e => e.type === "dynasty-rep").length;
-  const connectedPL = new Set(all.filter(e => e.plId).map(e => e.plId)).size;
+  const plCongress = all.filter(e => e.type === "pl-congress").length;
+  const connectedPL = new Set(all.filter(e => e.plId).map(e => e.partylistName || e.plId)).size;
   const connectedPeople = new Set(all.filter(e => e.personId).map(e => e.personId)).size;
 
   $('kpiRow').innerHTML = [
     {label:'Visible Links',val:edges.length.toLocaleString(),sub:'After current filters',sub2:`${all.length} total relationship links`,icon:'🔗',accent:'var(--gold)'},
     {label:'Party-list ↔ Reps',val:plRep.toLocaleString(),sub:'Links from partylist.csv reps field',sub2:'Direct relationship records',icon:'🎗️',accent:'var(--green)'},
     {label:'Dynasty ↔ Party-list',val:dynPl.toLocaleString(),sub:'Party-list rep surname matches dynasty group',sub2:'Possible connection signal',icon:'👑',accent:'var(--purple)'},
-    {label:'Connected Party-lists',val:connectedPL.toLocaleString(),sub:'Party-lists with relationship records',sub2:'From CSV rows',icon:'🏷️',accent:'var(--blue)'},
+    {label:'Party-list ↔ Congress',val:plCongress.toLocaleString(),sub:'Seat records linked by party-list name',sub2:`${connectedPL} party-lists connected`,icon:'🏷️',accent:'var(--blue)'},
     {label:'Connected People',val:connectedPeople.toLocaleString(),sub:'Matched or listed representatives',sub2:'From party-list + district data',icon:'👥',accent:'var(--red)'}
   ].map(k=>`<div class="kpi-card" style="--accent-bar:${k.accent}"><div class="kpi-icon">${k.icon}</div><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.val}</div><div class="kpi-sub">${esc(k.sub)}</div><div class="kpi-sub2">${esc(k.sub2)}</div></div>`).join('');
 }
