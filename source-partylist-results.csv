@@ -1,0 +1,12 @@
+election_year,congress,partylist_id,partylist_name,aka_names,seats_won,votes,vote_share,status,general_notes
+1998,11th Congress,akbayan,Akbayan,"Akbayan Citizens' Action Party; Akbayan Partylist",1,,,Sample row,Replace with verified official partylist data.
+2004,13th Congress,akbayan,Akbayan,"Akbayan Citizens' Action Party; Akbayan Partylist",3,,,Sample row,AKA grouped under same ID.
+2025,20th Congress,akbayan,Akbayan,"Akbayan Citizens' Action Party; Akbayan Partylist",3,,,Sample row,Top sample partylist winner.
+2019,18th Congress,tingog,Tingog Sinirangan,"Tingog; Tingog Party List",1,,,Sample row,Older/source name grouped under same partylist_id.
+2022,19th Congress,tingog,Tingog Party List,"Tingog Sinirangan; Tingog",2,,,Sample row,Grouped as same partylist.
+2025,20th Congress,tingog,Tingog Party List,"Tingog Sinirangan; Tingog",3,,,Sample row,Same partylist_id tingog.
+1998,11th Congress,apec,Association of Philippine Electric Cooperatives,"APEC; APEC Partylist; APEC Party-list",2,,,Sample row,Full name used in early source.
+2001,12th Congress,apec,Association of Philippine Electric Cooperatives,"APEC; APEC Partylist; APEC Party-list",3,,,Sample row,Full name.
+2025,20th Congress,apec,APEC Partylist,"Association of Philippine Electric Cooperatives; APEC",1,,,Sample row,Short name used in later source.
+2007,14th Congress,an-waray,An Waray,An Waray Party-list,2,,,Sample row,Corrected sample seat row.
+2022,19th Congress,an-waray,An Waray,An Waray Party-list,0,,,Registration cancelled / flagged,Tracked as legal/status note.
