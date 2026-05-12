@@ -14,15 +14,15 @@
   --gold-light:#F0C96A;
   --gold-dim:#8B6520;
   --gold-faint:rgba(201,146,42,0.08);
-  --navy:#080F1E;
-  --navy2:#0C1729;
-  --surface:#0F1D30;
-  --surface2:#142236;
-  --surface3:#1A2C44;
-  --surface4:#1F3450;
-  --text:#E4EAF4;
+  --navy:#060D1A;
+  --navy2:#0A1422;
+  --surface:#0D1828;
+  --surface2:#111F32;
+  --surface3:#16283E;
+  --surface4:#1B304A;
+  --text:#E8EFF8;
   --text2:#9AADC4;
-  --text3:#5A718F;
+  --text3:#52697F;
   --red:#D95555;
   --red-bg:rgba(217,85,85,0.1);
   --green:#3BAA72;
@@ -33,12 +33,12 @@
   --purple-bg:rgba(155,114,207,0.1);
   --amber:#E09030;
   --amber-bg:rgba(224,144,48,0.1);
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.12);
+  --border:rgba(255,255,255,0.06);
+  --border2:rgba(255,255,255,0.11);
   --radius:14px;
   --radius-sm:8px;
-  --shadow:0 4px 24px rgba(0,0,0,0.4);
-  --shadow-lg:0 16px 48px rgba(0,0,0,0.6);
+  --shadow:0 4px 24px rgba(0,0,0,0.5);
+  --shadow-lg:0 20px 60px rgba(0,0,0,0.7);
 }
 
 html{scroll-behavior:smooth}
@@ -51,23 +51,35 @@ body{
   overflow-x:hidden;
 }
 
-/* Background texture */
+/* Layered background */
 body::before{
   content:'';
   position:fixed;
   inset:0;
   background:
-    radial-gradient(ellipse at 10% 0%,rgba(201,146,42,0.04) 0%,transparent 60%),
-    radial-gradient(ellipse at 90% 80%,rgba(74,158,224,0.03) 0%,transparent 50%);
+    radial-gradient(ellipse 80% 50% at 5% -10%, rgba(201,146,42,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 95% 90%, rgba(74,158,224,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 60% at 50% 50%, rgba(8,15,30,0.5) 0%, transparent 100%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Subtle dot grid */
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size:28px 28px;
   pointer-events:none;
   z-index:0;
 }
 
 /* ── HEADER ── */
 .header{
-  background:rgba(8,15,30,0.92);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
+  background:rgba(6,13,26,0.94);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
   padding:0 32px;
   position:sticky;
@@ -77,43 +89,56 @@ body::before{
   grid-template-columns:auto 1fr auto;
   align-items:center;
   gap:24px;
-  height:60px;
+  height:62px;
+}
+
+/* Thin gold line at very top */
+.header::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:1.5px;
+  background:linear-gradient(90deg, transparent 0%, var(--gold-dim) 25%, var(--gold) 50%, var(--gold-dim) 75%, transparent 100%);
+  opacity:.6;
 }
 
 .logo{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:11px;
   text-decoration:none;
+  flex-shrink:0;
 }
 .logo-badge{
-  width:34px;
-  height:34px;
-  background:linear-gradient(135deg,var(--gold-dim),var(--gold));
-  border-radius:8px;
+  width:36px;
+  height:36px;
+  background:linear-gradient(135deg, var(--gold-dim) 0%, var(--gold) 60%, var(--gold-light) 100%);
+  border-radius:9px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:16px;
+  font-size:15px;
   font-weight:900;
   color:var(--navy);
   letter-spacing:-.5px;
   flex-shrink:0;
+  box-shadow:0 2px 12px rgba(201,146,42,0.3);
 }
-.logo-info{}
 .logo-name{
   font-family:'Fraunces',Georgia,serif;
   font-size:15px;
   font-weight:700;
   color:var(--gold-light);
   line-height:1.1;
+  letter-spacing:-.2px;
 }
 .logo-sub{
-  font-size:10px;
+  font-size:9.5px;
   color:var(--text3);
-  letter-spacing:.8px;
+  letter-spacing:.9px;
   text-transform:uppercase;
   font-weight:400;
+  margin-top:1px;
 }
 
 .nav{
@@ -123,38 +148,45 @@ body::before{
 }
 .nav-btn{
   padding:6px 14px;
-  border:0;
+  border:1px solid transparent;
   background:transparent;
   color:var(--text3);
   font-family:'Outfit',sans-serif;
-  font-size:13px;
+  font-size:12.5px;
   font-weight:500;
-  border-radius:7px;
+  border-radius:8px;
   cursor:pointer;
   display:flex;
   align-items:center;
   gap:6px;
   transition:.15s ease;
   white-space:nowrap;
+  letter-spacing:.1px;
 }
-.nav-btn:hover{background:var(--surface3);color:var(--text2)}
-.nav-btn.active{background:var(--gold-faint);color:var(--gold-light);border:1px solid rgba(201,146,42,0.25)}
-.nav-icon{font-size:14px}
+.nav-btn:hover{background:var(--surface3);color:var(--text2);border-color:var(--border)}
+.nav-btn.active{
+  background:var(--gold-faint);
+  color:var(--gold-light);
+  border-color:rgba(201,146,42,0.28);
+}
+.nav-icon{font-size:13px}
 
 .header-right{
   display:flex;
   align-items:center;
   gap:8px;
+  flex-shrink:0;
 }
 .data-badge{
-  font-size:11px;
-  padding:4px 9px;
+  font-size:10.5px;
+  padding:4px 10px;
   background:var(--green-bg);
   color:var(--green);
   border:1px solid rgba(59,170,114,0.2);
   border-radius:20px;
-  font-weight:500;
+  font-weight:600;
   white-space:nowrap;
+  letter-spacing:.2px;
 }
 
 /* ── LAYOUT ── */
@@ -177,47 +209,58 @@ body::before{
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:18px 20px;
+  padding:20px 22px;
   position:relative;
   overflow:hidden;
-  transition:.2s;
+  transition:.2s ease;
 }
-.kpi:hover{border-color:var(--border2);transform:translateY(-1px)}
+.kpi:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--shadow)}
 .kpi-accent-bar{
   position:absolute;
   top:0;left:0;right:0;
   height:2px;
   background:var(--accent,var(--gold));
-  opacity:.7;
+  opacity:.65;
+}
+/* diagonal decorative corner */
+.kpi::after{
+  content:'';
+  position:absolute;
+  bottom:-18px;right:-18px;
+  width:64px;height:64px;
+  border-radius:50%;
+  background:var(--accent,var(--gold));
+  opacity:.04;
 }
 .kpi-label{
-  font-size:10px;
+  font-size:9.5px;
   text-transform:uppercase;
-  letter-spacing:1.2px;
+  letter-spacing:1.3px;
   color:var(--text3);
-  font-weight:500;
-  margin-bottom:8px;
+  font-weight:600;
+  margin-bottom:9px;
 }
 .kpi-value{
   font-family:'Fraunces',Georgia,serif;
-  font-size:26px;
+  font-size:28px;
   font-weight:700;
   line-height:1;
   color:var(--text);
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
-  margin-bottom:5px;
+  margin-bottom:6px;
+  letter-spacing:-.5px;
 }
 .kpi-sub{
-  font-size:11.5px;
+  font-size:11px;
   color:var(--text3);
-  line-height:1.4;
+  line-height:1.5;
 }
 .kpi-bar{
-  margin-top:12px;
+  margin-top:14px;
   height:3px;
-  background:rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.05);
   border-radius:999px;
   overflow:hidden;
 }
@@ -225,7 +268,7 @@ body::before{
   height:100%;
   border-radius:999px;
   background:var(--accent,var(--gold));
-  transition:width .6s ease;
+  transition:width .7s ease;
 }
 
 /* ── PANEL ── */
@@ -268,11 +311,11 @@ body::before{
 }
 .field-group.wide{flex:2.5}
 .field-label{
-  font-size:10px;
+  font-size:9.5px;
   text-transform:uppercase;
-  letter-spacing:1px;
+  letter-spacing:1.1px;
   color:var(--text3);
-  font-weight:500;
+  font-weight:600;
 }
 .search-input,.search-select{
   background:var(--navy2);
@@ -286,7 +329,8 @@ body::before{
   transition:.15s;
   width:100%;
 }
-.search-input:focus,.search-select:focus{border-color:var(--gold-dim)}
+.search-input:focus,.search-select:focus{border-color:var(--gold-dim);background:rgba(10,20,34,0.9)}
+.search-input::placeholder{color:var(--text3)}
 .search-select option{background:var(--navy2)}
 .btn{
   padding:8px 14px;
@@ -295,7 +339,7 @@ body::before{
   background:transparent;
   color:var(--text3);
   font-family:'Outfit',sans-serif;
-  font-size:13px;
+  font-size:12.5px;
   font-weight:500;
   cursor:pointer;
   white-space:nowrap;
@@ -314,7 +358,7 @@ body::before{
   gap:8px;
 }
 .results-count{
-  font-size:12.5px;
+  font-size:12px;
   color:var(--text3);
 }
 .results-count strong{color:var(--text2);font-weight:600}
@@ -331,7 +375,7 @@ body::before{
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:16px 18px;
+  padding:17px 19px;
   cursor:pointer;
   transition:.2s ease;
   position:relative;
@@ -347,29 +391,29 @@ body::before{
   box-shadow:var(--shadow);
 }
 .card.dynasty-card{
-  border-color:rgba(201,146,42,0.3);
-  background:linear-gradient(135deg,var(--surface) 0%,rgba(42,30,8,0.6) 100%);
+  border-color:rgba(201,146,42,0.28);
+  background:linear-gradient(135deg,var(--surface) 0%,rgba(42,28,6,0.55) 100%);
 }
 .card.flagged-card{
-  border-color:rgba(217,85,85,0.3);
-  background:linear-gradient(135deg,var(--surface) 0%,rgba(52,25,25,0.6) 100%);
+  border-color:rgba(217,85,85,0.28);
+  background:linear-gradient(135deg,var(--surface) 0%,rgba(52,22,22,0.55) 100%);
 }
 
 .card-crown{
   position:absolute;
-  top:10px;right:12px;
-  font-size:14px;
-  opacity:.7;
+  top:11px;right:13px;
+  font-size:13px;
+  opacity:.65;
 }
 
 .card-initials{
-  width:40px;height:40px;
-  border-radius:10px;
+  width:42px;height:42px;
+  border-radius:11px;
   display:flex;align-items:center;justify-content:center;
   font-family:'Fraunces',Georgia,serif;
-  font-size:16px;font-weight:700;
+  font-size:17px;font-weight:700;
   flex-shrink:0;
-  margin-bottom:10px;
+  margin-bottom:11px;
 }
 
 .card-name{
@@ -377,15 +421,16 @@ body::before{
   font-size:16px;
   font-weight:700;
   color:var(--text);
-  line-height:1.2;
-  margin-bottom:2px;
-  padding-right:20px;
+  line-height:1.25;
+  margin-bottom:3px;
+  padding-right:22px;
+  letter-spacing:-.2px;
 }
 .card-district{
-  font-size:11.5px;
+  font-size:11px;
   color:var(--text3);
   font-family:'DM Mono',monospace;
-  margin-bottom:10px;
+  margin-bottom:11px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -395,27 +440,28 @@ body::before{
   display:flex;
   flex-wrap:wrap;
   gap:5px;
-  margin-bottom:12px;
+  margin-bottom:13px;
 }
 .tag{
-  font-size:10.5px;
+  font-size:10px;
   padding:2px 8px;
   border-radius:20px;
-  font-weight:500;
-  line-height:1.6;
+  font-weight:600;
+  line-height:1.65;
   white-space:nowrap;
+  letter-spacing:.1px;
 }
-.tag-blue{background:var(--blue-bg);color:#7BBFE4;border:1px solid rgba(74,158,224,0.18)}
-.tag-gold{background:var(--amber-bg);color:var(--gold-light);border:1px solid rgba(201,146,42,0.25)}
-.tag-green{background:var(--green-bg);color:#6ED69B;border:1px solid rgba(59,170,114,0.2)}
-.tag-red{background:var(--red-bg);color:#EE9999;border:1px solid rgba(217,85,85,0.2)}
-.tag-purple{background:var(--purple-bg);color:#C3A0E8;border:1px solid rgba(155,114,207,0.2)}
+.tag-blue{background:var(--blue-bg);color:#7BBFE4;border:1px solid rgba(74,158,224,0.16)}
+.tag-gold{background:var(--amber-bg);color:var(--gold-light);border:1px solid rgba(201,146,42,0.22)}
+.tag-green{background:var(--green-bg);color:#6ED69B;border:1px solid rgba(59,170,114,0.18)}
+.tag-red{background:var(--red-bg);color:#EE9999;border:1px solid rgba(217,85,85,0.18)}
+.tag-purple{background:var(--purple-bg);color:#C3A0E8;border:1px solid rgba(155,114,207,0.18)}
 
 .card-stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:8px;
-  padding-top:12px;
+  padding-top:13px;
   border-top:1px solid var(--border);
   margin-top:auto;
 }
@@ -426,12 +472,12 @@ body::before{
   font-weight:500;
   color:var(--text);
   line-height:1;
-  margin-bottom:2px;
+  margin-bottom:3px;
 }
 .cs-lbl{
-  font-size:9.5px;
+  font-size:9px;
   text-transform:uppercase;
-  letter-spacing:.8px;
+  letter-spacing:.9px;
   color:var(--text3);
 }
 
@@ -453,9 +499,9 @@ thead th{
   padding:10px 14px;
   text-align:left;
   border-bottom:1px solid var(--border);
-  font-size:10px;
+  font-size:9.5px;
   text-transform:uppercase;
-  letter-spacing:.8px;
+  letter-spacing:.9px;
   white-space:nowrap;
   font-weight:600;
   position:sticky;
@@ -486,9 +532,9 @@ tbody tr:hover{background:var(--surface3)}
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(4,9,18,0.85);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
+  background:rgba(3,7,16,0.88);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
   z-index:500;
   align-items:center;
   justify-content:center;
@@ -510,7 +556,7 @@ tbody tr:hover{background:var(--surface3)}
   animation:slideUp .2s ease;
   position:relative;
 }
-@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes slideUp{from{transform:translateY(22px);opacity:0}to{transform:translateY(0);opacity:1}}
 
 .modal-close{
   position:sticky;
@@ -522,6 +568,7 @@ tbody tr:hover{background:var(--surface3)}
   align-items:center;
   justify-content:space-between;
   z-index:10;
+  border-radius:20px 20px 0 0;
 }
 .modal-close-btn{
   width:28px;height:28px;
@@ -544,11 +591,11 @@ tbody tr:hover{background:var(--surface3)}
   margin-bottom:20px;
 }
 .modal-initials{
-  width:56px;height:56px;
-  border-radius:14px;
+  width:58px;height:58px;
+  border-radius:15px;
   display:flex;align-items:center;justify-content:center;
   font-family:'Fraunces',Georgia,serif;
-  font-size:22px;font-weight:700;
+  font-size:23px;font-weight:700;
   flex-shrink:0;
 }
 .modal-rep-name{
@@ -557,9 +604,10 @@ tbody tr:hover{background:var(--surface3)}
   font-weight:700;
   line-height:1.2;
   color:var(--text);
+  letter-spacing:-.3px;
 }
 .modal-rep-sub{
-  font-size:12px;
+  font-size:11.5px;
   color:var(--text3);
   font-family:'DM Mono',monospace;
   margin-top:3px;
@@ -569,15 +617,15 @@ tbody tr:hover{background:var(--surface3)}
   margin-bottom:20px;
 }
 .modal-section-label{
-  font-size:10px;
+  font-size:9.5px;
   text-transform:uppercase;
-  letter-spacing:1.2px;
+  letter-spacing:1.3px;
   color:var(--text3);
   font-weight:600;
   margin-bottom:10px;
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:8px;
 }
 .modal-section-label::after{
   content:'';
@@ -636,13 +684,13 @@ tbody tr:hover{background:var(--surface3)}
   margin-bottom:3px;
 }
 .modal-stat-lbl{
-  font-size:10px;
+  font-size:9.5px;
   text-transform:uppercase;
-  letter-spacing:.8px;
+  letter-spacing:.9px;
   color:var(--text3);
 }
 
-/* ── DYNASTY CARDS ── */
+/* ── DYNASTY ENTRIES ── */
 .dynasty-entry{
   background:var(--navy2);
   border-radius:10px;
@@ -671,7 +719,7 @@ tbody tr:hover{background:var(--surface3)}
   white-space:nowrap;
 }
 
-/* ── DYNASTY RANK BAR ── */
+/* ── RANK BAR ── */
 .rank-bar-wrap{
   margin-bottom:10px;
   background:var(--navy2);
@@ -696,7 +744,7 @@ tbody tr:hover{background:var(--surface3)}
 }
 .rank-bar{
   height:5px;
-  background:rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.05);
   border-radius:999px;
   overflow:hidden;
 }
@@ -716,29 +764,30 @@ tbody tr:hover{background:var(--surface3)}
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:16px 18px;
+  padding:17px 19px;
   cursor:pointer;
   transition:.2s;
+  position:relative;
 }
 .pl-card:hover{
   border-color:rgba(201,146,42,0.35);
   background:var(--surface2);
-  transform:translateY(-1px);
+  transform:translateY(-2px);
   box-shadow:var(--shadow);
 }
 .pl-card.flagged-card{
-  border-color:rgba(217,85,85,0.3);
+  border-color:rgba(217,85,85,0.28);
 }
-
 .pl-name{
   font-family:'Fraunces',Georgia,serif;
   font-size:16px;
   font-weight:700;
   color:var(--text);
   margin-bottom:4px;
+  letter-spacing:-.2px;
 }
 .pl-alias{
-  font-size:11px;
+  font-size:10.5px;
   color:var(--text3);
   font-family:'DM Mono',monospace;
   margin-bottom:10px;
@@ -754,21 +803,21 @@ tbody tr:hover{background:var(--surface3)}
 /* ── EMPTY STATE ── */
 .empty-state{
   text-align:center;
-  padding:48px 24px;
+  padding:52px 24px;
   color:var(--text3);
 }
 .empty-icon{font-size:36px;margin-bottom:12px}
 .empty-text{font-size:14px;line-height:1.6}
-.empty-sub{font-size:12px;margin-top:6px;font-family:'DM Mono',monospace;color:var(--text3);opacity:.6}
+.empty-sub{font-size:12px;margin-top:6px;font-family:'DM Mono',monospace;color:var(--text3);opacity:.55}
 
 /* ── ERROR ── */
 .error-panel{
   background:var(--red-bg);
-  border:1px solid rgba(217,85,85,0.25);
+  border:1px solid rgba(217,85,85,0.22);
   border-radius:var(--radius);
   padding:20px 24px;
   color:#EE9999;
-  line-height:1.6;
+  line-height:1.7;
   font-size:13.5px;
 }
 .error-panel strong{color:var(--red)}
@@ -777,7 +826,7 @@ tbody tr:hover{background:var(--surface3)}
 .notice{
   color:var(--text3);
   font-size:13px;
-  line-height:1.7;
+  line-height:1.75;
 }
 .notice code{
   font-family:'DM Mono',monospace;
@@ -793,7 +842,7 @@ tbody tr:hover{background:var(--surface3)}
   align-items:center;
   justify-content:center;
   gap:10px;
-  padding:60px 24px;
+  padding:72px 24px;
   color:var(--text3);
   font-size:13px;
 }
@@ -807,7 +856,7 @@ tbody tr:hover{background:var(--surface3)}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--surface4);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--surface3)}
@@ -834,7 +883,7 @@ tbody tr:hover{background:var(--surface3)}
 <header class="header">
   <div class="logo">
     <div class="logo-badge">PH</div>
-    <div class="logo-info">
+    <div>
       <div class="logo-name">Congress Database</div>
       <div class="logo-sub">House of Representatives · Partylist System</div>
     </div>
@@ -863,10 +912,10 @@ tbody tr:hover{background:var(--surface3)}
   <div class="modal" id="repModalInner">
     <div class="modal-close">
       <div style="display:flex;align-items:center;gap:8px">
-        <span id="modalTitleIcon" style="font-size:16px">🏛️</span>
+        <span id="modalTitleIcon" style="font-size:15px">🏛️</span>
         <span id="modalTitle" style="font-family:'Fraunces',Georgia,serif;font-size:14px;font-weight:600;color:var(--text2)">Representative Profile</span>
       </div>
-      <button class="modal-close-btn" onclick="$('repModal').classList.remove('open')">✕</button>
+      <button class="modal-close-btn" onclick="$('repModal').classList.remove('open');document.body.style.overflow=''">✕</button>
     </div>
     <div class="modal-body" id="modalBody"></div>
   </div>
@@ -1034,17 +1083,13 @@ function getSurnameMap(){
 function getDynastyStats(){
   const sm=getSurnameMap();
   const recurring=Object.entries(sm).filter(([s,t])=>t.length>=2).sort((a,b)=>b[1].length-a[1].length);
-  // unique rep IDs in dynasty surnames
   const dynastyRepIds=new Set();
   recurring.forEach(([s,t])=>t.forEach(term=>dynastyRepIds.add(term.rep_id)));
-  // unique districts touched by dynasty reps
   const dynastyDistricts=new Set();
   recurring.forEach(([s,t])=>t.forEach(term=>dynastyDistricts.add(term.district_id)));
-  // largest dynasty district = district with most dynasty-related terms
   const districtCount={};
   recurring.forEach(([s,t])=>t.forEach(term=>{ districtCount[term.district]=(districtCount[term.district]||0)+1; }));
   const topDistrict=Object.entries(districtCount).sort((a,b)=>b[1]-a[1])[0]||["—",0];
-  // % of all terms that are dynasty
   const dynastyTerms=recurring.reduce((s,[,t])=>s+t.length,0);
   const dynPct=DB.terms.length?Math.round(dynastyTerms/DB.terms.length*100):0;
   return { recurring, dynastyRepIds, dynastyDistricts, topDistrict, dynastyTerms, dynPct };
@@ -1054,17 +1099,42 @@ function getDynastyStats(){
 function renderReps(){
   const latest=latestCongress();
   const latestTerms=DB.terms.filter(t=>t.congress===latest);
+
+  // Most active region in latest congress
+  const regionCount={};
+  latestTerms.forEach(t=>{ regionCount[t.region]=(regionCount[t.region]||0)+1; });
+  const topRegion=Object.entries(regionCount).sort((a,b)=>b[1]-a[1])[0]||["—",0];
+  const totalLatest=latestTerms.length||1;
+
+  // Seat turnover: seats in latest congress held by someone different from the previous congress
+  const congresses=allCongresses();
+  const prevCongress=congresses.length>=2?congresses[congresses.length-2]:"";
+  let turnoverSeats=0,comparableSeats=0;
+  if(prevCongress){
+    const prevTerms=DB.terms.filter(t=>t.congress===prevCongress);
+    const prevByDistrict=new Map();
+    prevTerms.forEach(t=>prevByDistrict.set(t.district_id,t.rep_id));
+    latestTerms.forEach(t=>{
+      if(prevByDistrict.has(t.district_id)){
+        comparableSeats++;
+        if(prevByDistrict.get(t.district_id)!==t.rep_id) turnoverSeats++;
+      }
+    });
+  }
+  const turnoverPct=comparableSeats?Math.round(turnoverSeats/comparableSeats*100):0;
+
+  const latestRepIds=new Set(latestTerms.map(t=>t.rep_id));
+  const previousRepIds=new Set(DB.terms.filter(t=>t.congress!==latest).map(t=>t.rep_id));
+
   const topRep=DB.reps.slice().sort((a,b)=>b.terms.length-a.terms.length)[0];
   const maxTerms=topRep?topRep.terms.length:1;
-  const returning=latestTerms.filter(t=>DB.terms.some(x=>x.rep_id===t.rep_id&&x.congress!==latest)).length;
-  const retention=latestTerms.length?Math.round(returning/latestTerms.length*100):0;
   const multiTerm=DB.reps.filter(r=>r.terms.length>1).length;
 
   setKpis([
     {label:"Unique Representatives",value:DB.reps.length.toLocaleString(),sub:`Across all tracked congresses`,accent:"var(--gold)"},
     {label:"Longest-Serving Rep",value:topRep?topRep.surname:"—",sub:`${topRep?topRep.terms.length:0} congress appearances`,accent:"var(--blue)",bar:Math.round((topRep?topRep.terms.length:0)/maxTerms*100)},
     {label:"Multi-Term Reps",value:multiTerm.toLocaleString(),sub:`${DB.reps.length?Math.round(multiTerm/DB.reps.length*100):0}% of all tracked reps`,accent:"var(--green)",bar:DB.reps.length?Math.round(multiTerm/DB.reps.length*100):0},
-    {label:"Retention Rate",value:retention+"%",sub:`Reps returning in ${latest||"latest"}`,accent:"var(--purple)",bar:retention}
+    {label:"Seat Turnover Rate",value:turnoverPct+"%",sub:`${turnoverSeats} of ${comparableSeats} seats changed hands vs ${prevCongress||"prior congress"}`,accent:"var(--purple)",bar:turnoverPct}
   ]);
 
   $("content").innerHTML=`
@@ -1353,8 +1423,8 @@ function renderPartylists(){
     ]);
     $("content").innerHTML=`
       <div class="panel">
-        <div class="panel-title">🧾 Partylist Data Not Yet Uploaded</div>
-        <div class="notice" style="margin-top:8px">
+        <div class="panel-header"><div class="panel-title">🧾 Partylist Data Not Yet Uploaded</div></div>
+        <div class="notice">
           Upload your CSV as <code>data/partylist.csv</code> to enable partylist analytics including seat history, election cycle trends, representative rosters, and name-change tracking.
         </div>
       </div>
@@ -1484,8 +1554,8 @@ function renderPartyNotes(){
     ]);
     $("content").innerHTML=`
       <div class="panel">
-        <div class="panel-title">⚠️ No Partylist Notes Yet</div>
-        <div class="notice" style="margin-top:8px">Upload <code>data/partylist.csv</code> with note columns to populate this page.</div>
+        <div class="panel-header"><div class="panel-title">⚠️ No Partylist Notes Yet</div></div>
+        <div class="notice">Upload <code>data/partylist.csv</code> with note columns to populate this page.</div>
       </div>
     `;
     return;
@@ -1566,7 +1636,6 @@ async function init(){
   }
 }
 
-// Close modal on ESC
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"){$("repModal").classList.remove("open");document.body.style.overflow="";} });
 
 init();
