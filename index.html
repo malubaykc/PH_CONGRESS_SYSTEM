@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PH Congress Database</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -13,354 +13,864 @@
   --gold:#C9922A;
   --gold-light:#F0C96A;
   --gold-dim:#8B6520;
-  --navy:#0A1628;
-  --navy2:#112240;
-  --surface:#0F1F38;
-  --surface2:#162848;
-  --surface3:#1E3254;
-  --text:#E8EDF5;
-  --text2:#A8B8CC;
-  --text3:#6A82A0;
-  --red:#E05252;
-  --green:#3CB07A;
+  --gold-faint:rgba(201,146,42,0.08);
+  --navy:#080F1E;
+  --navy2:#0C1729;
+  --surface:#0F1D30;
+  --surface2:#142236;
+  --surface3:#1A2C44;
+  --surface4:#1F3450;
+  --text:#E4EAF4;
+  --text2:#9AADC4;
+  --text3:#5A718F;
+  --red:#D95555;
+  --red-bg:rgba(217,85,85,0.1);
+  --green:#3BAA72;
+  --green-bg:rgba(59,170,114,0.1);
   --blue:#4A9EE0;
+  --blue-bg:rgba(74,158,224,0.1);
   --purple:#9B72CF;
-  --border:#1E3254;
-  --radius:12px;
-  --warn-bg:#2A1A08;
-  --warn-border:#8B6520;
+  --purple-bg:rgba(155,114,207,0.1);
+  --amber:#E09030;
+  --amber-bg:rgba(224,144,48,0.1);
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(255,255,255,0.12);
+  --radius:14px;
+  --radius-sm:8px;
+  --shadow:0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg:0 16px 48px rgba(0,0,0,0.6);
 }
+
+html{scroll-behavior:smooth}
+
 body{
-  font-family:'DM Sans',sans-serif;
+  font-family:'Outfit',sans-serif;
   background:var(--navy);
   color:var(--text);
   min-height:100vh;
+  overflow-x:hidden;
 }
+
+/* Background texture */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 10% 0%,rgba(201,146,42,0.04) 0%,transparent 60%),
+    radial-gradient(ellipse at 90% 80%,rgba(74,158,224,0.03) 0%,transparent 50%);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── HEADER ── */
 .header{
-  background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 55%,#0D1F3C 100%);
-  border-bottom:1px solid var(--gold-dim);
-  padding:0 28px;
+  background:rgba(8,15,30,0.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0 32px;
   position:sticky;
   top:0;
-  z-index:100;
+  z-index:200;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:24px;
+  height:60px;
+}
+
+.logo{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  min-height:64px;
-  gap:16px;
+  gap:10px;
+  text-decoration:none;
 }
-.logo{display:flex;gap:12px;align-items:center}
-.logo-flag{font-size:28px;font-weight:800}
-.logo-text{
-  font-family:'Playfair Display',Georgia,serif;
-  font-size:18px;
+.logo-badge{
+  width:34px;
+  height:34px;
+  background:linear-gradient(135deg,var(--gold-dim),var(--gold));
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
+  font-weight:900;
+  color:var(--navy);
+  letter-spacing:-.5px;
+  flex-shrink:0;
+}
+.logo-info{}
+.logo-name{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:15px;
   font-weight:700;
   color:var(--gold-light);
+  line-height:1.1;
 }
 .logo-sub{
-  font-size:11px;
+  font-size:10px;
   color:var(--text3);
-  letter-spacing:.5px;
+  letter-spacing:.8px;
   text-transform:uppercase;
+  font-weight:400;
 }
-.nav{display:flex;gap:4px;flex-wrap:wrap}
+
+.nav{
+  display:flex;
+  gap:2px;
+  justify-content:center;
+}
 .nav-btn{
-  padding:7px 13px;
+  padding:6px 14px;
   border:0;
   background:transparent;
-  color:var(--text2);
-  font:500 13px sans-serif;
-  border-radius:8px;
+  color:var(--text3);
+  font-family:'Outfit',sans-serif;
+  font-size:13px;
+  font-weight:500;
+  border-radius:7px;
   cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transition:.15s ease;
+  white-space:nowrap;
 }
-.nav-btn:hover,.nav-btn.active{
-  background:var(--surface3);
-  color:var(--gold-light);
+.nav-btn:hover{background:var(--surface3);color:var(--text2)}
+.nav-btn.active{background:var(--gold-faint);color:var(--gold-light);border:1px solid rgba(201,146,42,0.25)}
+.nav-icon{font-size:14px}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
+.data-badge{
+  font-size:11px;
+  padding:4px 9px;
+  background:var(--green-bg);
+  color:var(--green);
+  border:1px solid rgba(59,170,114,0.2);
+  border-radius:20px;
+  font-weight:500;
+  white-space:nowrap;
+}
+
+/* ── LAYOUT ── */
 .main{
-  padding:24px 28px;
-  max-width:1400px;
+  padding:28px 32px;
+  max-width:1440px;
   margin:auto;
+  position:relative;
+  z-index:1;
 }
+
+/* ── KPI GRID ── */
 .kpi-row{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:14px;
+  gap:12px;
   margin-bottom:24px;
 }
 .kpi{
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:16px 18px;
+  padding:18px 20px;
   position:relative;
   overflow:hidden;
+  transition:.2s;
 }
-.kpi:before{
-  content:'';
+.kpi:hover{border-color:var(--border2);transform:translateY(-1px)}
+.kpi-accent-bar{
   position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:3px;
+  top:0;left:0;right:0;
+  height:2px;
   background:var(--accent,var(--gold));
+  opacity:.7;
 }
 .kpi-label{
-  font-size:11px;
+  font-size:10px;
   text-transform:uppercase;
-  letter-spacing:1px;
+  letter-spacing:1.2px;
   color:var(--text3);
   font-weight:500;
-  margin-bottom:6px;
+  margin-bottom:8px;
 }
 .kpi-value{
-  font-family:'Playfair Display',Georgia,serif;
-  font-size:28px;
+  font-family:'Fraunces',Georgia,serif;
+  font-size:26px;
   font-weight:700;
   line-height:1;
+  color:var(--text);
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
+  margin-bottom:5px;
 }
 .kpi-sub{
-  font-size:12px;
+  font-size:11.5px;
   color:var(--text3);
-  margin-top:5px;
+  line-height:1.4;
 }
 .kpi-bar{
-  margin-top:10px;
-  height:6px;
-  background:var(--navy2);
+  margin-top:12px;
+  height:3px;
+  background:rgba(255,255,255,0.06);
   border-radius:999px;
   overflow:hidden;
 }
 .kpi-bar-fill{
   height:100%;
-  background:var(--accent,var(--gold));
   border-radius:999px;
+  background:var(--accent,var(--gold));
+  transition:width .6s ease;
 }
+
+/* ── PANEL ── */
 .panel{
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:var(--radius);
   padding:20px 24px;
-  margin-bottom:20px;
+  margin-bottom:16px;
+}
+.panel-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:16px;
 }
 .panel-title{
-  font-family:'Playfair Display',Georgia,serif;
-  font-size:15px;
+  font-family:'Fraunces',Georgia,serif;
+  font-size:14px;
+  font-weight:600;
   color:var(--gold-light);
-  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
-.search-grid{
-  display:grid;
-  grid-template-columns:2fr 1.2fr 1.2fr 1fr;
+
+/* ── FILTER BAR ── */
+.filter-row{
+  display:flex;
   gap:10px;
-  align-items:end;
+  align-items:flex-end;
+  flex-wrap:wrap;
 }
-.field-group{display:flex;flex-direction:column;gap:5px}
+.field-group{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  flex:1;
+  min-width:140px;
+}
+.field-group.wide{flex:2.5}
 .field-label{
-  font-size:11px;
+  font-size:10px;
   text-transform:uppercase;
-  letter-spacing:.8px;
+  letter-spacing:1px;
   color:var(--text3);
+  font-weight:500;
 }
 .search-input,.search-select{
   background:var(--navy2);
   border:1px solid var(--border);
   border-radius:8px;
   color:var(--text);
-  font-size:14px;
-  padding:9px 12px;
+  font-family:'Outfit',sans-serif;
+  font-size:13px;
+  padding:8px 12px;
   outline:none;
+  transition:.15s;
+  width:100%;
 }
+.search-input:focus,.search-select:focus{border-color:var(--gold-dim)}
+.search-select option{background:var(--navy2)}
 .btn{
-  padding:9px 16px;
+  padding:8px 14px;
   border-radius:8px;
   border:1px solid var(--border);
   background:transparent;
   color:var(--text3);
-  font-weight:600;
-  cursor:pointer;
-}
-.btn:hover{border-color:var(--text3);color:var(--text)}
-.results-count{
+  font-family:'Outfit',sans-serif;
   font-size:13px;
+  font-weight:500;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:.15s;
+  height:36px;
+}
+.btn:hover{border-color:var(--border2);color:var(--text2);background:var(--surface3)}
+
+/* ── RESULTS ── */
+.results-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.results-count{
+  font-size:12.5px;
   color:var(--text3);
-  margin-bottom:12px;
 }
-.results-count span{
-  color:var(--gold-light);
-  font-weight:600;
-}
+.results-count strong{color:var(--text2);font-weight:600}
+
+/* ── CARD GRID ── */
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
-  gap:14px;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:12px;
 }
+
+/* ── REP CARD ── */
 .card{
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:18px;
-  transition:.2s;
+  padding:16px 18px;
+  cursor:pointer;
+  transition:.2s ease;
   position:relative;
   overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  gap:0;
 }
 .card:hover{
-  border-color:var(--gold-dim);
+  border-color:rgba(201,146,42,0.35);
+  background:var(--surface2);
   transform:translateY(-2px);
-  box-shadow:0 6px 28px rgba(0,0,0,.3);
+  box-shadow:var(--shadow);
 }
-.card.dynasty{
-  border-color:var(--warn-border);
-  background:var(--warn-bg);
+.card.dynasty-card{
+  border-color:rgba(201,146,42,0.3);
+  background:linear-gradient(135deg,var(--surface) 0%,rgba(42,30,8,0.6) 100%);
 }
-.card.flagged{
-  border-color:#704040;
-  background:#341919;
+.card.flagged-card{
+  border-color:rgba(217,85,85,0.3);
+  background:linear-gradient(135deg,var(--surface) 0%,rgba(52,25,25,0.6) 100%);
 }
-.card.dynasty:after{
-  content:'👑';
+
+.card-crown{
   position:absolute;
-  right:12px;
-  top:12px;
+  top:10px;right:12px;
+  font-size:14px;
+  opacity:.7;
 }
-.card.flagged:after{
-  content:'⚠️';
-  position:absolute;
-  right:12px;
-  top:12px;
+
+.card-initials{
+  width:40px;height:40px;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',Georgia,serif;
+  font-size:16px;font-weight:700;
+  flex-shrink:0;
+  margin-bottom:10px;
 }
+
 .card-name{
-  font-family:'Playfair Display',Georgia,serif;
-  font-size:17px;
+  font-family:'Fraunces',Georgia,serif;
+  font-size:16px;
   font-weight:700;
-  margin-bottom:4px;
-  padding-right:26px;
+  color:var(--text);
+  line-height:1.2;
+  margin-bottom:2px;
+  padding-right:20px;
 }
-.card-sub{
-  font:12px monospace;
+.card-district{
+  font-size:11.5px;
   color:var(--text3);
-  margin-bottom:9px;
+  font-family:'DM Mono',monospace;
+  margin-bottom:10px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
+
 .tags{
   display:flex;
   flex-wrap:wrap;
   gap:5px;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 .tag{
-  font-size:11px;
-  padding:3px 8px;
+  font-size:10.5px;
+  padding:2px 8px;
   border-radius:20px;
   font-weight:500;
+  line-height:1.6;
+  white-space:nowrap;
 }
-.tag-blue{background:#1E2F48;color:#7BADD4}
-.tag-gold{background:#2A1F00;color:var(--gold-light);border:1px solid var(--gold-dim)}
-.tag-green{background:#1A3520;color:#5ECC7B;border:1px solid #2E6040}
-.tag-red{background:#341919;color:#FF9999;border:1px solid #704040}
-.stats{
-  display:flex;
-  gap:14px;
-  margin-top:9px;
-  padding-top:9px;
+.tag-blue{background:var(--blue-bg);color:#7BBFE4;border:1px solid rgba(74,158,224,0.18)}
+.tag-gold{background:var(--amber-bg);color:var(--gold-light);border:1px solid rgba(201,146,42,0.25)}
+.tag-green{background:var(--green-bg);color:#6ED69B;border:1px solid rgba(59,170,114,0.2)}
+.tag-red{background:var(--red-bg);color:#EE9999;border:1px solid rgba(217,85,85,0.2)}
+.tag-purple{background:var(--purple-bg);color:#C3A0E8;border:1px solid rgba(155,114,207,0.2)}
+
+.card-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  padding-top:12px;
   border-top:1px solid var(--border);
+  margin-top:auto;
 }
-.stat-val{
-  font:500 17px monospace;
+.cs-item{text-align:center}
+.cs-val{
+  font-family:'DM Mono',monospace;
+  font-size:16px;
+  font-weight:500;
   color:var(--text);
+  line-height:1;
+  margin-bottom:2px;
 }
-.stat-lbl{
-  font-size:10px;
-  color:var(--text3);
+.cs-lbl{
+  font-size:9.5px;
   text-transform:uppercase;
+  letter-spacing:.8px;
+  color:var(--text3);
 }
+
+/* ── TABLE ── */
 .table-wrap{
   overflow:auto;
   border-radius:var(--radius);
   border:1px solid var(--border);
+  margin-bottom:20px;
 }
 table{
   width:100%;
   border-collapse:collapse;
-  font-size:13px;
+  font-size:12.5px;
 }
 thead th{
   background:var(--surface2);
-  color:var(--text2);
-  padding:11px 13px;
+  color:var(--text3);
+  padding:10px 14px;
   text-align:left;
   border-bottom:1px solid var(--border);
-  font-size:11px;
+  font-size:10px;
   text-transform:uppercase;
-  letter-spacing:.5px;
+  letter-spacing:.8px;
   white-space:nowrap;
+  font-weight:600;
+  position:sticky;
+  top:0;
+  z-index:2;
 }
 tbody td{
-  padding:9px 13px;
+  padding:9px 14px;
   color:var(--text2);
   border-bottom:1px solid var(--border);
   white-space:nowrap;
+  vertical-align:middle;
 }
-tbody tr:hover{background:var(--surface2)}
-.error{
-  background:#341919;
-  border:1px solid #704040;
-  color:#FF9999;
-  padding:18px;
-  border-radius:12px;
-  line-height:1.6;
+tbody td:first-child{color:var(--text)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface3)}
+.td-name{
+  font-weight:500;
+  font-size:13px;
 }
-.notice{
-  color:var(--text3);
+.td-mono{
+  font-family:'DM Mono',monospace;
+  font-size:11.5px;
+}
+
+/* ── MODAL ── */
+.modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(4,9,18,0.85);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  z-index:500;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  animation:fadeIn .15s ease;
+}
+.modal-overlay.open{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.modal{
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  width:100%;
+  max-width:600px;
+  max-height:88vh;
+  overflow-y:auto;
+  box-shadow:var(--shadow-lg);
+  animation:slideUp .2s ease;
+  position:relative;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.modal-close{
+  position:sticky;
+  top:0;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:16px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  z-index:10;
+}
+.modal-close-btn{
+  width:28px;height:28px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:var(--surface3);
+  color:var(--text2);
+  cursor:pointer;
   font-size:14px;
-  line-height:1.6;
+  display:flex;align-items:center;justify-content:center;
+  transition:.15s;
 }
-code{
-  color:var(--gold-light);
+.modal-close-btn:hover{background:var(--surface4);color:var(--text)}
+
+.modal-body{padding:24px}
+.modal-rep-header{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:20px;
 }
-.loading{
+.modal-initials{
+  width:56px;height:56px;
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',Georgia,serif;
+  font-size:22px;font-weight:700;
+  flex-shrink:0;
+}
+.modal-rep-name{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:22px;
+  font-weight:700;
+  line-height:1.2;
+  color:var(--text);
+}
+.modal-rep-sub{
+  font-size:12px;
   color:var(--text3);
-  padding:30px;
+  font-family:'DM Mono',monospace;
+  margin-top:3px;
+}
+
+.modal-section{
+  margin-bottom:20px;
+}
+.modal-section-label{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  color:var(--text3);
+  font-weight:600;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.modal-section-label::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--border);
+}
+
+.term-row{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  background:var(--navy2);
+  border-radius:8px;
+  margin-bottom:6px;
+}
+.term-congress{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--gold-light);
+  font-weight:500;
+}
+.term-district{
+  font-size:12.5px;
+  color:var(--text2);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.term-region{
+  font-size:11px;
+  color:var(--text3);
+  white-space:nowrap;
+}
+
+.modal-stat-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:12px;
+}
+.modal-stat{
+  background:var(--navy2);
+  border-radius:10px;
+  padding:12px 14px;
   text-align:center;
 }
+.modal-stat-val{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:22px;
+  font-weight:700;
+  color:var(--text);
+  line-height:1;
+  margin-bottom:3px;
+}
+.modal-stat-lbl{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:var(--text3);
+}
+
+/* ── DYNASTY CARDS ── */
+.dynasty-entry{
+  background:var(--navy2);
+  border-radius:10px;
+  padding:12px 14px;
+  margin-bottom:8px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+.dynasty-entry-name{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:2px;
+}
+.dynasty-entry-meta{
+  font-size:11px;
+  color:var(--text3);
+  font-family:'DM Mono',monospace;
+}
+.dynasty-entry-congress{
+  font-size:11px;
+  color:var(--gold-light);
+  font-family:'DM Mono',monospace;
+  white-space:nowrap;
+}
+
+/* ── DYNASTY RANK BAR ── */
+.rank-bar-wrap{
+  margin-bottom:10px;
+  background:var(--navy2);
+  border-radius:10px;
+  padding:12px 14px;
+}
+.rank-bar-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:7px;
+}
+.rank-bar-name{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+}
+.rank-bar-count{
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  color:var(--text2);
+}
+.rank-bar{
+  height:5px;
+  background:rgba(255,255,255,0.06);
+  border-radius:999px;
+  overflow:hidden;
+}
+.rank-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--gold-dim),var(--gold));
+  border-radius:999px;
+}
+.rank-bar-meta{
+  font-size:11px;
+  color:var(--text3);
+  margin-top:5px;
+}
+
+/* ── PARTYLIST ── */
+.pl-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px 18px;
+  cursor:pointer;
+  transition:.2s;
+}
+.pl-card:hover{
+  border-color:rgba(201,146,42,0.35);
+  background:var(--surface2);
+  transform:translateY(-1px);
+  box-shadow:var(--shadow);
+}
+.pl-card.flagged-card{
+  border-color:rgba(217,85,85,0.3);
+}
+
+.pl-name{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:16px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:4px;
+}
+.pl-alias{
+  font-size:11px;
+  color:var(--text3);
+  font-family:'DM Mono',monospace;
+  margin-bottom:10px;
+}
+.pl-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  padding-top:10px;
+  border-top:1px solid var(--border);
+}
+
+/* ── EMPTY STATE ── */
+.empty-state{
+  text-align:center;
+  padding:48px 24px;
+  color:var(--text3);
+}
+.empty-icon{font-size:36px;margin-bottom:12px}
+.empty-text{font-size:14px;line-height:1.6}
+.empty-sub{font-size:12px;margin-top:6px;font-family:'DM Mono',monospace;color:var(--text3);opacity:.6}
+
+/* ── ERROR ── */
+.error-panel{
+  background:var(--red-bg);
+  border:1px solid rgba(217,85,85,0.25);
+  border-radius:var(--radius);
+  padding:20px 24px;
+  color:#EE9999;
+  line-height:1.6;
+  font-size:13.5px;
+}
+.error-panel strong{color:var(--red)}
+
+/* ── NOTICE ── */
+.notice{
+  color:var(--text3);
+  font-size:13px;
+  line-height:1.7;
+}
+.notice code{
+  font-family:'DM Mono',monospace;
+  color:var(--gold-light);
+  background:rgba(201,146,42,0.08);
+  padding:1px 5px;
+  border-radius:4px;
+}
+
+/* ── LOADING ── */
+.loading{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:60px 24px;
+  color:var(--text3);
+  font-size:13px;
+}
+.spinner{
+  width:18px;height:18px;
+  border:2px solid var(--border2);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--surface4);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--surface3)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){.kpi-row{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){
-  .kpi-row{grid-template-columns:1fr 1fr}
-  .search-grid{grid-template-columns:1fr 1fr}
-  .header{flex-direction:column;align-items:flex-start;padding:12px 16px}
+  .header{grid-template-columns:auto 1fr;gap:12px;padding:0 16px;height:auto;padding-top:10px;padding-bottom:10px}
+  .nav{grid-column:1/-1;overflow-x:auto;padding-bottom:2px}
+  .header-right{display:none}
   .main{padding:16px}
 }
 @media(max-width:600px){
-  .kpi-row,.search-grid{grid-template-columns:1fr}
+  .kpi-row{grid-template-columns:1fr 1fr}
   .grid{grid-template-columns:1fr}
+  .filter-row{flex-direction:column}
+  .field-group{min-width:unset}
 }
+@media(max-width:400px){.kpi-row{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body>
 <header class="header">
   <div class="logo">
-    <span class="logo-flag">PH</span>
-    <div>
-      <div class="logo-text">PH Congress Database</div>
-      <div class="logo-sub">District Representatives + Partylist System</div>
+    <div class="logo-badge">PH</div>
+    <div class="logo-info">
+      <div class="logo-name">Congress Database</div>
+      <div class="logo-sub">House of Representatives · Partylist System</div>
     </div>
   </div>
 
   <nav class="nav">
-    <button class="nav-btn active" onclick="showModule('reps')">🏛️ House Reps</button>
-    <button class="nav-btn" onclick="showModule('districts')">🗺️ Districts</button>
-    <button class="nav-btn" onclick="showModule('dynasties')">👑 Dynasties</button>
-    <button class="nav-btn" onclick="showModule('partylists')">🧾 Partylists</button>
-    <button class="nav-btn" onclick="showModule('partyNotes')">⚠️ Partylist Notes</button>
+    <button class="nav-btn active" onclick="showModule('reps')"><span class="nav-icon">🏛️</span> Representatives</button>
+    <button class="nav-btn" onclick="showModule('districts')"><span class="nav-icon">🗺️</span> Districts</button>
+    <button class="nav-btn" onclick="showModule('dynasties')"><span class="nav-icon">👑</span> Dynasties</button>
+    <button class="nav-btn" onclick="showModule('partylists')"><span class="nav-icon">🧾</span> Partylists</button>
+    <button class="nav-btn" onclick="showModule('partyNotes')"><span class="nav-icon">⚠️</span> PL Notes</button>
   </nav>
+
+  <div class="header-right">
+    <span class="data-badge" id="headerBadge">Loading…</span>
+  </div>
 </header>
 
 <main class="main">
   <div class="kpi-row" id="kpis"></div>
-  <div id="content" class="loading">Loading database...</div>
+  <div id="content"><div class="loading"><div class="spinner"></div> Loading database…</div></div>
 </main>
+
+<!-- REP MODAL -->
+<div class="modal-overlay" id="repModal" onclick="closeModal(event)">
+  <div class="modal" id="repModalInner">
+    <div class="modal-close">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span id="modalTitleIcon" style="font-size:16px">🏛️</span>
+        <span id="modalTitle" style="font-family:'Fraunces',Georgia,serif;font-size:14px;font-weight:600;color:var(--text2)">Representative Profile</span>
+      </div>
+      <button class="modal-close-btn" onclick="$('repModal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
 
 <script>
 const PATHS = {
@@ -369,646 +879,374 @@ const PATHS = {
   partylist: "data/partylist.csv"
 };
 
-let DB = {
-  terms: [],
-  reps: [],
-  districts: [],
-  overview: [],
-  partylists: [],
-  partylistNotes: []
-};
+let DB = { terms:[], reps:[], districts:[], overview:[], partylists:[], partylistNotes:[] };
 
 const $ = id => document.getElementById(id);
 
-function clean(v){
-  return String(v ?? "").replace(/\uFEFF/g,"").replace(/\s+/g," ").trim();
-}
+function clean(v){ return String(v ?? "").replace(/\uFEFF/g,"").replace(/\s+/g," ").trim(); }
+function esc(v){ return String(v ?? "").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function slug(v){ return clean(v).toLowerCase().replace(/["']/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,""); }
+function num(v){ const n=Number(String(v??"").replace(/,/g,"").trim()); return Number.isFinite(n)?n:0; }
+function getSurname(name){ const n=clean(name); if(!n)return ""; if(n.includes(","))return clean(n.split(",")[0]); const p=n.split(" "); return p[p.length-1]||n; }
 
-function esc(v){
-  return String(v ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
-  }[c]));
-}
-
-function slug(v){
-  return clean(v)
-    .toLowerCase()
-    .replace(/["']/g,"")
-    .replace(/[^a-z0-9]+/g,"-")
-    .replace(/^-+|-+$/g,"");
-}
-
-function num(v){
-  const n = Number(String(v ?? "").replace(/,/g,"").trim());
-  return Number.isFinite(n) ? n : 0;
-}
-
-function getSurname(name){
+function getInitials(name){
   const n = clean(name);
-  if(!n) return "";
-  if(n.includes(",")) return clean(n.split(",")[0]);
-  const parts = n.split(" ");
-  return parts[parts.length - 1] || n;
+  if(!n) return "?";
+  const parts = n.replace(/,.*$/,"").split(" ").filter(Boolean);
+  if(parts.length >= 2) return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
+  return parts[0]?.[0]?.toUpperCase() || "?";
+}
+
+const COLOR_PALETTES = [
+  ['#1A3A5C','#4A9EE0'],['#1A3C28','#3BAA72'],['#3A2A10','#C9922A'],
+  ['#2A1A3C','#9B72CF'],['#3C1A1A','#D95555'],['#1A2E3C','#4AAED0'],
+  ['#2A3C1A','#72C94A'],['#3C2A1A','#E09030']
+];
+function getColorPair(name){
+  let h = 0;
+  for(let i=0;i<name.length;i++) h = ((h<<5)-h) + name.charCodeAt(i);
+  return COLOR_PALETTES[Math.abs(h) % COLOR_PALETTES.length];
 }
 
 function parseCSV(text){
-  const rows = [];
-  let row = [];
-  let cell = "";
-  let quoted = false;
-
-  for(let i = 0; i < text.length; i++){
-    const char = text[i];
-    const next = text[i + 1];
-
-    if(char === '"' && quoted && next === '"'){
-      cell += '"';
-      i++;
-    } else if(char === '"'){
-      quoted = !quoted;
-    } else if(char === "," && !quoted){
+  const rows=[]; let row=[],cell="",quoted=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i],n=text[i+1];
+    if(c==='"'&&quoted&&n==='"'){cell+='"';i++;}
+    else if(c==='"'){quoted=!quoted;}
+    else if(c===','&&!quoted){row.push(cell);cell="";}
+    else if((c==='\n'||c==='\r')&&!quoted){
+      if(c==='\r'&&n==='\n')i++;
       row.push(cell);
-      cell = "";
-    } else if((char === "\n" || char === "\r") && !quoted){
-      if(char === "\r" && next === "\n") i++;
-      row.push(cell);
-      if(row.some(x => clean(x))) rows.push(row);
-      row = [];
-      cell = "";
-    } else {
-      cell += char;
-    }
+      if(row.some(x=>clean(x)))rows.push(row);
+      row=[];cell="";
+    } else { cell+=c; }
   }
-
-  row.push(cell);
-  if(row.some(x => clean(x))) rows.push(row);
-
-  if(!rows.length) return [];
-
-  const headers = rows[0].map(h => clean(h));
-
-  return rows.slice(1).map(r => {
-    const obj = {};
-    headers.forEach((h, i) => obj[h] = r[i] ?? "");
-    return obj;
-  });
+  row.push(cell); if(row.some(x=>clean(x)))rows.push(row);
+  if(!rows.length)return [];
+  const headers=rows[0].map(h=>clean(h));
+  return rows.slice(1).map(r=>{const o={};headers.forEach((h,i)=>o[h]=r[i]??"");return o;});
 }
 
-async function fetchRequired(path){
-  const res = await fetch(path + "?v=" + Date.now());
-  if(!res.ok) throw new Error("Could not load " + path);
-  return await res.text();
-}
+async function fetchRequired(path){ const r=await fetch(path+"?v="+Date.now()); if(!r.ok)throw new Error("Could not load "+path); return await r.text(); }
+async function fetchOptional(path){ try{ const r=await fetch(path+"?v="+Date.now()); if(!r.ok)return ""; return await r.text(); }catch(e){return "";} }
 
-async function fetchOptional(path){
-  try{
-    const res = await fetch(path + "?v=" + Date.now());
-    if(!res.ok) return "";
-    return await res.text();
-  }catch(e){
-    return "";
-  }
-}
-
-function congressNumber(congress){
-  return parseInt(String(congress).match(/\d+/)?.[0] || "0", 10);
-}
-
-function normalizeCongressName(name){
-  const n = clean(name);
-  const match = n.match(/(\d+)(st|nd|rd|th)?\s*congress/i);
-  if(!match) return n;
-  return `${match[1]}${match[2] || "th"} Congress`;
-}
-
-function congressToElectionYear(congress){
-  const n = congressNumber(congress);
-  const map = {
-    20:2025,
-    19:2022,
-    18:2019,
-    17:2016,
-    16:2013,
-    15:2010,
-    14:2007,
-    13:2004,
-    12:2001,
-    11:1998,
-    10:1995,
-    9:1992,
-    8:1987
-  };
-  return map[n] || "";
-}
-
-function splitNames(cell){
-  const text = clean(cell);
-  if(!text) return [];
-  if(/^(n\/a|na|none|null|vacant|-|—)$/i.test(text)) return [];
-
-  return text
-    .split(/\s*;\s*/)
-    .map(x => clean(x))
-    .filter(Boolean)
-    .filter(x => !/^(n\/a|na|none|null|vacant|-|—)$/i.test(x));
-}
-
-function parseProvinceFromDistrict(district){
-  const d = clean(district);
-  return d.includes(",") ? clean(d.split(",")[0]) : d;
-}
+function congressNumber(congress){ return parseInt(String(congress).match(/\d+/)?.[0]||"0",10); }
+function normalizeCongressName(name){ const n=clean(name); const m=n.match(/(\d+)(st|nd|rd|th)?\s*congress/i); if(!m)return n; return `${m[1]}${m[2]||"th"} Congress`; }
+function congressToElectionYear(congress){ const n=congressNumber(congress); const map={20:2025,19:2022,18:2019,17:2016,16:2013,15:2010,14:2007,13:2004,12:2001,11:1998,10:1995,9:1992,8:1987}; return map[n]||""; }
+function splitNames(cell){ const t=clean(cell); if(!t)return []; if(/^(n\/a|na|none|null|vacant|-|—)$/i.test(t))return []; return t.split(/\s*;\s*/).map(x=>clean(x)).filter(Boolean).filter(x=>!/^(n\/a|na|none|null|vacant|-|—)$/i.test(x)); }
+function parseProvinceFromDistrict(district){ const d=clean(district); return d.includes(",")?clean(d.split(",")[0]):d; }
 
 function convertWideDistrictCSV(rows){
-  if(!rows.length) return [];
-
-  const keys = Object.keys(rows[0]);
-
-  const districtKey =
-    keys.find(k => clean(k).toLowerCase() === "district") ||
-    keys.find(k => /district/i.test(k)) ||
-    keys[1];
-
-  const congressKeys = keys.filter(k => /congress/i.test(k));
-
-  const regionKey =
-    keys.find(k => k !== districtKey && !/congress/i.test(k)) ||
-    keys[0];
-
-  const terms = [];
-
-  rows.forEach(row => {
-    const region = clean(row[regionKey]);
-    const district = clean(row[districtKey]);
-    const province = parseProvinceFromDistrict(district);
-
-    if(!region || !district) return;
-
-    congressKeys.forEach(cKey => {
-      const congress = normalizeCongressName(cKey);
-      const names = splitNames(row[cKey]);
-
-      names.forEach(name => {
-        terms.push({
-          rep_id: slug(name),
-          full_name: name,
-          surname: getSurname(name),
-          region,
-          province,
-          district,
-          district_id: slug(region + "-" + district),
-          congress,
-          congress_no: congressNumber(congress),
-          election_year: congressToElectionYear(congress),
-          seat_type: "District"
-        });
+  if(!rows.length)return [];
+  const keys=Object.keys(rows[0]);
+  const districtKey=keys.find(k=>clean(k).toLowerCase()==="district")||keys.find(k=>/district/i.test(k))||keys[1];
+  const congressKeys=keys.filter(k=>/congress/i.test(k));
+  const regionKey=keys.find(k=>k!==districtKey&&!/congress/i.test(k))||keys[0];
+  const terms=[];
+  rows.forEach(row=>{
+    const region=clean(row[regionKey]),district=clean(row[districtKey]),province=parseProvinceFromDistrict(district);
+    if(!region||!district)return;
+    congressKeys.forEach(cKey=>{
+      const congress=normalizeCongressName(cKey);
+      splitNames(row[cKey]).forEach(name=>{
+        terms.push({ rep_id:slug(name),full_name:name,surname:getSurname(name),region,province,district,district_id:slug(region+"-"+district),congress,congress_no:congressNumber(congress),election_year:congressToElectionYear(congress),seat_type:"District" });
       });
     });
   });
-
   return terms;
 }
 
 function buildReps(terms){
-  const map = new Map();
-
-  terms.forEach(t => {
-    if(!map.has(t.rep_id)){
-      map.set(t.rep_id, {
-        rep_id:t.rep_id,
-        full_name:t.full_name,
-        surname:t.surname,
-        terms:[]
-      });
-    }
-
-    map.get(t.rep_id).terms.push(t);
-  });
-
-  return Array.from(map.values()).map(rep => {
-    rep.terms.sort((a,b) => b.congress_no - a.congress_no);
-    return rep;
-  });
+  const map=new Map();
+  terms.forEach(t=>{ if(!map.has(t.rep_id))map.set(t.rep_id,{rep_id:t.rep_id,full_name:t.full_name,surname:t.surname,terms:[]}); map.get(t.rep_id).terms.push(t); });
+  return Array.from(map.values()).map(r=>{ r.terms.sort((a,b)=>b.congress_no-a.congress_no); return r; });
 }
 
 function buildDistricts(terms){
-  const map = new Map();
-
-  terms.forEach(t => {
-    if(!map.has(t.district_id)){
-      map.set(t.district_id, {
-        district_id:t.district_id,
-        region:t.region,
-        province:t.province,
-        district:t.district,
-        terms:[]
-      });
-    }
-
-    map.get(t.district_id).terms.push(t);
-  });
-
-  return Array.from(map.values()).map(d => {
-    d.terms.sort((a,b) => b.congress_no - a.congress_no);
-    return d;
-  });
+  const map=new Map();
+  terms.forEach(t=>{ if(!map.has(t.district_id))map.set(t.district_id,{district_id:t.district_id,region:t.region,province:t.province,district:t.district,terms:[]}); map.get(t.district_id).terms.push(t); });
+  return Array.from(map.values()).map(d=>{ d.terms.sort((a,b)=>b.congress_no-a.congress_no); return d; });
 }
 
-function getRowValue(row, possibleNames){
-  const keys = Object.keys(row);
-
-  for(const name of possibleNames){
-    const found = keys.find(k => clean(k).toLowerCase() === clean(name).toLowerCase());
-    if(found && clean(row[found])) return clean(row[found]);
-  }
-
-  return "";
-}
+function getRowValue(row,names){ const keys=Object.keys(row); for(const n of names){ const f=keys.find(k=>clean(k).toLowerCase()===clean(n).toLowerCase()); if(f&&clean(row[f]))return clean(row[f]); } return ""; }
 
 function buildPartylistData(rows){
-  if(!rows.length) return { partylists: [], notes: [] };
-
-  const map = new Map();
-  const notes = [];
-
-  rows.forEach(row => {
-    const name =
-      getRowValue(row, ["partylist_name","main_name","name","partylist"]) ||
-      "";
-
-    const id =
-      getRowValue(row, ["partylist_id","id"]) ||
-      slug(name);
-
-    if(!id) return;
-
-    if(!map.has(id)){
-      map.set(id, {
-        partylist_id:id,
-        name:name || id,
-        aliases:new Set(),
-        results:[],
-        representatives:[],
-        notes:[]
-      });
-    }
-
-    const p = map.get(id);
-
-    const alias = getRowValue(row, ["alias","aka","also_known_as","name_variation"]);
-    if(alias) p.aliases.add(alias);
-
-    const congress = getRowValue(row, ["congress"]);
-    const electionYear = getRowValue(row, ["election_year","year"]);
-    const seats = num(getRowValue(row, ["seats_won","seats","latest_seats"]));
-
-    if(congress || electionYear || seats){
-      p.results.push({
-        congress,
-        election_year:electionYear,
-        seats_won:seats,
-        status:getRowValue(row, ["status"]),
-        general_notes:getRowValue(row, ["general_notes","notes","remarks"])
-      });
-    }
-
-    const repName = getRowValue(row, ["representative_name","nominee_name","representative","nominee"]);
-    if(repName){
-      p.representatives.push({
-        congress,
-        election_year:electionYear,
-        seat_no:getRowValue(row, ["seat_no","seat_number","nominee_no"]),
-        representative_name:repName
-      });
-    }
-
-    const noteType = getRowValue(row, ["note_type","type","category"]);
-    const noteTitle = getRowValue(row, ["note_title","title"]);
-    const noteDesc = getRowValue(row, ["note_description","description","details"]);
-
-    if(noteType || noteTitle || noteDesc){
-      const note = {
-        partylist_id:id,
-        partylist_name:name || id,
-        date:getRowValue(row, ["date","note_date"]),
-        type:noteType,
-        title:noteTitle,
-        description:noteDesc
-      };
-
-      p.notes.push(note);
-      notes.push(note);
-    }
+  if(!rows.length)return {partylists:[],notes:[]};
+  const map=new Map(),notes=[];
+  rows.forEach(row=>{
+    const name=getRowValue(row,["partylist_name","main_name","name","partylist"])||"";
+    const id=getRowValue(row,["partylist_id","id"])||slug(name);
+    if(!id)return;
+    if(!map.has(id))map.set(id,{partylist_id:id,name:name||id,aliases:new Set(),results:[],representatives:[],notes:[]});
+    const p=map.get(id);
+    const alias=getRowValue(row,["alias","aka","also_known_as","name_variation"]);
+    if(alias)p.aliases.add(alias);
+    const congress=getRowValue(row,["congress"]),electionYear=getRowValue(row,["election_year","year"]),seats=num(getRowValue(row,["seats_won","seats","latest_seats"]));
+    if(congress||electionYear||seats)p.results.push({congress,election_year:electionYear,seats_won:seats,status:getRowValue(row,["status"]),general_notes:getRowValue(row,["general_notes","notes","remarks"])});
+    const repName=getRowValue(row,["representative_name","nominee_name","representative","nominee"]);
+    if(repName)p.representatives.push({congress,election_year:electionYear,seat_no:getRowValue(row,["seat_no","seat_number","nominee_no"]),representative_name:repName});
+    const noteType=getRowValue(row,["note_type","type","category"]),noteTitle=getRowValue(row,["note_title","title"]),noteDesc=getRowValue(row,["note_description","description","details"]);
+    if(noteType||noteTitle||noteDesc){ const note={partylist_id:id,partylist_name:name||id,date:getRowValue(row,["date","note_date"]),type:noteType,title:noteTitle,description:noteDesc}; p.notes.push(note);notes.push(note); }
   });
-
-  const partylists = Array.from(map.values()).map(p => {
-    p.aliases = Array.from(p.aliases);
-    p.total_seat_terms = p.results.reduce((s,r) => s + num(r.seats_won), 0);
-    p.latest_result = p.results.slice().sort((a,b) => num(b.election_year) - num(a.election_year))[0] || null;
-    p.has_adverse_note = p.notes.some(n =>
-      /legal|case|cancel|disqual|registration|adverse|flag/i.test(`${n.type} ${n.title} ${n.description}`)
-    );
-    return p;
-  });
-
-  return { partylists, notes };
+  const partylists=Array.from(map.values()).map(p=>{ p.aliases=Array.from(p.aliases); p.total_seat_terms=p.results.reduce((s,r)=>s+num(r.seats_won),0); p.latest_result=p.results.slice().sort((a,b)=>num(b.election_year)-num(a.election_year))[0]||null; p.has_adverse_note=p.notes.some(n=>/legal|case|cancel|disqual|registration|adverse|flag/i.test(`${n.type} ${n.title} ${n.description}`)); return p; });
+  return {partylists,notes};
 }
 
-function allCongresses(){
-  const set = new Set();
-
-  DB.terms.forEach(t => {
-    if(t.congress) set.add(t.congress);
-  });
-
-  DB.partylists.forEach(p => {
-    p.results.forEach(r => {
-      if(r.congress) set.add(r.congress);
-    });
-  });
-
-  return Array.from(set).sort((a,b) => congressNumber(a) - congressNumber(b));
-}
-
-function latestCongress(){
-  const list = allCongresses();
-  return list[list.length - 1] || "";
-}
-
-function latestElectionYear(){
-  const years = [
-    ...DB.terms.map(t => num(t.election_year)),
-    ...DB.partylists.flatMap(p => p.results.map(r => num(r.election_year)))
-  ].filter(Boolean);
-
-  return years.length ? Math.max(...years) : "";
-}
+function allCongresses(){ const s=new Set(); DB.terms.forEach(t=>{if(t.congress)s.add(t.congress);}); DB.partylists.forEach(p=>{p.results.forEach(r=>{if(r.congress)s.add(r.congress);}); }); return Array.from(s).sort((a,b)=>congressNumber(a)-congressNumber(b)); }
+function latestCongress(){ const l=allCongresses(); return l[l.length-1]||""; }
+function latestElectionYear(){ const years=[...DB.terms.map(t=>num(t.election_year)),...DB.partylists.flatMap(p=>p.results.map(r=>num(r.election_year)))].filter(Boolean); return years.length?Math.max(...years):""; }
 
 function setKpis(items){
-  $("kpis").innerHTML = items.map(k => `
+  $("kpis").innerHTML=items.map(k=>`
     <div class="kpi" style="--accent:${k.accent}">
+      <div class="kpi-accent-bar"></div>
       <div class="kpi-label">${esc(k.label)}</div>
       <div class="kpi-value">${esc(k.value)}</div>
       <div class="kpi-sub">${esc(k.sub)}</div>
-      ${k.bar != null ? `
-        <div class="kpi-bar">
-          <div class="kpi-bar-fill" style="width:${k.bar}%;background:${k.accent}"></div>
-        </div>
-      ` : ""}
+      ${k.bar!=null?`<div class="kpi-bar"><div class="kpi-bar-fill" style="width:${k.bar}%"></div></div>`:""}
     </div>
   `).join("");
 }
 
 function activateNav(module){
-  document.querySelectorAll(".nav-btn").forEach(btn => {
-    btn.classList.remove("active");
-  });
-
-  const order = ["reps","districts","dynasties","partylists","partyNotes"];
-  const index = order.indexOf(module);
-
-  if(index >= 0){
-    document.querySelectorAll(".nav-btn")[index].classList.add("active");
-  }
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+  const order=["reps","districts","dynasties","partylists","partyNotes"];
+  const i=order.indexOf(module);
+  if(i>=0) document.querySelectorAll(".nav-btn")[i].classList.add("active");
 }
 
 function showModule(module){
   activateNav(module);
-
-  if(module === "reps") renderReps();
-  if(module === "districts") renderDistricts();
-  if(module === "dynasties") renderDynasties();
-  if(module === "partylists") renderPartylists();
-  if(module === "partyNotes") renderPartyNotes();
+  if(module==="reps") renderReps();
+  if(module==="districts") renderDistricts();
+  if(module==="dynasties") renderDynasties();
+  if(module==="partylists") renderPartylists();
+  if(module==="partyNotes") renderPartyNotes();
 }
 
-function getTopSurname(){
-  const freq = {};
-
-  DB.terms.forEach(t => {
-    if(t.surname) freq[t.surname] = (freq[t.surname] || 0) + 1;
-  });
-
-  return Object.entries(freq).sort((a,b) => b[1] - a[1])[0] || ["—",0];
+/* ── DYNASTY HELPERS ── */
+function getSurnameMap(){
+  const m={};
+  DB.terms.forEach(t=>{ if(!t.surname)return; if(!m[t.surname])m[t.surname]=[]; m[t.surname].push(t); });
+  return m;
+}
+function getDynastyStats(){
+  const sm=getSurnameMap();
+  const recurring=Object.entries(sm).filter(([s,t])=>t.length>=2).sort((a,b)=>b[1].length-a[1].length);
+  // unique rep IDs in dynasty surnames
+  const dynastyRepIds=new Set();
+  recurring.forEach(([s,t])=>t.forEach(term=>dynastyRepIds.add(term.rep_id)));
+  // unique districts touched by dynasty reps
+  const dynastyDistricts=new Set();
+  recurring.forEach(([s,t])=>t.forEach(term=>dynastyDistricts.add(term.district_id)));
+  // largest dynasty district = district with most dynasty-related terms
+  const districtCount={};
+  recurring.forEach(([s,t])=>t.forEach(term=>{ districtCount[term.district]=(districtCount[term.district]||0)+1; }));
+  const topDistrict=Object.entries(districtCount).sort((a,b)=>b[1]-a[1])[0]||["—",0];
+  // % of all terms that are dynasty
+  const dynastyTerms=recurring.reduce((s,[,t])=>s+t.length,0);
+  const dynPct=DB.terms.length?Math.round(dynastyTerms/DB.terms.length*100):0;
+  return { recurring, dynastyRepIds, dynastyDistricts, topDistrict, dynastyTerms, dynPct };
 }
 
+/* ── REPS MODULE ── */
 function renderReps(){
-  const latest = latestCongress();
-  const latestTerms = DB.terms.filter(t => t.congress === latest);
-  const topRep = DB.reps.slice().sort((a,b) => b.terms.length - a.terms.length)[0];
-
-  const returning = latestTerms.filter(t =>
-    DB.terms.some(x => x.rep_id === t.rep_id && x.congress !== latest)
-  ).length;
-
-  const retention = latestTerms.length ? Math.round((returning / latestTerms.length) * 100) : 0;
+  const latest=latestCongress();
+  const latestTerms=DB.terms.filter(t=>t.congress===latest);
+  const topRep=DB.reps.slice().sort((a,b)=>b.terms.length-a.terms.length)[0];
+  const maxTerms=topRep?topRep.terms.length:1;
+  const returning=latestTerms.filter(t=>DB.terms.some(x=>x.rep_id===t.rep_id&&x.congress!==latest)).length;
+  const retention=latestTerms.length?Math.round(returning/latestTerms.length*100):0;
+  const multiTerm=DB.reps.filter(r=>r.terms.length>1).length;
 
   setKpis([
-    {
-      label:"Total reps tracked",
-      value:DB.reps.length,
-      sub:"Unique district representatives",
-      accent:"var(--gold)"
-    },
-    {
-      label:"Longest-serving rep",
-      value:topRep ? topRep.surname : "—",
-      sub:`${topRep ? topRep.terms.length : 0} tracked congress appearance(s)`,
-      accent:"var(--blue)",
-      bar:Math.min((topRep ? topRep.terms.length : 0) * 10,100)
-    },
-    {
-      label:"Returning latest reps",
-      value:returning,
-      sub:`Returned in ${latest || "latest congress"}`,
-      accent:"var(--green)",
-      bar:retention
-    },
-    {
-      label:"Latest retention rate",
-      value:retention + "%",
-      sub:"Latest reps with prior tracked terms",
-      accent:"var(--purple)",
-      bar:retention
-    }
+    {label:"Unique Representatives",value:DB.reps.length.toLocaleString(),sub:`Across all tracked congresses`,accent:"var(--gold)"},
+    {label:"Longest-Serving Rep",value:topRep?topRep.surname:"—",sub:`${topRep?topRep.terms.length:0} congress appearances`,accent:"var(--blue)",bar:Math.round((topRep?topRep.terms.length:0)/maxTerms*100)},
+    {label:"Multi-Term Reps",value:multiTerm.toLocaleString(),sub:`${DB.reps.length?Math.round(multiTerm/DB.reps.length*100):0}% of all tracked reps`,accent:"var(--green)",bar:DB.reps.length?Math.round(multiTerm/DB.reps.length*100):0},
+    {label:"Retention Rate",value:retention+"%",sub:`Reps returning in ${latest||"latest"}`,accent:"var(--purple)",bar:retention}
   ]);
 
-  $("content").innerHTML = `
+  $("content").innerHTML=`
     <div class="panel">
-      <div class="panel-title">🔍 Search & Filter House Representatives</div>
-
-      <div class="search-grid">
-        <div class="field-group">
+      <div class="panel-header">
+        <div class="panel-title">🔍 Search Representatives</div>
+      </div>
+      <div class="filter-row">
+        <div class="field-group wide">
           <label class="field-label">Search Name / District / Region</label>
-          <input class="search-input" id="repQ" oninput="drawRepCards()" placeholder="e.g. Marcos, Leyte, Manila">
+          <input class="search-input" id="repQ" oninput="drawRepCards()" placeholder="e.g. Marcos, Leyte, Ilocos…">
         </div>
-
         <div class="field-group">
           <label class="field-label">Congress</label>
           <select class="search-select" id="repC" onchange="drawRepCards()">
             <option value="">All Congresses</option>
-            ${allCongresses().map(c => `<option>${esc(c)}</option>`).join("")}
+            ${allCongresses().map(c=>`<option>${esc(c)}</option>`).join("")}
           </select>
         </div>
-
         <div class="field-group">
           <label class="field-label">Filter</label>
           <select class="search-select" id="repF" onchange="drawRepCards()">
-            <option value="">All</option>
-            <option value="returning">Returning Latest Reps</option>
-            <option value="multi">Multi-Term Reps</option>
+            <option value="">All Representatives</option>
+            <option value="returning">Returning / Multi-Term</option>
+            <option value="single">Single-Term Only</option>
+            <option value="latest">Latest Congress Only</option>
           </select>
         </div>
-
-        <div class="field-group">
-          <label class="field-label">&nbsp;</label>
-          <button class="btn" onclick="document.getElementById('repQ').value='';document.getElementById('repC').value='';document.getElementById('repF').value='';drawRepCards()">✕ Clear</button>
-        </div>
+        <button class="btn" onclick="$('repQ').value='';$('repC').value='';$('repF').value='';drawRepCards()">✕ Clear</button>
       </div>
     </div>
-
     <div id="repCards"></div>
   `;
-
   drawRepCards();
 }
 
 function drawRepCards(){
-  const q = clean($("repQ") ? $("repQ").value : "").toLowerCase();
-  const c = $("repC") ? $("repC").value : "";
-  const f = $("repF") ? $("repF").value : "";
-  const latest = latestCongress();
+  const q=clean($("repQ")?$("repQ").value:"").toLowerCase();
+  const c=$("repC")?$("repC").value:"";
+  const f=$("repF")?$("repF").value:"";
+  const latest=latestCongress();
 
-  const rows = DB.reps.filter(rep => {
-    const text = `${rep.full_name} ${rep.surname} ${rep.terms.map(t => `${t.region} ${t.province} ${t.district} ${t.congress}`).join(" ")}`.toLowerCase();
-
-    const hasCongress = !c || rep.terms.some(t => t.congress === c);
-    const isReturning = rep.terms.some(t => t.congress === latest) && rep.terms.some(t => t.congress !== latest);
-    const isMulti = rep.terms.length > 1;
-
-    return (!q || text.includes(q)) &&
-      hasCongress &&
-      (!f || (f === "returning" && isReturning) || (f === "multi" && isMulti));
+  const rows=DB.reps.filter(rep=>{
+    const text=`${rep.full_name} ${rep.surname} ${rep.terms.map(t=>`${t.region} ${t.province} ${t.district} ${t.congress}`).join(" ")}`.toLowerCase();
+    const hasCongress=!c||rep.terms.some(t=>t.congress===c);
+    const isReturning=rep.terms.some(t=>t.congress===latest)&&rep.terms.some(t=>t.congress!==latest);
+    const isSingle=rep.terms.length===1;
+    const isLatest=rep.terms.some(t=>t.congress===latest);
+    return (!q||text.includes(q))&&hasCongress&&
+      (!f||(f==="returning"&&isReturning)||(f==="single"&&isSingle)||(f==="latest"&&isLatest));
   });
 
-  $("repCards").innerHTML = `
-    <div class="results-count">Showing <span>${rows.length}</span> representatives</div>
-
+  $("repCards").innerHTML=`
+    <div class="results-bar">
+      <div class="results-count">Showing <strong>${rows.length.toLocaleString()}</strong> of ${DB.reps.length.toLocaleString()} representatives</div>
+    </div>
     <div class="grid">
-      ${rows.map(rep => {
-        const first = rep.terms.slice().sort((a,b) => a.congress_no - b.congress_no)[0];
-        const latestTerm = rep.terms[0];
-
-        return `
-          <div class="card">
-            <div class="card-name">${esc(rep.full_name)}</div>
-            <div class="card-sub">${esc(latestTerm ? latestTerm.district : "")}</div>
-
-            <div class="tags">
-              <span class="tag tag-blue">${esc(latestTerm ? latestTerm.region : "—")}</span>
-              ${rep.terms.length > 1 ? `<span class="tag tag-gold">Returning / Multi-Term</span>` : ""}
-            </div>
-
-            <div class="stats">
-              <div>
-                <div class="stat-val">${rep.terms.length}</div>
-                <div class="stat-lbl">Terms</div>
-              </div>
-
-              <div style="flex:1;font-size:11px;color:var(--text3)">
-                First: ${esc(first ? first.congress : "—")}<br>
-                Latest: ${esc(latestTerm ? latestTerm.congress : "—")}
-              </div>
-            </div>
+      ${rows.map(rep=>{
+        const first=rep.terms.slice().sort((a,b)=>a.congress_no-b.congress_no)[0];
+        const lt=rep.terms[0];
+        const initials=getInitials(rep.full_name);
+        const [bg,fg]=getColorPair(rep.surname||rep.full_name);
+        const isMulti=rep.terms.length>1;
+        return `<div class="card" onclick="openRepModal('${esc(rep.rep_id)}')">
+          <div class="card-initials" style="background:${bg};color:${fg}">${initials}</div>
+          <div class="card-name">${esc(rep.full_name)}</div>
+          <div class="card-district">${esc(lt?lt.district:"—")}</div>
+          <div class="tags">
+            <span class="tag tag-blue">${esc(lt?lt.region:"—")}</span>
+            ${isMulti?`<span class="tag tag-gold">⟳ Multi-Term</span>`:""}
           </div>
-        `;
+          <div class="card-stats">
+            <div class="cs-item"><div class="cs-val">${rep.terms.length}</div><div class="cs-lbl">Terms</div></div>
+            <div class="cs-item"><div class="cs-val">${esc(first?first.congress.replace(" Congress",""):"—")}</div><div class="cs-lbl">First</div></div>
+            <div class="cs-item"><div class="cs-val">${esc(lt?lt.congress.replace(" Congress",""):"—")}</div><div class="cs-lbl">Latest</div></div>
+          </div>
+        </div>`;
       }).join("")}
     </div>
   `;
 }
 
-function renderDistricts(){
-  const latest = latestCongress();
+function openRepModal(repId){
+  const rep=DB.reps.find(r=>r.rep_id===repId);
+  if(!rep)return;
+  const [bg,fg]=getColorPair(rep.surname||rep.full_name);
+  const initials=getInitials(rep.full_name);
+  const lt=rep.terms[0];
+  const first=rep.terms.slice().sort((a,b)=>a.congress_no-b.congress_no)[0];
+  const regions=[...new Set(rep.terms.map(t=>t.region))];
+  const provinces=[...new Set(rep.terms.map(t=>t.province))];
+  const latest=latestCongress();
+  const isLatest=rep.terms.some(t=>t.congress===latest);
 
-  const stable = DB.districts.filter(d => {
-    const reps = new Set(d.terms.map(t => t.rep_id));
-    return reps.size === 1 && d.terms.length > 1;
-  }).length;
-
-  const latestDistricts = DB.districts.filter(d =>
-    d.terms.some(t => t.congress === latest)
-  );
-
-  const changed = latestDistricts.filter(d => {
-    const latestTerm = d.terms.find(t => t.congress === latest);
-    return d.terms.some(t => t.congress !== latest && t.rep_id !== (latestTerm ? latestTerm.rep_id : ""));
-  }).length;
-
-  const turnover = latestDistricts.length ? Math.round((changed / latestDistricts.length) * 100) : 0;
-  const topSurname = getTopSurname();
-
-  setKpis([
-    {
-      label:"Districts tracked",
-      value:DB.districts.length,
-      sub:"Unique district records",
-      accent:"var(--gold)"
-    },
-    {
-      label:"Stable districts",
-      value:stable,
-      sub:"Same rep across multiple congresses",
-      accent:"var(--green)",
-      bar:DB.districts.length ? Math.round(stable / DB.districts.length * 100) : 0
-    },
-    {
-      label:"Latest turnover rate",
-      value:turnover + "%",
-      sub:`Changed holder in ${latest || "latest congress"}`,
-      accent:"var(--red)",
-      bar:turnover
-    },
-    {
-      label:"Most repeated surname",
-      value:topSurname[0],
-      sub:`Appears ${topSurname[1]} time(s)`,
-      accent:"var(--purple)"
-    }
-  ]);
-
-  const congresses = allCongresses().sort((a,b) => congressNumber(b) - congressNumber(a));
-
-  $("content").innerHTML = `
-    <div class="panel">
-      <div class="panel-title">🗺️ District Representative History</div>
+  $("modalTitle").textContent="Representative Profile";
+  $("modalTitleIcon").textContent="🏛️";
+  $("modalBody").innerHTML=`
+    <div class="modal-rep-header">
+      <div class="modal-initials" style="background:${bg};color:${fg}">${initials}</div>
+      <div>
+        <div class="modal-rep-name">${esc(rep.full_name)}</div>
+        <div class="modal-rep-sub">${esc(lt?lt.district:"—")}</div>
+        <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:5px">
+          ${isLatest?`<span class="tag tag-green">✓ Active ${esc(latest)}</span>`:""}
+          ${rep.terms.length>1?`<span class="tag tag-gold">⟳ Multi-Term Rep</span>`:""}
+          ${regions.map(r=>`<span class="tag tag-blue">${esc(r)}</span>`).join("")}
+        </div>
+      </div>
     </div>
 
+    <div class="modal-stat-row">
+      <div class="modal-stat"><div class="modal-stat-val">${rep.terms.length}</div><div class="modal-stat-lbl">Terms Served</div></div>
+      <div class="modal-stat"><div class="modal-stat-val">${esc(first?first.congress_no+"th":"—")}</div><div class="modal-stat-lbl">First Congress</div></div>
+      <div class="modal-stat"><div class="modal-stat-val">${esc(lt?lt.congress_no+"th":"—")}</div><div class="modal-stat-lbl">Latest Congress</div></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Term History</div>
+      ${rep.terms.map(t=>`
+        <div class="term-row">
+          <div class="term-congress">${esc(t.congress)}</div>
+          <div class="term-district">${esc(t.district)}</div>
+          <div class="term-region">${esc(t.region)}</div>
+        </div>
+      `).join("")}
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Areas Represented</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${provinces.map(p=>`<span class="tag tag-blue">${esc(p)}</span>`).join("")}
+      </div>
+    </div>
+  `;
+  $("repModal").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+function closeModal(e){
+  if(e.target.classList.contains("modal-overlay")){
+    $("repModal").classList.remove("open");
+    document.body.style.overflow="";
+  }
+}
+
+/* ── DISTRICTS MODULE ── */
+function renderDistricts(){
+  const latest=latestCongress();
+  const latestDistricts=DB.districts.filter(d=>d.terms.some(t=>t.congress===latest));
+  const stable=DB.districts.filter(d=>{ const reps=new Set(d.terms.map(t=>t.rep_id)); return reps.size===1&&d.terms.length>1; }).length;
+  const changed=latestDistricts.filter(d=>{ const lt=d.terms.find(t=>t.congress===latest); return d.terms.some(t=>t.congress!==latest&&t.rep_id!==(lt?lt.rep_id:"")); }).length;
+  const turnover=latestDistricts.length?Math.round(changed/latestDistricts.length*100):0;
+  const contested=DB.districts.filter(d=>{const reps=new Set(d.terms.map(t=>t.rep_id));return reps.size>2;}).length;
+
+  setKpis([
+    {label:"Districts Tracked",value:DB.districts.length.toLocaleString(),sub:"Unique legislative districts",accent:"var(--gold)"},
+    {label:"Stable Districts",value:stable.toLocaleString(),sub:"Same rep across 2+ congresses",accent:"var(--green)",bar:DB.districts.length?Math.round(stable/DB.districts.length*100):0},
+    {label:"Latest Turnover Rate",value:turnover+"%",sub:`Districts that changed rep in ${latest||"latest"}`,accent:"var(--red)",bar:turnover},
+    {label:"Highly Contested",value:contested.toLocaleString(),sub:"3+ different reps over time",accent:"var(--purple)",bar:DB.districts.length?Math.round(contested/DB.districts.length*100):0}
+  ]);
+
+  const congresses=allCongresses().sort((a,b)=>congressNumber(b)-congressNumber(a));
+
+  $("content").innerHTML=`
+    <div class="panel">
+      <div class="panel-header"><div class="panel-title">🗺️ District Representative History by Congress</div></div>
+    </div>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>Region</th>
-            <th>District</th>
-            ${congresses.map(c => `<th>${esc(c)}</th>`).join("")}
+            <th style="min-width:110px">Region</th>
+            <th style="min-width:200px">District</th>
+            ${congresses.map(c=>`<th style="min-width:130px">${esc(c)}</th>`).join("")}
           </tr>
         </thead>
-
         <tbody>
-          ${DB.districts.map(d => `
+          ${DB.districts.map(d=>`
             <tr>
-              <td>${esc(d.region)}</td>
-              <td>${esc(d.district)}</td>
-              ${congresses.map(c => {
-                const names = d.terms
-                  .filter(t => t.congress === c)
-                  .map(t => t.full_name)
-                  .join("; ");
-
-                return `<td>${esc(names || "—")}</td>`;
-              }).join("")}
+              <td class="td-mono" style="color:var(--text3)">${esc(d.region)}</td>
+              <td class="td-name">${esc(d.district)}</td>
+              ${congresses.map(c=>{ const names=d.terms.filter(t=>t.congress===c).map(t=>t.full_name).join("; "); return `<td class="td-mono">${esc(names||"—")}</td>`; }).join("")}
             </tr>
           `).join("")}
         </tbody>
@@ -1017,209 +1255,166 @@ function renderDistricts(){
   `;
 }
 
+/* ── DYNASTIES MODULE ── */
 function renderDynasties(){
-  const surnameMap = {};
-
-  DB.terms.forEach(t => {
-    if(!t.surname) return;
-    if(!surnameMap[t.surname]) surnameMap[t.surname] = [];
-    surnameMap[t.surname].push(t);
-  });
-
-  const recurring = Object.entries(surnameMap)
-    .filter(([surname, terms]) => terms.length >= 2)
-    .sort((a,b) => b[1].length - a[1].length);
-
-  const top = recurring[0] || ["—", []];
+  const { recurring, dynastyRepIds, dynastyDistricts, topDistrict, dynastyTerms, dynPct } = getDynastyStats();
+  const top=recurring[0]||["—",[]];
+  const maxCount=top[1].length||1;
 
   setKpis([
-    {
-      label:"Recurring surnames",
-      value:recurring.length,
-      sub:"Surnames appearing 2+ times",
-      accent:"var(--gold)"
-    },
-    {
-      label:"Most repeated surname",
-      value:top[0],
-      sub:`${top[1].length || 0} tracked appearance(s)`,
-      accent:"var(--red)",
-      bar:Math.min((top[1].length || 0) * 10,100)
-    },
-    {
-      label:"Possible dynasty signal",
-      value:recurring.length,
-      sub:"Based on repeated surname, not confirmed family relation",
-      accent:"var(--purple)"
-    },
-    {
-      label:"Total surname records",
-      value:DB.terms.length,
-      sub:"District-congress seat entries",
-      accent:"var(--blue)"
-    }
+    {label:"Recurring Surnames",value:recurring.length.toLocaleString(),sub:"Surnames appearing 2+ times (dynasty signal)",accent:"var(--gold)"},
+    {label:"Most Frequent Surname",value:top[0],sub:`${top[1].length} tracked appearances in records`,accent:"var(--red)",bar:100},
+    {label:"Dynasty Terms %",value:dynPct+"%",sub:`${dynastyTerms} of ${DB.terms.length} seat entries linked to recurring surnames`,accent:"var(--amber)",bar:dynPct},
+    {label:"Largest Dynasty District",value:topDistrict[0].length>18?topDistrict[0].substring(0,18)+"…":topDistrict[0],sub:`${topDistrict[1]} seat entries with recurring surnames`,accent:"var(--purple)"}
   ]);
 
-  $("content").innerHTML = `
+  $("content").innerHTML=`
     <div class="panel">
-      <div class="panel-title">👑 Recurring Surnames / Possible Dynasty Signals</div>
-      <div class="notice">
-        This section uses repeated surnames only. It does not automatically prove family relation.
+      <div class="panel-header"><div class="panel-title">👑 Dynasty Analysis — Recurring Surnames</div></div>
+      <div class="notice" style="margin-bottom:0">
+        Surname recurrence is used as a proxy signal. It does not confirm family relation.
+        <strong style="color:var(--text2)">${dynastyRepIds.size}</strong> unique individuals and
+        <strong style="color:var(--text2)">${dynastyDistricts.size}</strong> districts are linked to recurring surnames across all tracked congresses.
       </div>
     </div>
-
     <div class="grid">
-      ${recurring.map(([surname, terms]) => `
-        <div class="card dynasty">
-          <div class="card-name">${esc(surname)}</div>
-          <div class="card-sub">${terms.length} tracked appearance(s)</div>
-
-          ${terms.slice(0,8).map(t => `
-            <div style="padding:9px 11px;background:var(--navy2);border-radius:8px;margin-top:7px">
-              <b style="font-size:13px">${esc(t.full_name)}</b><br>
-              <span style="color:var(--text3);font-size:12px">${esc(t.district)}</span><br>
-              <span style="color:var(--gold-light);font-size:11px">${esc(t.congress)}</span>
+      ${recurring.map(([surname,terms])=>{
+        const districts=[...new Set(terms.map(t=>t.district))];
+        const congresses=[...new Set(terms.map(t=>t.congress))];
+        const reps=[...new Set(terms.map(t=>t.full_name))];
+        return `
+          <div class="card dynasty-card" onclick="openDynastyModal('${esc(surname)}')">
+            <div class="card-crown">👑</div>
+            <div class="card-name">${esc(surname)}</div>
+            <div class="card-district">${reps.length} unique rep${reps.length!==1?'s':''} · ${districts.length} district${districts.length!==1?'s':''}</div>
+            <div class="tags">
+              <span class="tag tag-gold">${terms.length} appearances</span>
+              <span class="tag tag-blue">${congresses.length} congress${congresses.length!==1?'es':''}</span>
             </div>
-          `).join("")}
-        </div>
-      `).join("") || `<div class="error">No recurring surnames found yet.</div>`}
+            <div class="rank-bar"><div class="rank-bar-fill" style="width:${Math.round(terms.length/maxCount*100)}%"></div></div>
+          </div>
+        `;
+      }).join("")||`<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">No recurring surnames found.</div></div>`}
     </div>
   `;
 }
 
+function openDynastyModal(surname){
+  const sm=getSurnameMap();
+  const terms=sm[surname]||[];
+  const reps=[...new Set(terms.map(t=>t.full_name))];
+  const districts=[...new Set(terms.map(t=>t.district))];
+  const congresses=[...new Set(terms.map(t=>t.congress))].sort((a,b)=>congressNumber(a)-congressNumber(b));
+
+  $("modalTitle").textContent="Dynasty Signal";
+  $("modalTitleIcon").textContent="👑";
+  $("modalBody").innerHTML=`
+    <div class="modal-rep-header">
+      <div class="modal-initials" style="background:var(--amber-bg);color:var(--gold-light);font-size:28px">👑</div>
+      <div>
+        <div class="modal-rep-name">${esc(surname)}</div>
+        <div class="modal-rep-sub">Recurring surname · ${terms.length} total appearances</div>
+        <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+          <span class="tag tag-gold">${reps.length} unique reps</span>
+          <span class="tag tag-blue">${districts.length} districts</span>
+          <span class="tag tag-purple">${congresses.length} congresses</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Members / Representatives</div>
+      ${reps.map(name=>{
+        const repTerms=terms.filter(t=>t.full_name===name);
+        return `<div class="dynasty-entry">
+          <div><div class="dynasty-entry-name">${esc(name)}</div><div class="dynasty-entry-meta">${esc(repTerms[0]?.district||"—")}</div></div>
+          <div class="dynasty-entry-congress">${repTerms.map(t=>t.congress).join(", ")}</div>
+        </div>`;
+      }).join("")}
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-label">Districts Held</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        ${districts.map(d=>`<span class="tag tag-blue">${esc(d)}</span>`).join("")}
+      </div>
+    </div>
+  `;
+  $("repModal").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+/* ── PARTYLISTS MODULE ── */
 function renderPartylists(){
   if(!DB.partylists.length){
     setKpis([
-      {
-        label:"Partylists tracked",
-        value:0,
-        sub:"No partylist.csv uploaded yet",
-        accent:"var(--gold)"
-      },
-      {
-        label:"Most consistent",
-        value:"—",
-        sub:"Waiting for partylist data",
-        accent:"var(--green)"
-      },
-      {
-        label:"Latest seat leader",
-        value:"—",
-        sub:"Waiting for partylist data",
-        accent:"var(--blue)"
-      },
-      {
-        label:"With AKA/name variants",
-        value:0,
-        sub:"Waiting for partylist data",
-        accent:"var(--purple)"
-      }
+      {label:"Partylists Tracked",value:"—",sub:"Upload partylist.csv to activate",accent:"var(--gold)"},
+      {label:"Election Cycles",value:"—",sub:"No data yet",accent:"var(--green)"},
+      {label:"Total Seat-Terms",value:"—",sub:"No data yet",accent:"var(--blue)"},
+      {label:"Flagged Partylists",value:"—",sub:"No data yet",accent:"var(--red)"}
     ]);
-
-    $("content").innerHTML = `
+    $("content").innerHTML=`
       <div class="panel">
-        <div class="panel-title">🧾 Partylist Data Not Uploaded Yet</div>
-        <div class="notice">
-          House Reps, Districts, and Dynasties are already working.
-          <br><br>
-          Later, upload your partylist file as:
-          <br>
-          <code>data/partylist.csv</code>
+        <div class="panel-title">🧾 Partylist Data Not Yet Uploaded</div>
+        <div class="notice" style="margin-top:8px">
+          Upload your CSV as <code>data/partylist.csv</code> to enable partylist analytics including seat history, election cycle trends, representative rosters, and name-change tracking.
         </div>
       </div>
     `;
     return;
   }
 
-  const latestYear = latestElectionYear();
-
-  const allResults = DB.partylists.flatMap(p =>
-    p.results.map(r => ({...r, partylist_name:p.name}))
-  );
-
-  const latestResults = allResults.filter(r => num(r.election_year) === num(latestYear));
-  const seatLeader = latestResults.slice().sort((a,b) => num(b.seats_won) - num(a.seats_won))[0];
-  const mostConsistent = DB.partylists.slice().sort((a,b) => b.total_seat_terms - a.total_seat_terms)[0];
-  const withAKA = DB.partylists.filter(p => p.aliases.length > 0).length;
+  const latestYear=latestElectionYear();
+  const allResults=DB.partylists.flatMap(p=>p.results.map(r=>({...r,partylist_name:p.name})));
+  const latestResults=allResults.filter(r=>num(r.election_year)===num(latestYear));
+  const seatLeader=latestResults.slice().sort((a,b)=>num(b.seats_won)-num(a.seats_won))[0];
+  const mostConsistent=DB.partylists.slice().sort((a,b)=>b.total_seat_terms-a.total_seat_terms)[0];
+  const withAKA=DB.partylists.filter(p=>p.aliases.length>0).length;
+  const flagged=DB.partylists.filter(p=>p.has_adverse_note).length;
+  const totalSeats=DB.partylists.reduce((s,p)=>s+p.total_seat_terms,0);
+  const electionCycles=[...new Set(allResults.map(r=>r.election_year).filter(Boolean))].length;
 
   setKpis([
-    {
-      label:"Partylists tracked",
-      value:DB.partylists.length,
-      sub:"Unique partylist IDs",
-      accent:"var(--gold)"
-    },
-    {
-      label:"Most consistent",
-      value:mostConsistent ? mostConsistent.name : "—",
-      sub:`${mostConsistent ? mostConsistent.total_seat_terms : 0} total seat-term(s)`,
-      accent:"var(--green)"
-    },
-    {
-      label:"Latest seat leader",
-      value:seatLeader ? seatLeader.partylist_name : "—",
-      sub:`${seatLeader ? seatLeader.seats_won : 0} seat(s) in ${latestYear}`,
-      accent:"var(--blue)"
-    },
-    {
-      label:"With AKA/name variants",
-      value:withAKA,
-      sub:"Partylists with aliases",
-      accent:"var(--purple)",
-      bar:DB.partylists.length ? Math.round(withAKA / DB.partylists.length * 100) : 0
-    }
+    {label:"Partylists Tracked",value:DB.partylists.length.toLocaleString(),sub:`Across ${electionCycles} election cycle(s)`,accent:"var(--gold)"},
+    {label:"Most Consistent Party",value:mostConsistent?mostConsistent.name:"—",sub:`${mostConsistent?mostConsistent.total_seat_terms:0} total seat-terms won`,accent:"var(--green)"},
+    {label:"Latest Seat Leader",value:seatLeader?seatLeader.partylist_name:"—",sub:`${seatLeader?seatLeader.seats_won:0} seat(s) in ${latestYear}`,accent:"var(--blue)"},
+    {label:"Flagged Partylists",value:flagged.toLocaleString(),sub:`${flagged} with legal/status notes · ${withAKA} with aliases`,accent:"var(--red)",bar:DB.partylists.length?Math.round(flagged/DB.partylists.length*100):0}
   ]);
 
-  $("content").innerHTML = `
+  $("content").innerHTML=`
     <div class="panel">
-      <div class="panel-title">🧾 Search Partylists</div>
-      <div class="search-grid">
-        <div class="field-group">
+      <div class="panel-header"><div class="panel-title">🧾 Search Partylists</div></div>
+      <div class="filter-row">
+        <div class="field-group wide">
           <label class="field-label">Search Partylist / AKA / Representative</label>
-          <input class="search-input" id="plQ" oninput="drawPartylistCards()" placeholder="e.g. Akbayan, Tingog, APEC">
+          <input class="search-input" id="plQ" oninput="drawPartylistCards()" placeholder="e.g. Akbayan, Tingog, APEC…">
         </div>
+        <button class="btn" onclick="$('plQ').value='';drawPartylistCards()">✕ Clear</button>
       </div>
     </div>
-
     <div id="partyCards"></div>
   `;
-
   drawPartylistCards();
 }
 
 function drawPartylistCards(){
-  const q = clean($("plQ") ? $("plQ").value : "").toLowerCase();
-
-  const rows = DB.partylists.filter(p => {
-    const text = `${p.name} ${p.aliases.join(" ")} ${p.representatives.map(r => r.representative_name).join(" ")}`.toLowerCase();
-    return !q || text.includes(q);
-  });
-
-  $("partyCards").innerHTML = `
-    <div class="results-count">Showing <span>${rows.length}</span> partylists</div>
-
+  const q=clean($("plQ")?$("plQ").value:"").toLowerCase();
+  const rows=DB.partylists.filter(p=>{ const t=`${p.name} ${p.aliases.join(" ")} ${p.representatives.map(r=>r.representative_name).join(" ")}`.toLowerCase(); return !q||t.includes(q); });
+  $("partyCards").innerHTML=`
+    <div class="results-bar"><div class="results-count">Showing <strong>${rows.length}</strong> of ${DB.partylists.length} partylists</div></div>
     <div class="grid">
-      ${rows.map(p => `
-        <div class="card ${p.has_adverse_note ? "flagged" : ""}">
-          <div class="card-name">${esc(p.name)}</div>
-          <div class="card-sub">${esc(p.aliases.join(" · ") || p.partylist_id)}</div>
-
+      ${rows.map(p=>`
+        <div class="pl-card ${p.has_adverse_note?"flagged-card":""}" onclick="openPartyModal('${esc(p.partylist_id)}')">
+          ${p.has_adverse_note?`<div class="card-crown">⚠️</div>`:""}
+          <div class="pl-name">${esc(p.name)}</div>
+          <div class="pl-alias">${esc(p.aliases.join(" · ")||p.partylist_id)}</div>
           <div class="tags">
-            <span class="tag tag-green">${esc(p.latest_result ? p.latest_result.seats_won : 0)} latest seat(s)</span>
-            <span class="tag tag-gold">${p.results.length} election record(s)</span>
-            ${p.has_adverse_note ? `<span class="tag tag-red">⚠️ Notes</span>` : ""}
+            <span class="tag tag-green">${num(p.latest_result?.seats_won||0)} latest seat(s)</span>
+            <span class="tag tag-gold">${p.results.length} election(s)</span>
+            ${p.has_adverse_note?`<span class="tag tag-red">⚠️ Flagged</span>`:""}
           </div>
-
-          <div class="stats">
-            <div>
-              <div class="stat-val">${p.total_seat_terms}</div>
-              <div class="stat-lbl">Seat-Terms</div>
-            </div>
-
-            <div>
-              <div class="stat-val">${p.representatives.length}</div>
-              <div class="stat-lbl">Reps</div>
-            </div>
+          <div class="pl-stats">
+            <div class="cs-item"><div class="cs-val">${p.total_seat_terms}</div><div class="cs-lbl">Total Seats</div></div>
+            <div class="cs-item"><div class="cs-val">${p.representatives.length}</div><div class="cs-lbl">Nominees</div></div>
+            <div class="cs-item"><div class="cs-val">${p.aliases.length}</div><div class="cs-lbl">Aliases</div></div>
           </div>
         </div>
       `).join("")}
@@ -1227,110 +1422,107 @@ function drawPartylistCards(){
   `;
 }
 
+function openPartyModal(id){
+  const p=DB.partylists.find(x=>x.partylist_id===id);
+  if(!p)return;
+  $("modalTitle").textContent="Partylist Profile";
+  $("modalTitleIcon").textContent="🧾";
+  $("modalBody").innerHTML=`
+    <div class="modal-rep-header">
+      <div class="modal-initials" style="background:var(--blue-bg);color:var(--blue);font-size:22px">🧾</div>
+      <div>
+        <div class="modal-rep-name">${esc(p.name)}</div>
+        <div class="modal-rep-sub">${esc(p.partylist_id)}</div>
+        ${p.aliases.length?`<div style="margin-top:6px;font-size:11px;color:var(--text3)">AKA: ${p.aliases.map(a=>`<span class="tag tag-purple" style="display:inline-block;margin:2px">${esc(a)}</span>`).join("")}</div>`:""}
+      </div>
+    </div>
+    <div class="modal-stat-row">
+      <div class="modal-stat"><div class="modal-stat-val">${p.total_seat_terms}</div><div class="modal-stat-lbl">Total Seats Won</div></div>
+      <div class="modal-stat"><div class="modal-stat-val">${p.results.length}</div><div class="modal-stat-lbl">Elections</div></div>
+      <div class="modal-stat"><div class="modal-stat-val">${p.representatives.length}</div><div class="modal-stat-lbl">Nominees</div></div>
+    </div>
+    ${p.results.length?`<div class="modal-section">
+      <div class="modal-section-label">Election Results</div>
+      ${p.results.slice().sort((a,b)=>num(b.election_year)-num(a.election_year)).map(r=>`
+        <div class="term-row">
+          <div class="term-congress">${esc(r.election_year||r.congress||"—")}</div>
+          <div class="term-district">${r.seats_won} seat(s)${r.status?` · ${r.status}`:""}</div>
+          <div class="term-region">${esc(r.general_notes||"")}</div>
+        </div>
+      `).join("")}
+    </div>`:""}
+    ${p.representatives.length?`<div class="modal-section">
+      <div class="modal-section-label">Representatives / Nominees</div>
+      ${p.representatives.map(r=>`
+        <div class="dynasty-entry">
+          <div><div class="dynasty-entry-name">${esc(r.representative_name)}</div><div class="dynasty-entry-meta">Seat #${esc(r.seat_no||"—")}</div></div>
+          <div class="dynasty-entry-congress">${esc(r.election_year||r.congress||"—")}</div>
+        </div>
+      `).join("")}
+    </div>`:""}
+    ${p.notes.length?`<div class="modal-section">
+      <div class="modal-section-label">Notes & Flags</div>
+      ${p.notes.map(n=>`<div class="term-row">
+        <div class="term-congress" style="color:var(--red)">${esc(n.type||"Note")}</div>
+        <div class="term-district">${esc(n.title||n.description||"—")}</div>
+        <div class="term-region">${esc(n.date||"")}</div>
+      </div>`).join("")}
+    </div>`:""}
+  `;
+  $("repModal").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+/* ── PARTY NOTES MODULE ── */
 function renderPartyNotes(){
   if(!DB.partylistNotes.length){
     setKpis([
-      {
-        label:"Total notes logged",
-        value:0,
-        sub:"No partylist notes yet",
-        accent:"var(--gold)"
-      },
-      {
-        label:"AKA/name notes",
-        value:0,
-        sub:"Waiting for partylist.csv",
-        accent:"var(--purple)"
-      },
-      {
-        label:"Legal/status flags",
-        value:0,
-        sub:"Waiting for partylist.csv",
-        accent:"var(--red)"
-      },
-      {
-        label:"Total aliases tracked",
-        value:0,
-        sub:"Waiting for partylist.csv",
-        accent:"var(--blue)"
-      }
+      {label:"Notes Logged",value:"—",sub:"Upload partylist.csv to activate",accent:"var(--gold)"},
+      {label:"AKA / Alias Notes",value:"—",sub:"No data yet",accent:"var(--purple)"},
+      {label:"Legal / Status Flags",value:"—",sub:"No data yet",accent:"var(--red)"},
+      {label:"Aliases Tracked",value:"—",sub:"No data yet",accent:"var(--blue)"}
     ]);
-
-    $("content").innerHTML = `
+    $("content").innerHTML=`
       <div class="panel">
         <div class="panel-title">⚠️ No Partylist Notes Yet</div>
-        <div class="notice">
-          This page will populate after you upload:
-          <br>
-          <code>data/partylist.csv</code>
-        </div>
+        <div class="notice" style="margin-top:8px">Upload <code>data/partylist.csv</code> with note columns to populate this page.</div>
       </div>
     `;
     return;
   }
 
-  const akaNotes = DB.partylistNotes.filter(n =>
-    /aka|alias|variation|name/i.test(`${n.type} ${n.title} ${n.description}`)
-  );
-
-  const legalNotes = DB.partylistNotes.filter(n =>
-    /legal|case|cancel|disqual|registration/i.test(`${n.type} ${n.title} ${n.description}`)
-  );
-
-  const aliases = DB.partylists.reduce((sum, p) => sum + p.aliases.length, 0);
+  const akaNotes=DB.partylistNotes.filter(n=>/aka|alias|variation|name/i.test(`${n.type} ${n.title} ${n.description}`));
+  const legalNotes=DB.partylistNotes.filter(n=>/legal|case|cancel|disqual|registration/i.test(`${n.type} ${n.title} ${n.description}`));
+  const aliases=DB.partylists.reduce((s,p)=>s+p.aliases.length,0);
 
   setKpis([
-    {
-      label:"Total notes logged",
-      value:DB.partylistNotes.length,
-      sub:"Across partylist records",
-      accent:"var(--gold)"
-    },
-    {
-      label:"AKA/name notes",
-      value:akaNotes.length,
-      sub:"Name variation notes",
-      accent:"var(--purple)"
-    },
-    {
-      label:"Legal/status flags",
-      value:legalNotes.length,
-      sub:"Cancellation, case, or registration issues",
-      accent:"var(--red)"
-    },
-    {
-      label:"Total aliases tracked",
-      value:aliases,
-      sub:"AKA names in partylist.csv",
-      accent:"var(--blue)"
-    }
+    {label:"Total Notes Logged",value:DB.partylistNotes.length.toLocaleString(),sub:"Across all partylist records",accent:"var(--gold)"},
+    {label:"AKA / Alias Notes",value:akaNotes.length.toLocaleString(),sub:"Name variation records",accent:"var(--purple)"},
+    {label:"Legal / Status Flags",value:legalNotes.length.toLocaleString(),sub:"Cancellation, case, or registration issues",accent:"var(--red)"},
+    {label:"Aliases Tracked",value:aliases.toLocaleString(),sub:"Total AKA names in partylist data",accent:"var(--blue)"}
   ]);
 
-  $("content").innerHTML = `
-    <div class="panel">
-      <div class="panel-title">⚠️ Partylist Notes & Status Flags</div>
-    </div>
-
+  $("content").innerHTML=`
+    <div class="panel"><div class="panel-title">⚠️ Partylist Notes & Status Flags</div></div>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>Partylist</th>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Title</th>
+            <th style="min-width:160px">Partylist</th>
+            <th style="min-width:90px">Date</th>
+            <th style="min-width:100px">Type</th>
+            <th style="min-width:160px">Title</th>
             <th>Description</th>
           </tr>
         </thead>
-
         <tbody>
-          ${DB.partylistNotes.map(n => `
+          ${DB.partylistNotes.map(n=>`
             <tr>
-              <td>${esc(n.partylist_name || n.partylist_id)}</td>
-              <td>${esc(n.date || "—")}</td>
-              <td style="color:var(--gold-light)">${esc(n.type || "—")}</td>
-              <td>${esc(n.title || "—")}</td>
-              <td>${esc(n.description || "—")}</td>
+              <td class="td-name">${esc(n.partylist_name||n.partylist_id)}</td>
+              <td class="td-mono">${esc(n.date||"—")}</td>
+              <td><span class="tag tag-gold">${esc(n.type||"—")}</span></td>
+              <td class="td-name" style="font-size:12px">${esc(n.title||"—")}</td>
+              <td style="color:var(--text3);font-size:12px;max-width:300px;white-space:normal">${esc(n.description||"—")}</td>
             </tr>
           `).join("")}
         </tbody>
@@ -1339,54 +1531,43 @@ function renderPartyNotes(){
   `;
 }
 
+/* ── INIT ── */
 async function init(){
   try{
-    const districtCSV = await fetchRequired(PATHS.districts);
-    const overviewCSV = await fetchOptional(PATHS.overview);
-    const partylistCSV = await fetchOptional(PATHS.partylist);
-
-    const districtRows = parseCSV(districtCSV);
-    const overviewRows = overviewCSV ? parseCSV(overviewCSV) : [];
-    const partylistRows = partylistCSV ? parseCSV(partylistCSV) : [];
-
-    const terms = convertWideDistrictCSV(districtRows);
-    const reps = buildReps(terms);
-    const districts = buildDistricts(terms);
-    const partyData = buildPartylistData(partylistRows);
-
-    DB = {
-      terms,
-      reps,
-      districts,
-      overview:overviewRows,
-      partylists:partyData.partylists,
-      partylistNotes:partyData.notes
-    };
-
-    if(!terms.length){
-      throw new Error("The district CSV loaded, but no Congress data was detected. Check that your columns include 20th Congress, 19th Congress, 18th Congress, etc.");
-    }
-
+    const districtCSV=await fetchRequired(PATHS.districts);
+    const overviewCSV=await fetchOptional(PATHS.overview);
+    const partylistCSV=await fetchOptional(PATHS.partylist);
+    const districtRows=parseCSV(districtCSV);
+    const overviewRows=overviewCSV?parseCSV(overviewCSV):[];
+    const partylistRows=partylistCSV?parseCSV(partylistCSV):[];
+    const terms=convertWideDistrictCSV(districtRows);
+    const reps=buildReps(terms);
+    const districts=buildDistricts(terms);
+    const partyData=buildPartylistData(partylistRows);
+    DB={terms,reps,districts,overview:overviewRows,partylists:partyData.partylists,partylistNotes:partyData.notes};
+    if(!terms.length) throw new Error("The district CSV loaded, but no Congress data was detected. Check that your columns include 20th Congress, 19th Congress, 18th Congress, etc.");
+    $("headerBadge").textContent=`${reps.length.toLocaleString()} Reps · ${districts.length} Districts`;
     showModule("reps");
-
   }catch(err){
     console.error(err);
-
-    $("kpis").innerHTML = "";
-
-    $("content").innerHTML = `
-      <div class="error">
-        <b>Database loading failed.</b><br><br>
+    $("kpis").innerHTML="";
+    $("headerBadge").textContent="Error loading data";
+    $("headerBadge").style.background="var(--red-bg)";
+    $("headerBadge").style.color="var(--red)";
+    $("content").innerHTML=`
+      <div class="error-panel">
+        <strong>Database loading failed.</strong><br><br>
         ${esc(err.message)}<br><br>
-        This file is currently looking for:
-        <br>
-        <code>${esc(PATHS.districts)}</code><br>
-        <code>${esc(PATHS.overview)}</code><br><br>
-        Make sure those filenames match exactly in your GitHub <code>data</code> folder.
+        Looking for:<br>
+        <code style="font-family:'DM Mono',monospace;color:var(--gold-light)">${esc(PATHS.districts)}</code><br>
+        <code style="font-family:'DM Mono',monospace;color:var(--text3)">${esc(PATHS.overview)}</code>
       </div>
     `;
   }
 }
+
+// Close modal on ESC
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"){$("repModal").classList.remove("open");document.body.style.overflow="";} });
 
 init();
 </script>
