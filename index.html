@@ -23,7 +23,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 ::-webkit-scrollbar-thumb{background:var(--navy3);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--gold-dim)}
 
-/* ── HEADER ── */
 .header{
   background:linear-gradient(135deg,#0A1628 0%,#0D1E36 60%,#0A1628 100%);
   border-bottom:1px solid rgba(201,146,42,0.25);
@@ -46,10 +45,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .nav-btn.active{background:var(--surface3);color:var(--gold-light);border-color:rgba(201,146,42,0.4)}
 .nav-icon{font-size:14px}
 
-/* ── MAIN ── */
 .main{padding:24px 28px;max-width:1680px;margin:0 auto}
 
-/* ── KPI CARDS ── */
 .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:24px}
 .kpi-card{
   background:var(--surface2);border:1px solid var(--border);
@@ -64,7 +61,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .kpi-sub2{font-size:11px;color:var(--text3);margin-top:2px}
 .kpi-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:28px;opacity:.12}
 
-/* ── PANELS ── */
 .panel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:20px}
 .panel-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--gold-light);margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .filter-grid{display:grid;gap:12px;align-items:end}
@@ -79,17 +75,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .search-input::placeholder{color:var(--text3)}
 .search-select option{background:var(--navy2)}
 
-/* ── TABS ── */
 .tabs{display:flex;gap:2px;margin-bottom:18px;width:fit-content;background:var(--navy);border:1px solid var(--border);border-radius:10px;padding:3px}
 .tab{padding:7px 18px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;border:none;background:transparent;color:var(--text3)}
 .tab.active{background:var(--surface3);color:var(--gold-light)}
 
-/* ── RESULTS HEADER ── */
 .results-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
 .results-count{font-size:13px;color:var(--text3)}
 .results-count span{color:var(--gold-light);font-weight:600}
 
-/* ── PERSON GRID & CARDS ── */
 .person-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
 .person-card{
   background:var(--surface2);border:1px solid var(--border);
@@ -113,7 +106,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--text);m
 .pc-stat-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
 .pc-stat-info{font-size:11px;color:var(--text3);flex:1;padding-left:14px;display:flex;flex-direction:column;justify-content:center}
 
-/* ── DISTRICT TABLE ── */
 .district-table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
 table{width:100%;border-collapse:collapse;font-size:12px}
 thead th{
@@ -132,13 +124,11 @@ tbody td:first-child{color:var(--text);font-weight:500}
 .clickable{cursor:pointer;transition:color .15s}
 .clickable:hover{color:var(--gold-light);text-decoration:underline}
 
-/* ── PAGINATION ── */
 .pagination{display:flex;gap:6px;justify-content:center;margin-top:22px;flex-wrap:wrap}
 .page-btn{padding:6px 11px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text3);font-size:12px;cursor:pointer;transition:all .2s}
 .page-btn:hover,.page-btn.active{background:var(--surface3);color:var(--gold-light);border-color:rgba(201,146,42,.4)}
 .page-btn:disabled{opacity:.3;cursor:default}
 
-/* ── DYNASTY CARDS ── */
 .dynasty-card{background:var(--dynasty-bg);border:1px solid var(--dynasty-border);border-radius:14px;padding:20px;margin-bottom:16px}
 .dynasty-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:14px}
 .dynasty-name{font-family:'Playfair Display',serif;font-size:19px;color:var(--gold-light);line-height:1.2}
@@ -164,7 +154,6 @@ tbody td:first-child{color:var(--text);font-weight:500}
 .member-row{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--navy2);border:1px solid rgba(255,255,255,.04);border-radius:8px;cursor:pointer;transition:all .15s}
 .member-row:hover{background:var(--surface3);border-color:rgba(201,146,42,.3)}
 
-/* ── MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s}
 .modal-overlay.open{opacity:1;pointer-events:all}
 .modal{background:var(--navy2);border:1px solid var(--border);border-radius:16px;max-width:960px;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(24px);transition:transform .25s}
@@ -188,7 +177,6 @@ tbody td:first-child{color:var(--text);font-weight:500}
 .tl-period{font-family:'DM Mono',monospace;font-size:12px;color:var(--gold-light);min-width:130px}
 .tl-detail{font-size:12px;color:var(--text2);line-height:1.5}
 
-/* ── RELATED PEOPLE ── */
 .related-section{margin-top:6px}
 .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin-top:10px}
 .related-card{
@@ -200,29 +188,26 @@ tbody td:first-child{color:var(--text);font-weight:500}
 .related-sub{font-size:11px;color:var(--text3)}
 .related-badge{font-size:10px;padding:2px 7px;border-radius:20px;background:rgba(201,146,42,.15);border:1px solid rgba(201,146,42,.3);color:var(--gold);margin-top:5px;display:inline-block}
 
-/* ── EMPTY STATE ── */
 .empty{text-align:center;padding:56px 20px;color:var(--text3)}
 .empty-icon{font-size:36px;margin-bottom:10px}
 .empty-text{font-size:14px}
 
-/* ── FADE IN ── */
 .fade-in{animation:fadeIn .3s ease-out forwards}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── CONGRESS OVERVIEW TABLE ── */
 .bar-list{display:flex;flex-direction:column;gap:7px}
 .bar-row{display:grid;grid-template-columns:150px 1fr 52px;gap:10px;align-items:center;font-size:12px;color:var(--text2)}
 .bar-bg{height:7px;background:var(--navy2);border-radius:999px;overflow:hidden}
 .bar-fill{height:100%;background:var(--gold);border-radius:999px}
 
-/* ── SEX FILTER BADGE ── */
 .female-tag{color:#CF8ED0}
 
 /* ── PARTYLIST ── */
 .pl-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
 .pl-card:hover{border-color:rgba(74,158,224,.5);transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+/* FIX: only show disqualified styling when actually red-flagged */
 .pl-card.disqualified{border-color:rgba(224,82,82,.35);background:rgba(224,82,82,.04)}
-.pl-card.disqualified::after{content:'⚠ DISQUALIFIED';position:absolute;top:12px;right:12px;font-size:9px;font-weight:700;color:var(--red);letter-spacing:.5px;background:rgba(224,82,82,.15);border:1px solid rgba(224,82,82,.3);padding:2px 7px;border-radius:20px}
+.pl-card.disqualified::after{content:'⚠ CANCELLED';position:absolute;top:12px;right:12px;font-size:9px;font-weight:700;color:var(--red);letter-spacing:.5px;background:rgba(224,82,82,.15);border:1px solid rgba(224,82,82,.3);padding:2px 7px;border-radius:20px}
 .pl-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:2px;padding-right:100px;line-height:1.3}
 .pl-aka{font-size:11px;color:var(--text3);margin-bottom:8px;font-style:italic}
 .pl-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
@@ -231,9 +216,25 @@ tbody td:first-child{color:var(--text);font-weight:500}
 .tag-status-disq{background:rgba(224,82,82,.1);color:var(--red);border:1px solid rgba(224,82,82,.3)}
 .tag-status-inactive{background:rgba(106,130,160,.1);color:var(--text3);border:1px solid rgba(106,130,160,.2)}
 .pl-stats{display:flex;gap:14px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-.pl-modal-note{background:rgba(224,82,82,.08);border:1px solid rgba(224,82,82,.25);border-radius:8px;padding:12px 16px;margin-bottom:16px}
-.pl-modal-note-title{font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+
+/* FIX: separate red note box (for genuine cancellations) from general info note box */
+.pl-modal-note{border-radius:8px;padding:12px 16px;margin-bottom:16px}
+.pl-modal-note.red{background:rgba(224,82,82,.08);border:1px solid rgba(224,82,82,.25)}
+.pl-modal-note.info{background:rgba(74,158,224,.06);border:1px solid rgba(74,158,224,.2)}
+.pl-modal-note-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.pl-modal-note.red .pl-modal-note-title{color:var(--red)}
+.pl-modal-note.info .pl-modal-note-title{color:var(--gold-light)}
 .pl-modal-note-text{font-size:12px;color:var(--text2);line-height:1.5}
+
+/* ── Election table in modal ── */
+.election-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.election-table th{background:var(--surface3);color:var(--text3);padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.election-table td{padding:9px 12px;border-bottom:1px solid rgba(30,50,84,.5);color:var(--text2);vertical-align:top}
+.election-table tr:last-child td{border-bottom:none}
+.election-table tr:hover td{background:var(--surface2)}
+.election-table .seat-count{font-family:'DM Mono',monospace;color:var(--gold-light);font-weight:600}
+.election-table .rep-list{font-size:11px;color:var(--text3);line-height:1.6;margin-top:2px}
+
 .aka-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .aka-chip{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--surface3);border:1px solid var(--border);color:var(--text2)}
 .pending-banner{background:linear-gradient(135deg,rgba(74,158,224,.08),rgba(155,114,207,.08));border:1px dashed rgba(74,158,224,.3);border-radius:var(--radius);padding:40px 32px;text-align:center;margin:16px 0}
@@ -244,7 +245,6 @@ tbody td:first-child{color:var(--text);font-weight:500}
 .pending-step{display:flex;gap:10px;align-items:flex-start;font-size:12px;color:var(--text2)}
 .pending-step-num{width:20px;height:20px;border-radius:50%;background:var(--surface3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--gold-light);flex-shrink:0;margin-top:1px}
 
-/* ── RELATIONSHIPS ── */
 .rel-view-tabs{display:flex;gap:2px;margin-bottom:20px;background:var(--navy);border:1px solid var(--border);border-radius:10px;padding:3px;width:fit-content}
 .rel-node-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .2s}
 .rel-node-card:hover{border-color:rgba(74,158,224,.4);background:var(--surface3)}
@@ -429,6 +429,7 @@ tbody td:first-child{color:var(--text);font-weight:500}
       <div class="empty"><div class="empty-icon">📜</div><div class="empty-text">Select a Congress period above.</div></div>
     </div>
   </div>
+
   <!-- PARTYLIST VIEW -->
   <div id="view-partylist" style="display:none">
     <div class="panel">
@@ -450,8 +451,8 @@ tbody td:first-child{color:var(--text);font-weight:500}
           <label class="field-label">Status</label>
           <select class="search-select" id="plStatusSelect" onchange="renderPartylist()">
             <option value="">All</option>
-            <option value="active">Active</option>
-            <option value="disqualified">Disqualified</option>
+            <option value="active">Active / Elected</option>
+            <option value="disqualified">Cancelled / Disqualified</option>
             <option value="inactive">Inactive / Delisted</option>
           </select>
         </div>
@@ -519,17 +520,8 @@ tbody td:first-child{color:var(--text);font-weight:500}
 
 const ALL_CONGRESSES=['8th Congress','9th Congress','10th Congress','11th Congress','12th Congress','13th Congress','14th Congress','15th Congress','16th Congress','17th Congress','18th Congress','19th Congress','20th Congress'];
 const PAGE_SIZE=24;
-const DB={
-  p:[],
-  d:[],
-  o:[],
-  plRaw:[],
-  pl:[],
-  relationships:[],
-  dynasties:[],
-  analytics:{}
-};
-  
+const DB={p:[],d:[],o:[],plRaw:[],pl:[],relationships:[],dynasties:[],analytics:{}};
+
 let ALL_REGIONS=[],searchResults=[],currentPage=1,cardMode='cards',debounceTimer=null,currentView='search';
 
 const $=id=>document.getElementById(id);
@@ -541,360 +533,126 @@ function congressNum(c){return parseInt(c)||0}
 function congressIndex(c){return ALL_CONGRESSES.indexOf(c)}
 function surnameOf(name){let s=String(name||'').trim();if(!s)return 'Unknown';let first=s.includes(',')?s.split(',')[0]:s.split(/\s+/)[0];return first.replace(/[^A-Za-zÀ-žÑñ' -]/g,'').trim()||'Unknown'}
 function memberLabel(p){return surnameOf(p.fn||p.name).slice(0,12)}
-const DATA_PATHS = {
-  districts: "data/district-representatives.xlsx%20-%20reps.csv",
-  overview: "data/roster-legislators-expanded.xlsx%20-%20overview.csv",
-  partylist: "data/partylist.csv"
+
+const DATA_PATHS={
+  districts:"data/district-representatives.xlsx%20-%20reps.csv",
+  overview:"data/roster-legislators-expanded.xlsx%20-%20overview.csv",
+  partylist:"data/partylist.csv"
 };
 
 async function loadTextRequired(path){
-  const r = await fetch(path + "?v=" + Date.now());
-  if(!r.ok) throw new Error(path + " failed");
+  const r=await fetch(path+"?v="+Date.now());
+  if(!r.ok)throw new Error(path+" failed");
   return await r.text();
 }
-
 async function loadTextOptional(path){
-  try{
-    const r = await fetch(path + "?v=" + Date.now());
-    if(!r.ok) return "";
-    return await r.text();
-  }catch(e){
-    return "";
-  }
+  try{const r=await fetch(path+"?v="+Date.now());if(!r.ok)return "";return await r.text();}catch(e){return "";}
 }
-
-function cleanCSVCell(v){
-  return String(v ?? "")
-    .replace(/\uFEFF/g,"")
-    .replace(/\s+/g," ")
-    .trim();
-}
-
+function cleanCSVCell(v){return String(v??"").replace(/\uFEFF/g,"").replace(/\s+/g," ").trim();}
 function parseCSV(text){
-  const rows = [];
-  let row = [];
-  let cell = "";
-  let quoted = false;
-
-  for(let i = 0; i < text.length; i++){
-    const c = text[i];
-    const n = text[i + 1];
-
-    if(c === '"' && quoted && n === '"'){
-      cell += '"';
-      i++;
-    }else if(c === '"'){
-      quoted = !quoted;
-    }else if(c === "," && !quoted){
+  const rows=[];let row=[],cell="",quoted=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i],n=text[i+1];
+    if(c==='"'&&quoted&&n==='"'){cell+='"';i++;}
+    else if(c==='"'){quoted=!quoted;}
+    else if(c===","&&!quoted){row.push(cell);cell="";}
+    else if((c==="\n"||c==="\r")&&!quoted){
+      if(c==="\r"&&n==="\n")i++;
       row.push(cell);
-      cell = "";
-    }else if((c === "\n" || c === "\r") && !quoted){
-      if(c === "\r" && n === "\n") i++;
-      row.push(cell);
-      if(row.some(x => cleanCSVCell(x))) rows.push(row);
-      row = [];
-      cell = "";
-    }else{
-      cell += c;
-    }
+      if(row.some(x=>cleanCSVCell(x)))rows.push(row);
+      row=[];cell="";
+    }else{cell+=c;}
   }
-
   row.push(cell);
-  if(row.some(x => cleanCSVCell(x))) rows.push(row);
-
-  if(!rows.length) return [];
-
-  const headers = rows[0].map(h => cleanCSVCell(h));
-
-  return rows.slice(1).map(r => {
-    const obj = {};
-    headers.forEach((h,i) => obj[h] = r[i] ?? "");
-    return obj;
-  });
+  if(row.some(x=>cleanCSVCell(x)))rows.push(row);
+  if(!rows.length)return [];
+  const headers=rows[0].map(h=>cleanCSVCell(h));
+  return rows.slice(1).map(r=>{const obj={};headers.forEach((h,i)=>obj[h]=r[i]??"");return obj;});
 }
-
-function csvValue(row, names){
-  const keys = Object.keys(row || {});
-
+function csvValue(row,names){
+  const keys=Object.keys(row||{});
   for(const name of names){
-    const found = keys.find(k => cleanCSVCell(k).toLowerCase() === cleanCSVCell(name).toLowerCase());
-    if(found && cleanCSVCell(row[found])) return cleanCSVCell(row[found]);
+    const found=keys.find(k=>cleanCSVCell(k).toLowerCase()===cleanCSVCell(name).toLowerCase());
+    if(found&&cleanCSVCell(row[found]))return cleanCSVCell(row[found]);
   }
-
   return "";
 }
-
-function keySlug(v){
-  return norm(v).replace(/\s+/g,"-") || Math.random().toString(36).slice(2);
-}
-
+function keySlug(v){return norm(v).replace(/\s+/g,"-")||Math.random().toString(36).slice(2);}
 function normalizeCongressHeader(header){
-  const h = cleanCSVCell(header);
-  const match = h.match(/(\d+)(st|nd|rd|th)?\s*congress/i);
-
-  if(!match) return h;
-
-  const number = parseInt(match[1],10);
-  return ALL_CONGRESSES.find(c => parseInt(c,10) === number) || h;
+  const h=cleanCSVCell(header);
+  const match=h.match(/(\d+)(st|nd|rd|th)?\s*congress/i);
+  if(!match)return h;
+  const number=parseInt(match[1],10);
+  return ALL_CONGRESSES.find(c=>parseInt(c,10)===number)||h;
 }
-
 function splitList(value){
-  const text = cleanCSVCell(value);
-  if(!text) return [];
-
-  if(/^(n\/a|na|none|null|vacant|-|—)$/i.test(text)) return [];
-
-  return text
-    .split(/\s*;\s*|\s*\|\s*|\n+/)
-    .map(x => cleanCSVCell(x))
-    .filter(Boolean)
-    .filter(x => !/^(n\/a|na|none|null|vacant|-|—)$/i.test(x));
+  const text=cleanCSVCell(value);
+  if(!text)return [];
+  if(/^(n\/a|na|none|null|vacant|-|—)$/i.test(text))return [];
+  return text.split(/\s*;\s*|\s*\|\s*|\n+/).map(x=>cleanCSVCell(x)).filter(Boolean).filter(x=>!/^(n\/a|na|none|null|vacant|-|—)$/i.test(x));
 }
-
-function csvRowsToDistrictObjects(rows){
-  if(!rows.length) return [];
-
-  const firstRow = rows[0];
-  const keys = Object.keys(firstRow);
-
-  const districtKey =
-    keys.find(k => cleanCSVCell(k).toLowerCase() === "district") ||
-    keys.find(k => /district/i.test(k)) ||
-    keys[1];
-
-  const regionKey =
-    keys.find(k => k !== districtKey && /region/i.test(k)) ||
-    keys[0];
-
-  const congressKeys = keys.filter(k =>
-    /congress/i.test(k) || ALL_CONGRESSES.includes(normalizeCongressHeader(k))
-  );
-
-  return rows
-    .map(row => {
-      const region = cleanCSVCell(row[regionKey]);
-      const district = cleanCSVCell(row[districtKey]);
-
-      if(!region || !district) return null;
-
-      const history = {};
-
-      congressKeys.forEach(key => {
-        const congress = normalizeCongressHeader(key);
-        const names = splitList(row[key]);
-
-        if(names.length){
-          history[congress] = names;
-        }
-      });
-
-      return {region,district,history};
-    })
-    .filter(Boolean);
-}
-async function loadTextRequired(path){
-  const r = await fetch(path + "?v=" + Date.now());
-  if(!r.ok) throw new Error(path + " failed");
-  return await r.text();
-}
-
-async function loadTextOptional(path){
-  try{
-    const r = await fetch(path + "?v=" + Date.now());
-    if(!r.ok) return "";
-    return await r.text();
-  }catch(e){
-    return "";
-  }
-}
-
-function cleanCSVCell(v){
-  return String(v ?? "")
-    .replace(/\uFEFF/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function parseCSV(text){
-  const rows = [];
-  let row = [];
-  let cell = "";
-  let quoted = false;
-
-  for(let i = 0; i < text.length; i++){
-    const c = text[i];
-    const n = text[i + 1];
-
-    if(c === '"' && quoted && n === '"'){
-      cell += '"';
-      i++;
-    }else if(c === '"'){
-      quoted = !quoted;
-    }else if(c === "," && !quoted){
-      row.push(cell);
-      cell = "";
-    }else if((c === "\n" || c === "\r") && !quoted){
-      if(c === "\r" && n === "\n") i++;
-      row.push(cell);
-      if(row.some(x => cleanCSVCell(x))) rows.push(row);
-      row = [];
-      cell = "";
-    }else{
-      cell += c;
-    }
-  }
-
-  row.push(cell);
-  if(row.some(x => cleanCSVCell(x))) rows.push(row);
-
-  if(!rows.length) return [];
-
-  const headers = rows[0].map(h => cleanCSVCell(h));
-
-  return rows.slice(1).map(r => {
-    const obj = {};
-    headers.forEach((h,i) => obj[h] = r[i] ?? "");
-    return obj;
-  });
-}
-
-function findCSVKey(row, possibleNames){
-  const keys = Object.keys(row);
-
+function findCSVKey(row,possibleNames){
+  const keys=Object.keys(row);
   for(const name of possibleNames){
-    const found = keys.find(k => cleanCSVCell(k).toLowerCase() === cleanCSVCell(name).toLowerCase());
-    if(found) return found;
+    const found=keys.find(k=>cleanCSVCell(k).toLowerCase()===cleanCSVCell(name).toLowerCase());
+    if(found)return found;
   }
-
   return "";
 }
-
-function normalizeCongressHeader(header){
-  const h = cleanCSVCell(header);
-  const match = h.match(/(\d+)(st|nd|rd|th)?\s*congress/i);
-
-  if(!match) return h;
-
-  const number = parseInt(match[1], 10);
-  return ALL_CONGRESSES.find(c => parseInt(c, 10) === number) || h;
-}
-
 function splitRepresentativeNames(value){
-  const text = cleanCSVCell(value);
-
-  if(!text) return [];
-  if(/^(n\/a|na|none|null|vacant|-|—)$/i.test(text)) return [];
-
-  return text
-    .split(/\s*;\s*|\s*\|\s*|\n+/)
-    .map(x => cleanCSVCell(x))
-    .filter(Boolean)
-    .filter(x => !/^(n\/a|na|none|null|vacant|-|—)$/i.test(x));
+  const text=cleanCSVCell(value);
+  if(!text)return [];
+  if(/^(n\/a|na|none|null|vacant|-|—)$/i.test(text))return [];
+  return text.split(/\s*;\s*|\s*\|\s*|\n+/).map(x=>cleanCSVCell(x)).filter(Boolean).filter(x=>!/^(n\/a|na|none|null|vacant|-|—)$/i.test(x));
 }
-
 function csvRowsToDistrictObjects(rows){
-  if(!rows.length) return [];
-
-  const firstRow = rows[0];
-  const keys = Object.keys(firstRow);
-
-  const regionKey =
-    findCSVKey(firstRow, ["Region"]) ||
-    keys.find(k => /region/i.test(k)) ||
-    keys[0];
-
-  const districtKey =
-    findCSVKey(firstRow, ["District"]) ||
-    keys.find(k => /district/i.test(k)) ||
-    keys[1];
-
-  const congressKeys = keys.filter(k =>
-    /congress/i.test(k) || ALL_CONGRESSES.includes(normalizeCongressHeader(k))
-  );
-
-  return rows
-    .map(row => {
-      const region = cleanCSVCell(row[regionKey]);
-      const district = cleanCSVCell(row[districtKey]);
-
-      if(!region || !district) return null;
-
-      const history = {};
-
-      congressKeys.forEach(key => {
-        const congress = normalizeCongressHeader(key);
-        const names = splitRepresentativeNames(row[key]);
-
-        if(names.length){
-          history[congress] = names;
-        }
-      });
-
-      return {
-        region,
-        district,
-        history
-      };
-    })
-    .filter(Boolean);
+  if(!rows.length)return [];
+  const firstRow=rows[0];
+  const keys=Object.keys(firstRow);
+  const regionKey=findCSVKey(firstRow,["Region"])||keys.find(k=>/region/i.test(k))||keys[0];
+  const districtKey=findCSVKey(firstRow,["District"])||keys.find(k=>/district/i.test(k))||keys[1];
+  const congressKeys=keys.filter(k=>/congress/i.test(k)||ALL_CONGRESSES.includes(normalizeCongressHeader(k)));
+  return rows.map(row=>{
+    const region=cleanCSVCell(row[regionKey]),district=cleanCSVCell(row[districtKey]);
+    if(!region||!district)return null;
+    const history={};
+    congressKeys.forEach(key=>{
+      const congress=normalizeCongressHeader(key);
+      const names=splitRepresentativeNames(row[key]);
+      if(names.length)history[congress]=names;
+    });
+    return{region,district,history};
+  }).filter(Boolean);
 }
 
 async function init(){
   try{
-    const districtCSV = await loadTextRequired(DATA_PATHS.districts);
-    const overviewCSV = await loadTextOptional(DATA_PATHS.overview);
-    const partylistCSV = await loadTextOptional(DATA_PATHS.partylist);
-
-    const districtRows = parseCSV(districtCSV);
-    const overviewRows = overviewCSV ? parseCSV(overviewCSV) : [];
-
-    DB.d = csvRowsToDistrictObjects(districtRows);
-    DB.o = overviewRows;
-
-    if(!DB.d.length){
-      throw new Error("The district CSV loaded, but no district rows were detected.");
-    }
-
-    if(!DB.d.some(d => Object.keys(d.history || {}).length)){
-      throw new Error("The district CSV loaded, but no Congress columns were detected.");
-    }
-
+    const districtCSV=await loadTextRequired(DATA_PATHS.districts);
+    const overviewCSV=await loadTextOptional(DATA_PATHS.overview);
+    const partylistCSV=await loadTextOptional(DATA_PATHS.partylist);
+    const districtRows=parseCSV(districtCSV);
+    const overviewRows=overviewCSV?parseCSV(overviewCSV):[];
+    DB.d=csvRowsToDistrictObjects(districtRows);
+    DB.o=overviewRows;
+    if(!DB.d.length)throw new Error("The district CSV loaded, but no district rows were detected.");
+    if(!DB.d.some(d=>Object.keys(d.history||{}).length))throw new Error("The district CSV loaded, but no Congress columns were detected.");
     prepareRepresentatives([]);
-
     buildDynastyModel();
     buildAnalytics();
-
-    DB.plRaw = partylistCSV ? parseCSV(partylistCSV) : [];
+    DB.plRaw=partylistCSV?parseCSV(partylistCSV):[];
     buildPartylistModel();
     buildRelationshipModel();
-
     populateSelects();
     populatePartylistSelects();
-
     buildKPIs();
     doSearch();
     renderDistrictHeader();
     renderDistricts();
-
   }catch(e){
-    $('kpiRow').innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--red)">
-        <div style="font-size:26px;margin-bottom:10px">⚠️</div>
-        <div style="font-weight:700">Could not load CSV data files.</div>
-        <div style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.7">
-          Looking for:<br>
-          <code>${esc(DATA_PATHS.districts)}</code><br>
-          <code>${esc(DATA_PATHS.overview)}</code><br>
-          <code>${esc(DATA_PATHS.partylist)}</code><br><br>
-          Partylist CSV is optional, but it must be named <code>data/partylist.csv</code> to activate the Party-list and Relationships pages.
-        </div>
-      </div>
-    `;
-
+    $('kpiRow').innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--red)"><div style="font-size:26px;margin-bottom:10px">⚠️</div><div style="font-weight:700">Could not load CSV data files.</div><div style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.7">Looking for:<br><code>${esc(DATA_PATHS.districts)}</code><br><code>${esc(DATA_PATHS.overview)}</code><br><code>${esc(DATA_PATHS.partylist)}</code></div></div>`;
     console.error(e);
   }
 }
-
 
 function prepareRepresentatives(reps){
   const byName=new Map();
@@ -941,7 +699,7 @@ function makeDynasty(name,members){
   const overlaps=[];for(const c of ALL_CONGRESSES){const people=members.filter(p=>p.tr.includes(c));if(people.length>=2)overlaps.push({congress:c,people})}
   const successions=[];for(const dist of districts){for(let i=0;i<ALL_CONGRESSES.length-1;i++){const a=ALL_CONGRESSES[i],b=ALL_CONGRESSES[i+1];const from=members.find(p=>p.terms.some(t=>t.district===dist&&t.congress===a));const to=members.find(p=>p.terms.some(t=>t.district===dist&&t.congress===b));if(from&&to&&from.id!==to.id)successions.push({district:dist,from,to,fromCongress:a,toCongress:b})}}
   const first=members.map(p=>p.first).sort((a,b)=>congressNum(a)-congressNum(b))[0]||'',last=members.map(p=>p.last).sort((a,b)=>congressNum(b)-congressNum(a))[0]||'';
-  return {name,members:members.sort((a,b)=>b.tt-a.tt||a.fn.localeCompare(b.fn)),count:members.length,seatCount,regions,districts,sharedDistricts,overlaps,successions,first,last,connectionScore:sharedDistricts.length+overlaps.length+successions.length};
+  return{name,members:members.sort((a,b)=>b.tt-a.tt||a.fn.localeCompare(b.fn)),count:members.length,seatCount,regions,districts,sharedDistricts,overlaps,successions,first,last,connectionScore:sharedDistricts.length+overlaps.length+successions.length};
 }
 
 function buildAnalytics(){
@@ -980,7 +738,6 @@ function populateSelects(){
 }
 
 function debounceSearch(){clearTimeout(debounceTimer);debounceTimer=setTimeout(doSearch,180)}
-
 function doSearch(){
   const q=norm($('nameInput').value),dq=norm($('districtInput').value),cong=$('congressSelect').value,filt=$('filterSelect').value;
   searchResults=DB.p.filter(p=>{
@@ -995,25 +752,21 @@ function doSearch(){
   }).sort((a,b)=>Number(b.dy)-Number(a.dy)||b.tt-a.tt||a.fn.localeCompare(b.fn));
   currentPage=1;renderResults();
 }
-
 function clearSearch(){
   ['nameInput','districtInput'].forEach(id=>$(id).value='');
   ['congressSelect','filterSelect'].forEach(id=>$(id).value='');
   doSearch();
 }
-
 function renderResults(){
   const total=searchResults.length,start=(currentPage-1)*PAGE_SIZE,page=searchResults.slice(start,start+PAGE_SIZE);
   $('resultsCount').innerHTML=`Showing <span>${Math.min(start+PAGE_SIZE,total).toLocaleString()}</span> of <span>${total.toLocaleString()}</span> legislators`;
   cardMode==='cards'?renderCards(page):renderTable(page);
   renderPagination(total);
 }
-
 function renderCards(items){
   $('cardsView').style.display='';$('tableView').style.display='none';
   $('cardsView').innerHTML=items.length?`<div class="person-grid fade-in">${items.map(personCard).join('')}</div>`:emptyState('🔍','No legislators found.');
 }
-
 function personCard(p){
   const first=p.first||'—',last=p.last||'—';
   const isFemale=p.sex==='Female'||p.sex==='F';
@@ -1026,18 +779,11 @@ function personCard(p){
       ${isFemale?`<span class="tag tag-female">♀ Female</span>`:''}
     </div>
     <div class="pc-stats">
-      <div class="pc-stat">
-        <div class="pc-stat-val">${p.tt}</div>
-        <div class="pc-stat-lbl">Terms</div>
-      </div>
-      <div class="pc-stat-info">
-        <div>First: ${esc(first)}</div>
-        <div>Last: ${esc(last)}</div>
-      </div>
+      <div class="pc-stat"><div class="pc-stat-val">${p.tt}</div><div class="pc-stat-lbl">Terms</div></div>
+      <div class="pc-stat-info"><div>First: ${esc(first)}</div><div>Last: ${esc(last)}</div></div>
     </div>
   </div>`;
 }
-
 function renderTable(items){
   $('cardsView').style.display='none';$('tableView').style.display='';
   $('tableView').innerHTML=items.length?`<div class="district-table-wrap"><table>
@@ -1045,7 +791,6 @@ function renderTable(items){
     <tbody>${items.map(p=>`<tr onclick="openModal('${esc(p.id)}')"><td>${esc(p.fn)}</td><td>${esc(p.surname)}</td><td>${esc(p.regions.join('; ')||'—')}</td><td>${esc(p.districts.join('; ')||'—')}</td><td class="${p.dy?'dynasty-cell':''}">${p.dy?esc(p.cl):'—'}</td><td>${p.tt}</td><td>${esc(p.last||'—')}</td></tr>`).join('')}</tbody>
   </table></div>`:emptyState('🔍','No results found.');
 }
-
 function renderPagination(total){
   const pages=Math.ceil(total/PAGE_SIZE);
   if(pages<=1){$('pagination').innerHTML='';return}
@@ -1054,31 +799,26 @@ function renderPagination(total){
   html+=`<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>›</button>`;
   $('pagination').innerHTML=html;
 }
-
 function pageRange(cur,total){
   if(total<=7)return Array.from({length:total},(_,i)=>i+1);
   if(cur<=4)return [1,2,3,4,5,'…',total];
   if(cur>=total-3)return [1,'…',total-4,total-3,total-2,total-1,total];
   return [1,'…',cur-1,cur,cur+1,'…',total];
 }
-
 function goPage(p){
   const pages=Math.ceil(searchResults.length/PAGE_SIZE);
   if(p<1||p>pages)return;
   currentPage=p;renderResults();window.scrollTo({top:160,behavior:'smooth'});
 }
-
 function setCardView(mode,btn){
   cardMode=mode;
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
   renderResults();
 }
-
 function emptyState(icon,text){
   return `<div class="empty"><div class="empty-icon">${icon}</div><div class="empty-text">${esc(text)}</div></div>`;
 }
-
 function findPersonByName(name){
   const key=norm(name);
   return DB.p.find(p=>norm(p.fn)===key)||DB.p.find(p=>p.terms.some(t=>norm(t.name_used)===key))||null;
@@ -1088,10 +828,8 @@ function findPersonByName(name){
 function openModal(id){
   const p=DB.p.find(x=>x.id===id)||findPersonByName(id);
   if(!p)return;
-
   $('modalName').textContent=p.fn;
   $('modalName2').textContent=`${p.surname}${p.dy?' · '+p.cl+' family':''}${p.synthetic?' · districts file':''}`;
-
   const isFemale=p.sex==='Female'||p.sex==='F';
   const info=[
     ['Family / Surname',p.surname,p.dy?'dynasty':''],
@@ -1103,10 +841,7 @@ function openModal(id){
     ['First Congress',p.first||'—',''],
     ['Last Congress',p.last||'—',''],
   ];
-
   let html=`<div class="info-grid">${info.map(i=>`<div class="info-item"><div class="info-lbl">${esc(i[0])}</div><div class="info-val ${i[2]}">${esc(i[1])}</div></div>`).join('')}</div>`;
-
-  // Congress timeline
   if(p.terms.length){
     html+=`<div class="section-head">📅 Congress Timeline</div>
     <div class="timeline">${p.terms.sort((a,b)=>congressNum(a.congress)-congressNum(b.congress)).map(t=>`
@@ -1116,8 +851,6 @@ function openModal(id){
         <div class="tl-detail">${esc(t.region)} · ${esc(t.district)}<br><span style="color:var(--text3)">Name used: ${esc(t.name_used)}</span></div>
       </div>`).join('')}</div>`;
   }
-
-  // Dynasty connections & related people
   if(p.dy&&p.relations){
     html+=`<div class="section-divider"></div>
     <div class="section-head">🔗 Dynasty Connections — ${esc(p.cl)} Family</div>
@@ -1125,25 +858,20 @@ function openModal(id){
     ${renderNetwork(p.relations,p.id)}
     ${renderRelatedPeople(p)}`;
   }
-
   $('modalBody').innerHTML=html;
   $('modalOverlay').classList.add('open');
   document.body.style.overflow='hidden';
 }
-
 function closeModal(e){
   if(e&&e.target!==$('modalOverlay'))return;
   $('modalOverlay').classList.remove('open');
   document.body.style.overflow='';
 }
-
 function renderRelatedPeople(focusPerson){
   if(!focusPerson.dy||!focusPerson.relations)return '';
   const dynasty=focusPerson.relations;
   const related=dynasty.members.filter(m=>m.id!==focusPerson.id);
   if(!related.length)return '';
-
-  // Score by connection strength
   const scored=related.map(m=>{
     let score=0;
     const sharedD=dynasty.sharedDistricts.filter(x=>x.people.some(pp=>pp.id===focusPerson.id)&&x.people.some(pp=>pp.id===m.id));
@@ -1156,13 +884,11 @@ function renderRelatedPeople(focusPerson){
     if(overlap.length)connectionTypes.push('overlap');
     return{m,score,sharedD,overlap,succ,connectionTypes};
   }).sort((a,b)=>b.score-a.score);
-
   const topRelated=scored.slice(0,8);
-
   return `<div class="related-section">
     <div class="section-head" style="margin-top:16px">👥 Possible Family Members &amp; Connections</div>
     <div class="related-grid">
-      ${topRelated.map(({m,connectionTypes,succ,sharedD})=>{
+      ${topRelated.map(({m,connectionTypes,succ})=>{
         const connLabel=connectionTypes.length?connectionTypes.join(', '):'same surname';
         const succNote=succ.length?` (${succ[0].fromCongress}→${succ[0].toCongress})`:'';
         return `<div class="related-card" onclick="switchModal('${esc(m.id)}')">
@@ -1175,30 +901,15 @@ function renderRelatedPeople(focusPerson){
     </div>
   </div>`;
 }
-
-function switchModal(id){
-  // Close and reopen with new person
-  $('modalOverlay').classList.remove('open');
-  setTimeout(()=>openModal(id),150);
-}
-
+function switchModal(id){$('modalOverlay').classList.remove('open');setTimeout(()=>openModal(id),150);}
 function renderRelationshipBoxes(d,focus){
   const shared=d.sharedDistricts.filter(x=>!focus||x.people.some(p=>p.id===focus.id)).slice(0,3);
   const overlaps=d.overlaps.filter(x=>!focus||x.people.some(p=>p.id===focus.id)).slice(0,3);
   const succ=d.successions.filter(x=>!focus||x.from.id===focus.id||x.to.id===focus.id).slice(0,3);
   return `<div class="relation-grid">
-    <div class="relation-box">
-      <div class="relation-title">🏛 Shared District</div>
-      ${shared.length?shared.map(x=>`${esc(x.district)} — ${x.people.length} members`).join('<br>'):'No direct shared-district signal found.'}
-    </div>
-    <div class="relation-box">
-      <div class="relation-title">🔁 Possible Succession</div>
-      ${succ.length?succ.map(x=>`${esc(x.fromCongress)}: ${esc(x.from.fn)} → ${esc(x.to.fn)}`).join('<br>'):'No consecutive-term signal found.'}
-    </div>
-    <div class="relation-box">
-      <div class="relation-title">🤝 Overlap</div>
-      ${overlaps.length?overlaps.map(x=>`${esc(x.congress)} — ${x.people.map(p=>esc(p.fn)).join(' + ')}`).join('<br>'):'No overlap signal found.'}
-    </div>
+    <div class="relation-box"><div class="relation-title">🏛 Shared District</div>${shared.length?shared.map(x=>`${esc(x.district)} — ${x.people.length} members`).join('<br>'):'No direct shared-district signal found.'}</div>
+    <div class="relation-box"><div class="relation-title">🔁 Possible Succession</div>${succ.length?succ.map(x=>`${esc(x.fromCongress)}: ${esc(x.from.fn)} → ${esc(x.to.fn)}`).join('<br>'):'No consecutive-term signal found.'}</div>
+    <div class="relation-box"><div class="relation-title">🤝 Overlap</div>${overlaps.length?overlaps.map(x=>`${esc(x.congress)} — ${x.people.map(p=>esc(p.fn)).join(' + ')}`).join('<br>'):'No overlap signal found.'}</div>
   </div>`;
 }
 
@@ -1207,7 +918,6 @@ function renderDistrictHeader(){
   const cols=ALL_CONGRESSES.slice().reverse();
   $('districtThead').innerHTML=`<tr><th style="min-width:170px">Region</th><th style="min-width:200px">District</th>${cols.map(c=>`<th style="min-width:140px">${esc(c)}</th>`).join('')}</tr>`;
 }
-
 function renderDistricts(){
   const q=norm($('dSearchInput')?.value),reg=$('dRegionSelect')?.value||'',cong=$('dCongressSelect')?.value||'',cols=ALL_CONGRESSES.slice().reverse();
   let rows='',curReg='';
@@ -1236,14 +946,10 @@ function renderDynasties(){
   clans.sort(sorters[sort]||sorters.members);
   $('dynastyContent').innerHTML=clans.length?clans.map(dynastyCard).join(''):emptyState('👑','No dynasty groups found.');
 }
-
 function dynastyCard(d){
   return `<div class="dynasty-card fade-in">
     <div class="dynasty-head">
-      <div>
-        <div class="dynasty-name">${esc(d.name)}-${esc(d.regions[0]||'')}</div>
-        <div class="dynasty-meta">${d.count} members across all congresses</div>
-      </div>
+      <div><div class="dynasty-name">${esc(d.name)}-${esc(d.regions[0]||'')}</div><div class="dynasty-meta">${d.count} members across all congresses</div></div>
       <div class="dynasty-score">${d.count}</div>
     </div>
     <div>
@@ -1257,17 +963,13 @@ function dynastyCard(d){
     <div class="member-list">
       ${d.members.slice(0,10).map(m=>`
         <div class="member-row" onclick="openModal('${esc(m.id)}')">
-          <div>
-            <div style="font-size:13px;font-weight:600;color:var(--text)">${esc(m.fn)}</div>
-            <div style="font-size:11px;color:var(--text3)">${esc(m.districts[0]||m.regions[0]||'')} · ${m.tt} term${m.tt!==1?'s':''}</div>
-          </div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--text)">${esc(m.fn)}</div><div style="font-size:11px;color:var(--text3)">${esc(m.districts[0]||m.regions[0]||'')} · ${m.tt} term${m.tt!==1?'s':''}</div></div>
           <span style="color:var(--text3)">›</span>
         </div>`).join('')}
       ${d.count>10?`<div style="font-size:12px;color:var(--text3);text-align:center;padding:8px">+${d.count-10} more members</div>`:''}
     </div>
   </div>`;
 }
-
 function renderNetwork(d,focusId=null){
   const members=d.members.slice(0,12);
   if(!members.length)return '';
@@ -1302,13 +1004,7 @@ function renderCongressView(){
     if(sex==='male'&&(p.sex==='Female'||p.sex==='F'))return false;
     return true;
   }).sort((a,b)=>Number(b.dy)-Number(a.dy)||a.fn.localeCompare(b.fn));
-
-  const dyn=members.filter(p=>p.dy).length,
-    families=[...new Set(members.map(p=>p.surname))].length,
-    dynFamilies=[...new Set(members.filter(p=>p.dy).map(p=>p.cl))].length,
-    regions=[...new Set(members.flatMap(p=>p.regions))].length,
-    tot=members.length||1;
-
+  const dyn=members.filter(p=>p.dy).length,families=[...new Set(members.map(p=>p.surname))].length,dynFamilies=[...new Set(members.filter(p=>p.dy).map(p=>p.cl))].length,regions=[...new Set(members.flatMap(p=>p.regions))].length,tot=members.length||1;
   $('congressContent').innerHTML=`
     <div class="kpi-row" style="grid-template-columns:repeat(5,1fr);margin-bottom:18px">
       <div class="kpi-card" style="--accent-bar:var(--blue)"><div class="kpi-label">Members</div><div class="kpi-value">${members.length}</div><div class="kpi-sub">in ${esc(cong)}</div></div>
@@ -1320,41 +1016,39 @@ function renderCongressView(){
     <div class="person-grid fade-in">${members.map(personCard).join('')}</div>`;
 }
 
-/* ── VIEW SWITCHING ── */
-
-/* ── PARTYLIST DATA MODEL ── */
+/* ═══════════════════════════════════════════════════════════
+   PARTYLIST DATA MODEL
+   FIX 1: Each party-list org is built from ONE canonical row
+   per congress term. Notes are deduplicated so they don't
+   repeat across all congress rows.
+═══════════════════════════════════════════════════════════ */
 function buildPartylistModel(){
   const map = new Map();
 
   DB.plRaw.forEach(row => {
-    /*
-      MERGE RULE:
-      Use the party-list NAME as the main merging key.
-      This allows the relationship page to connect:
-      party-list name → party-list reps → matching district/congress reps.
-      partyKey is still kept only as a readable source field, not the merge key.
-    */
     const rawName =
       csvValue(row,["mergeName","canonicalName","name","partylist_name","partylist"]) ||
       csvValue(row,["partyKey","partylist_id","id"]);
-
     const name = rawName || "Unknown Party-list";
     const key = keySlug(name);
 
     if(!map.has(key)){
       map.set(key,{
-        id:key,
+        id: key,
         key,
-        partyKey:csvValue(row,["partyKey","partylist_id","id"]) || key,
+        partyKey: csvValue(row,["partyKey","partylist_id","id"]) || key,
         name,
-        abbrev:"",
-        aka:[],
-        sector:"",
-        status:"",
-        notes:[],
-        source:"",
-        results:[],
-        reps:[]
+        abbrev: "",
+        aka: [],
+        sector: "",
+        status: "",
+        // FIX: store the ui_red_flag directly from CSV
+        uiRedFlag: false,
+        notes: [],
+        source: "",
+        // Each result = one congress row (year, congress, seats, votes, reps, note)
+        results: [],
+        reps: []
       });
     }
 
@@ -1363,12 +1057,27 @@ function buildPartylistModel(){
     p.name = name || p.name;
     p.abbrev = csvValue(row,["abbrev","abbreviation"]) || p.abbrev;
     p.sector = csvValue(row,["sector"]) || p.sector;
-    p.status = csvValue(row,["status"]) || p.status;
     p.source = csvValue(row,["source_url","source"]) || p.source;
 
+    // FIX: Only mark red if the CSV column ui_red_flag === "yes"
+    if(csvValue(row,["ui_red_flag"]).toLowerCase() === "yes"){
+      p.uiRedFlag = true;
+    }
+
+    // Keep the most informative status (prefer "registration_cancelled" etc over "active")
+    const rowStatus = csvValue(row,["status"]);
+    const rowStatusFlag = csvValue(row,["status_flag"]);
+    if(rowStatusFlag && rowStatusFlag !== "active"){
+      p.status = rowStatus || p.status;
+      p.statusFlag = rowStatusFlag;
+    } else if(!p.status){
+      p.status = rowStatus;
+    }
+
+    // AKA — deduplicate
     const aliases = splitList(csvValue(row,["aka","alias","also_known_as","othernames","other_names"]));
     aliases.forEach(a => {
-      if(a && norm(a) !== norm(p.name) && !p.aka.some(existing => norm(existing) === norm(a))){
+      if(a && norm(a) !== norm(p.name) && !p.aka.some(ex => norm(ex) === norm(a))){
         p.aka.push(a);
       }
     });
@@ -1377,68 +1086,71 @@ function buildPartylistModel(){
     const congress = csvValue(row,["congress"]);
     const seats = Number(String(csvValue(row,["seats","seats_won","latest_seats"]) || 0).replace(/,/g,""));
     const votes = Number(String(csvValue(row,["votes"])).replace(/,/g,"") || 0);
+    const rowNoteType = csvValue(row,["note_type"]);
+    const rowNoteText = csvValue(row,["notes","note","remarks","general_notes"]);
 
+    // Build per-congress representative list for this row
+    const repFields = [
+      "reps","representatives","representative_name","nomineeNames","nominee_names",
+      "rep1","rep2","rep3","representative1","representative2","representative3",
+      "first_representative","second_representative","third_representative"
+    ];
+    const rowRepNames = [];
+    repFields.forEach(field => {
+      splitList(csvValue(row,[field])).forEach(rn => {
+        if(rn && !rowRepNames.some(ex => norm(ex) === norm(rn))) rowRepNames.push(rn);
+      });
+    });
+
+    // Push one result entry per congress row
     if(year || congress || seats || votes){
       p.results.push({
         year,
         congress,
         seats,
         votes,
-        status:csvValue(row,["status"]),
-        notes:csvValue(row,["notes","note","remarks","general_notes"])
+        status: rowStatus,
+        noteType: rowNoteType,
+        noteText: rowNoteText,
+        reps: rowRepNames
       });
     }
 
-    const repFields = [
-      "reps","representatives","representative_name","nomineeNames","nominee_names",
-      "rep1","rep2","rep3","representative1","representative2","representative3",
-      "first_representative","second_representative","third_representative"
-    ];
-
-    const repNames = [];
-    repFields.forEach(field => {
-      splitList(csvValue(row,[field])).forEach(name => {
-        if(name && !repNames.some(existing => norm(existing) === norm(name))){
-          repNames.push(name);
-        }
-      });
-    });
-
-    repNames.forEach((repName,i) => {
+    // Global reps list — deduplicate by name+congress
+    rowRepNames.forEach((repName, i) => {
       const duplicate = p.reps.some(r =>
         norm(r.name) === norm(repName) &&
         (!congress || !r.congress || r.congress === congress)
       );
-
       if(!duplicate){
-        p.reps.push({
-          name:repName,
-          congress,
-          year,
-          seatNo:i+1,
-          partylistName:p.name
-        });
+        p.reps.push({ name: repName, congress, year, seatNo: i+1, partylistName: p.name });
       }
     });
 
-    const noteText = csvValue(row,["notes","note","remarks","general_notes"]);
-    if(noteText){
-      p.notes.push({
-        type:/disqual|cancel|registration|delist|removed|vacated/i.test(noteText + " " + p.status) ? "Legal / Status Note" : "General Note",
-        title:p.status || "Note",
-        description:noteText,
-        congress,
-        year
-      });
+    // FIX: Only add a note if this row has a distinct noteText not already stored
+    // AND only flag it as a legal note if ui_red_flag === "yes" (not by regex guessing)
+    if(rowNoteText){
+      const isDupe = p.notes.some(n => n.description === rowNoteText);
+      if(!isDupe){
+        const isLegal = csvValue(row,["ui_red_flag"]).toLowerCase() === "yes";
+        p.notes.push({
+          type: isLegal ? "Status / Legal Flag" : "General Note",
+          description: rowNoteText,
+          congress,
+          year,
+          isLegal
+        });
+      }
     }
   });
 
   DB.pl = [...map.values()].map(p => {
     p.results.sort((a,b) => Number(b.year || 0) - Number(a.year || 0));
     p.latest = p.results[0] || {};
-    p.totalSeats = p.results.reduce((s,r) => s + Number(r.seats || 0),0);
+    p.totalSeats = p.results.reduce((s,r) => s + Number(r.seats || 0), 0);
     p.elections = p.results.length;
-    p.isDisqualified = /disqual|cancel|registration|delist|removed|vacated/i.test(`${p.status} ${p.notes.map(n=>n.description).join(" ")}`);
+    // FIX: isDisqualified is now ONLY driven by the ui_red_flag CSV column
+    p.isDisqualified = p.uiRedFlag;
     return p;
   }).sort((a,b) => a.name.localeCompare(b.name));
 }
@@ -1452,59 +1164,46 @@ function populatePartylistSelects(){
   }
 }
 
-/* ── PARTYLIST KPIS ── */
+/* ── PARTYLIST KPIs ── */
 function buildPartylistKPIs(){
   if(!DB.pl.length){
     $('kpiRow').innerHTML = [
       {label:'Partylists',val:'—',sub:'Upload data/partylist.csv',sub2:'No partylist data loaded yet',icon:'🎗️',accent:'var(--gold)'},
       {label:'Total Seats',val:'—',sub:'Waiting for CSV',sub2:'',icon:'🪑',accent:'var(--blue)'},
       {label:'AKA / Other Names',val:'—',sub:'Waiting for CSV',sub2:'',icon:'🏷️',accent:'var(--purple)'},
-      {label:'Flagged / Disqualified',val:'—',sub:'Waiting for CSV',sub2:'',icon:'⚠️',accent:'var(--red)'},
+      {label:'Flagged / Cancelled',val:'—',sub:'Waiting for CSV',sub2:'',icon:'⚠️',accent:'var(--red)'},
       {label:'Representatives',val:'—',sub:'Waiting for CSV',sub2:'',icon:'👥',accent:'var(--green)'}
     ].map(k=>`<div class="kpi-card" style="--accent-bar:${k.accent}"><div class="kpi-icon">${k.icon}</div><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.val}</div><div class="kpi-sub">${esc(k.sub)}</div><div class="kpi-sub2">${esc(k.sub2)}</div></div>`).join('');
     return;
   }
-
-  const totalSeats = DB.pl.reduce((s,p) => s + p.totalSeats,0);
-  const aliases = DB.pl.reduce((s,p) => s + p.aka.length,0);
+  const totalSeats = DB.pl.reduce((s,p) => s + p.totalSeats, 0);
+  const aliases = DB.pl.reduce((s,p) => s + p.aka.length, 0);
   const flagged = DB.pl.filter(p => p.isDisqualified).length;
   const repCount = new Set(DB.pl.flatMap(p => p.reps.map(r => norm(r.name)))).size;
   const top = [...DB.pl].sort((a,b) => b.totalSeats - a.totalSeats)[0];
-
   $('kpiRow').innerHTML = [
     {label:'Partylists Tracked',val:DB.pl.length.toLocaleString(),sub:'Loaded from partylist.csv',sub2:`${DB.pl.filter(p=>p.status).length} with status fields`,icon:'🎗️',accent:'var(--gold)'},
     {label:'Total Seat-Terms',val:totalSeats.toLocaleString(),sub:'Sum of party-list seats in CSV',sub2:top?`Top: ${top.name}`:'',icon:'🪑',accent:'var(--blue)'},
     {label:'AKA / Other Names',val:aliases.toLocaleString(),sub:'Name variants tracked',sub2:'Used for same-party grouping',icon:'🏷️',accent:'var(--purple)'},
-    {label:'Flagged / Disqualified',val:flagged.toLocaleString(),sub:'Rows with legal/status flags',sub2:`${DB.pl.length?Math.round(flagged/DB.pl.length*100):0}% of partylists`,icon:'⚠️',accent:'var(--red)'},
+    {label:'Flagged / Cancelled',val:flagged.toLocaleString(),sub:'Rows with ui_red_flag = yes',sub2:`${DB.pl.length?Math.round(flagged/DB.pl.length*100):0}% of partylists`,icon:'⚠️',accent:'var(--red)'},
     {label:'Linked Reps',val:repCount.toLocaleString(),sub:'Party-list nominees / reps',sub2:'Used in relationships page',icon:'👥',accent:'var(--green)'}
   ].map(k=>`<div class="kpi-card" style="--accent-bar:${k.accent}"><div class="kpi-icon">${k.icon}</div><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.val}</div><div class="kpi-sub">${esc(k.sub)}</div><div class="kpi-sub2">${esc(k.sub2)}</div></div>`).join('');
 }
 
 /* ── PARTYLIST PAGE ── */
 function clearPartylistFilters(){
-  ["plSearchInput","plCongressSelect","plSectorSelect","plStatusSelect"].forEach(id => {
-    const el = $(id);
-    if(el) el.value = "";
+  ["plSearchInput","plCongressSelect","plSectorSelect","plStatusSelect"].forEach(id=>{
+    const el=$(id);if(el)el.value="";
   });
   renderPartylist();
 }
 
 function renderPartylist(){
   buildPartylistKPIs();
-
   if(!DB.pl.length){
-    $("plContent").innerHTML = `
-      <div class="pending-banner">
-        <div class="pending-banner-icon">🎗️</div>
-        <div class="pending-banner-title">Party-list CSV not loaded yet</div>
-        <div class="pending-banner-text">
-          Upload the file as <code>data/partylist.csv</code>. The file should include partyKey, name, AKA, sector, congress, seats, reps, status, and notes.
-        </div>
-      </div>
-    `;
+    $("plContent").innerHTML=`<div class="pending-banner"><div class="pending-banner-icon">🎗️</div><div class="pending-banner-title">Party-list CSV not loaded yet</div><div class="pending-banner-text">Upload the file as <code>data/partylist.csv</code>.</div></div>`;
     return;
   }
-
   const q = norm($("plSearchInput")?.value || "");
   const cong = $("plCongressSelect")?.value || "";
   const sector = $("plSectorSelect")?.value || "";
@@ -1513,9 +1212,10 @@ function renderPartylist(){
   let rows = DB.pl.filter(p => {
     const text = norm([p.name,p.abbrev,...p.aka,p.sector,p.status,p.reps.map(r=>r.name).join(" ")].join(" "));
     if(q && !text.includes(q)) return false;
+    // FIX: congress filter — check if any result row matches the selected congress
     if(cong && !p.results.some(r => r.congress === cong)) return false;
     if(sector && p.sector !== sector) return false;
-    if(status === "active" && /disqual|inactive|delist|cancel/i.test(p.status)) return false;
+    if(status === "active" && p.isDisqualified) return false;
     if(status === "disqualified" && !p.isDisqualified) return false;
     if(status === "inactive" && !/inactive|delist/i.test(p.status)) return false;
     return true;
@@ -1525,28 +1225,40 @@ function renderPartylist(){
 
   $("plContent").innerHTML = `
     <div class="results-header">
-      <div class="results-count">Showing <span>${rows.length}</span> of <span>${DB.pl.length}</span> party-lists</div>
+      <div class="results-count">Showing <span>${rows.length}</span> of <span>${DB.pl.length}</span> party-lists${cong ? ` · filtered to <strong>${esc(cong)}</strong>` : ''}</div>
     </div>
     <div class="person-grid fade-in">
-      ${rows.map(p => `
+      ${rows.map(p => {
+        // When a congress filter is active, show seats for that congress only
+        const displaySeats = cong
+          ? (p.results.find(r => r.congress === cong)?.seats ?? 0)
+          : p.totalSeats;
+        const displayLabel = cong ? `Seats (${cong})` : 'Total Seats';
+        return `
         <div class="pl-card ${p.isDisqualified ? 'disqualified' : ''}" onclick="openPartylistModal('${esc(p.id)}')">
           <div class="pl-name">${esc(p.name)}</div>
           <div class="pl-aka">${p.aka.length ? 'AKA: ' + esc(p.aka.slice(0,3).join(' · ')) : esc(p.abbrev || p.key)}</div>
           <div class="pl-tags">
             ${p.sector ? `<span class="tag tag-sector">${esc(p.sector)}</span>` : ""}
-            <span class="tag ${p.isDisqualified ? 'tag-status-disq' : 'tag-status-active'}">${esc(p.status || 'Active')}</span>
+            <span class="tag ${p.isDisqualified ? 'tag-status-disq' : 'tag-status-active'}">${esc(p.status || 'Active / elected')}</span>
           </div>
           <div class="pl-stats">
-            <div class="pc-stat"><div class="pc-stat-val">${p.totalSeats}</div><div class="pc-stat-lbl">Seats</div></div>
-            <div class="pc-stat"><div class="pc-stat-val">${p.reps.length}</div><div class="pc-stat-lbl">Reps</div></div>
+            <div class="pc-stat"><div class="pc-stat-val">${displaySeats}</div><div class="pc-stat-lbl">${displayLabel}</div></div>
+            <div class="pc-stat"><div class="pc-stat-val">${p.elections}</div><div class="pc-stat-lbl">Elections</div></div>
             <div class="pc-stat"><div class="pc-stat-val">${p.aka.length}</div><div class="pc-stat-lbl">AKA</div></div>
           </div>
-        </div>
-      `).join("") || emptyState("🎗️","No party-list records match.")}
+        </div>`;
+      }).join("") || emptyState("🎗️","No party-list records match.")}
     </div>
   `;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   PARTYLIST MODAL
+   FIX 2: Red banner only shown when isDisqualified (ui_red_flag=yes).
+   FIX 1: Notes section shows unique notes only, grouped by type.
+   NEW:   Election table shows per-congress reps inline.
+═══════════════════════════════════════════════════════════ */
 function openPartylistModal(id){
   const p = DB.pl.find(x => x.id === id);
   if(!p) return;
@@ -1554,17 +1266,21 @@ function openPartylistModal(id){
   $("modalName").textContent = p.name;
   $("modalName2").textContent = `${p.key}${p.abbrev ? " · " + p.abbrev : ""}`;
 
+  // Separate legal notes (red) from informational notes (blue)
+  const legalNotes = p.notes.filter(n => n.isLegal);
+  const infoNotes  = p.notes.filter(n => !n.isLegal);
+
   $("modalBody").innerHTML = `
     ${p.isDisqualified ? `
-      <div class="pl-modal-note">
-        <div class="pl-modal-note-title">Status / Legal Flag</div>
-        <div class="pl-modal-note-text">${esc(p.status || "Flagged")} — ${esc(p.notes.map(n=>n.description).join(" ") || "See notes.")}</div>
+      <div class="pl-modal-note red">
+        <div class="pl-modal-note-title">⚠ Status / Legal Flag</div>
+        <div class="pl-modal-note-text">${esc(p.status || "Registration cancelled")}${legalNotes.length ? " — " + esc(legalNotes.map(n=>n.description).join(" ")) : ""}</div>
       </div>
     ` : ""}
 
     <div class="info-grid">
       <div class="info-item"><div class="info-lbl">Sector</div><div class="info-val">${esc(p.sector || "—")}</div></div>
-      <div class="info-item"><div class="info-lbl">Status</div><div class="info-val ${p.isDisqualified ? 'dynasty' : ''}">${esc(p.status || "Active")}</div></div>
+      <div class="info-item"><div class="info-lbl">Status</div><div class="info-val ${p.isDisqualified ? 'dynasty' : ''}">${esc(p.status || "Active / elected")}</div></div>
       <div class="info-item"><div class="info-lbl">Total Seat-Terms</div><div class="info-val">${p.totalSeats}</div></div>
       <div class="info-item"><div class="info-lbl">Representatives</div><div class="info-val">${p.reps.length}</div></div>
     </div>
@@ -1575,36 +1291,51 @@ function openPartylistModal(id){
       <div class="section-divider"></div>
     ` : ""}
 
-    <div class="section-head">📊 Election / Seat Records</div>
-    <div class="timeline">
-      ${p.results.map(r => `
-        <div class="tl-item">
-          <div class="tl-dot"></div>
-          <div class="tl-period">${esc(r.congress || r.year || "—")}</div>
-          <div class="tl-detail">${Number(r.seats || 0).toLocaleString()} seat(s) · ${Number(r.votes || 0).toLocaleString()} votes</div>
-        </div>
-      `).join("") || `<div class="empty-text">No seat history listed.</div>`}
+    <div class="section-head">📊 Election / Seat Records by Congress</div>
+    <div style="overflow-x:auto;border-radius:8px;border:1px solid var(--border)">
+      <table class="election-table">
+        <thead>
+          <tr>
+            <th>Congress</th>
+            <th>Year</th>
+            <th>Seats</th>
+            <th>Votes</th>
+            <th>Representatives</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${p.results.map(r => `
+            <tr>
+              <td>${esc(r.congress || "—")}</td>
+              <td>${esc(r.year || "—")}</td>
+              <td class="seat-count">${Number(r.seats || 0)}</td>
+              <td>${Number(r.votes || 0).toLocaleString()}</td>
+              <td>
+                ${r.reps.length
+                  ? r.reps.map(rn => {
+                      const match = findPersonByName(rn);
+                      return match
+                        ? `<div class="rep-list clickable" onclick="closeModal();setTimeout(()=>openModal('${esc(match.id)}'),150)">${esc(rn)} ↗</div>`
+                        : `<div class="rep-list">${esc(rn)}</div>`;
+                    }).join("")
+                  : `<span style="color:var(--text3);font-size:11px">—</span>`
+                }
+              </td>
+            </tr>
+          `).join("") || `<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--text3)">No seat history listed.</td></tr>`}
+        </tbody>
+      </table>
     </div>
 
-    <div class="section-divider"></div>
-    <div class="section-head">👥 Party-list Representatives / Nominees</div>
-    <div class="member-list">
-      ${p.reps.map(r => {
-        const match = findPersonByName(r.name);
-        return `<div class="member-row" ${match ? `onclick="openModal('${esc(match.id)}')"` : ""}>
-          <div>
-            <div style="font-size:13px;font-weight:600;color:var(--text)">${esc(r.name)}</div>
-            <div style="font-size:11px;color:var(--text3)">${esc(r.congress || r.year || "—")}${match ? " · matched in legislators" : ""}</div>
-          </div>
-          <span style="color:var(--text3)">›</span>
-        </div>`;
-      }).join("") || `<div class="empty-text">No representatives listed.</div>`}
-    </div>
-
-    ${p.notes.length ? `
+    ${infoNotes.length ? `
       <div class="section-divider"></div>
-      <div class="section-head">⚠️ Notes</div>
-      ${p.notes.map(n => `<div class="pl-modal-note"><div class="pl-modal-note-title">${esc(n.type)}</div><div class="pl-modal-note-text">${esc(n.description)}</div></div>`).join("")}
+      <div class="section-head">📋 Notes</div>
+      ${infoNotes.map(n => `
+        <div class="pl-modal-note info">
+          <div class="pl-modal-note-title">${esc(n.type)}${n.congress ? ' · ' + esc(n.congress) : ''}</div>
+          <div class="pl-modal-note-text">${esc(n.description)}</div>
+        </div>
+      `).join("")}
     ` : ""}
   `;
 
@@ -1615,100 +1346,37 @@ function openPartylistModal(id){
 /* ── RELATIONSHIP DATA ── */
 function buildRelationshipModel(){
   const edges = [];
-
   DB.pl.forEach(pl => {
     const partylistName = pl.name;
-
-    // Party-list ↔ Congress seat records
     pl.results.forEach(r => {
       if(r.congress){
-        edges.push({
-          type:"pl-congress",
-          from:partylistName,
-          to:r.congress,
-          label:"Party-list ↔ Congress",
-          congress:r.congress || "",
-          plId:pl.id,
-          personId:"",
-          dynastyName:"",
-          partylistName
-        });
+        edges.push({type:"pl-congress",from:partylistName,to:r.congress,label:"Party-list ↔ Congress",congress:r.congress||"",plId:pl.id,personId:"",dynastyName:"",partylistName});
       }
     });
-
-    // Party-list ↔ Party-list representatives
     pl.reps.forEach(rep => {
       const matchedPerson = findPersonByName(rep.name);
       const repSurname = surnameOf(rep.name);
       const dynasty = DB.dynasties.find(d => norm(d.name) === norm(repSurname));
-
-      edges.push({
-        type:"pl-rep",
-        from:partylistName,
-        to:rep.name,
-        label:"Party-list ↔ Representative",
-        congress:rep.congress || pl.latest?.congress || "",
-        plId:pl.id,
-        personId:matchedPerson?.id || "",
-        dynastyName:dynasty?.name || "",
-        partylistName
-      });
-
-      // If party-list rep also appears in district data, make a direct district-link edge.
+      edges.push({type:"pl-rep",from:partylistName,to:rep.name,label:"Party-list ↔ Representative",congress:rep.congress||pl.latest?.congress||"",plId:pl.id,personId:matchedPerson?.id||"",dynastyName:dynasty?.name||"",partylistName});
       if(matchedPerson){
         matchedPerson.districts.forEach(dist => {
-          edges.push({
-            type:"rep-district",
-            from:rep.name,
-            to:dist,
-            label:"Representative ↔ District",
-            congress:rep.congress || matchedPerson.last || "",
-            plId:pl.id,
-            personId:matchedPerson.id,
-            dynastyName:matchedPerson.cl || "",
-            partylistName
-          });
+          edges.push({type:"rep-district",from:rep.name,to:dist,label:"Representative ↔ District",congress:rep.congress||matchedPerson.last||"",plId:pl.id,personId:matchedPerson.id,dynastyName:matchedPerson.cl||"",partylistName});
         });
       }
-
-      // Dynasty ↔ Party-list signal through surname matching
       if(dynasty){
-        edges.push({
-          type:"dynasty-pl",
-          from:dynasty.name + " family",
-          to:partylistName,
-          label:"Dynasty ↔ Party-list",
-          congress:rep.congress || pl.latest?.congress || "",
-          plId:pl.id,
-          personId:matchedPerson?.id || "",
-          dynastyName:dynasty.name,
-          partylistName
-        });
+        edges.push({type:"dynasty-pl",from:dynasty.name+" family",to:partylistName,label:"Dynasty ↔ Party-list",congress:rep.congress||pl.latest?.congress||"",plId:pl.id,personId:matchedPerson?.id||"",dynastyName:dynasty.name,partylistName});
       }
     });
   });
-
-  // Dynasty ↔ District representative links from district CSV
   DB.dynasties.forEach(d => {
     d.members.forEach(m => {
-      edges.push({
-        type:"dynasty-rep",
-        from:d.name + " family",
-        to:m.fn,
-        label:"Dynasty ↔ Representative",
-        congress:m.last || "",
-        plId:"",
-        personId:m.id,
-        dynastyName:d.name,
-        partylistName:""
-      });
+      edges.push({type:"dynasty-rep",from:d.name+" family",to:m.fn,label:"Dynasty ↔ Representative",congress:m.last||"",plId:"",personId:m.id,dynastyName:d.name,partylistName:""});
     });
   });
-
   const seen = new Set();
   DB.relationships = edges.filter(e => {
     const key = [e.type,e.from,e.to,e.congress,e.partylistName].map(norm).join("|");
-    if(seen.has(key)) return false;
+    if(seen.has(key))return false;
     seen.add(key);
     return true;
   });
@@ -1716,13 +1384,11 @@ function buildRelationshipModel(){
 
 function buildRelationshipKPIs(edges){
   const all = DB.relationships;
-  const plRep = all.filter(e => e.type === "pl-rep").length;
-  const dynPl = all.filter(e => e.type === "dynasty-pl").length;
-  const dynRep = all.filter(e => e.type === "dynasty-rep").length;
-  const plCongress = all.filter(e => e.type === "pl-congress").length;
-  const connectedPL = new Set(all.filter(e => e.plId).map(e => e.partylistName || e.plId)).size;
-  const connectedPeople = new Set(all.filter(e => e.personId).map(e => e.personId)).size;
-
+  const plRep = all.filter(e=>e.type==="pl-rep").length;
+  const dynPl = all.filter(e=>e.type==="dynasty-pl").length;
+  const plCongress = all.filter(e=>e.type==="pl-congress").length;
+  const connectedPL = new Set(all.filter(e=>e.plId).map(e=>e.partylistName||e.plId)).size;
+  const connectedPeople = new Set(all.filter(e=>e.personId).map(e=>e.personId)).size;
   $('kpiRow').innerHTML = [
     {label:'Visible Links',val:edges.length.toLocaleString(),sub:'After current filters',sub2:`${all.length} total relationship links`,icon:'🔗',accent:'var(--gold)'},
     {label:'Party-list ↔ Reps',val:plRep.toLocaleString(),sub:'Links from partylist.csv reps field',sub2:'Direct relationship records',icon:'🎗️',accent:'var(--green)'},
@@ -1732,27 +1398,16 @@ function buildRelationshipKPIs(edges){
   ].map(k=>`<div class="kpi-card" style="--accent-bar:${k.accent}"><div class="kpi-icon">${k.icon}</div><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.val}</div><div class="kpi-sub">${esc(k.sub)}</div><div class="kpi-sub2">${esc(k.sub2)}</div></div>`).join('');
 }
 
-/* ── RELATIONSHIPS PAGE ── */
 function renderRelationships(){
   if(!DB.relationships.length){
     buildRelationshipKPIs([]);
-    $("relContent").innerHTML = `
-      <div class="pending-banner">
-        <div class="pending-banner-icon">🔗</div>
-        <div class="pending-banner-title">No relationship data yet</div>
-        <div class="pending-banner-text">
-          Upload <code>data/partylist.csv</code> with a <code>reps</code> or <code>nomineeNames</code> column to generate Party-list ↔ Representative and Dynasty ↔ Party-list links.
-        </div>
-      </div>
-    `;
+    $("relContent").innerHTML=`<div class="pending-banner"><div class="pending-banner-icon">🔗</div><div class="pending-banner-title">No relationship data yet</div><div class="pending-banner-text">Upload <code>data/partylist.csv</code> with a <code>reps</code> or <code>nomineeNames</code> column.</div></div>`;
     return;
   }
-
   const q = norm($("relSearchInput")?.value || "");
   const cong = $("relCongressSelect")?.value || "";
   const type = $("relTypeSelect")?.value || "";
   const mode = $("relViewMode")?.value || "network";
-
   let edges = DB.relationships.filter(e => {
     const text = norm(`${e.from} ${e.to} ${e.label} ${e.dynastyName}`);
     if(q && !text.includes(q)) return false;
@@ -1760,98 +1415,51 @@ function renderRelationships(){
     if(type && e.type !== type) return false;
     return true;
   });
-
   buildRelationshipKPIs(edges);
-
   if(mode === "list"){
-    $("relContent").innerHTML = `
-      <div class="results-header">
-        <div class="results-count">Showing <span>${edges.length}</span> relationship links</div>
-      </div>
-      <div class="rel-edge-list">
-        ${edges.map(e => relationshipEdgeHTML(e)).join("") || emptyState("🔗","No relationships match.")}
-      </div>
-    `;
+    $("relContent").innerHTML=`<div class="results-header"><div class="results-count">Showing <span>${edges.length}</span> relationship links</div></div><div class="rel-edge-list">${edges.map(e=>relationshipEdgeHTML(e)).join("")||emptyState("🔗","No relationships match.")}</div>`;
     return;
   }
-
   const grouped = {};
-  edges.forEach(e => {
-    const key = e.from;
-    if(!grouped[key]) grouped[key] = [];
-    grouped[key].push(e);
-  });
-
-  $("relContent").innerHTML = `
-    <div class="results-header">
-      <div class="results-count">Showing <span>${edges.length}</span> relationship links grouped into <span>${Object.keys(grouped).length}</span> nodes</div>
-    </div>
+  edges.forEach(e => {if(!grouped[e.from])grouped[e.from]=[];grouped[e.from].push(e);});
+  $("relContent").innerHTML=`
+    <div class="results-header"><div class="results-count">Showing <span>${edges.length}</span> relationship links grouped into <span>${Object.keys(grouped).length}</span> nodes</div></div>
     <div class="person-grid fade-in">
-      ${Object.entries(grouped).slice(0,60).map(([name,items]) => `
-        <div class="rel-node-card ${items[0].type.includes('pl') ? 'type-pl' : 'type-dynasty'}">
+      ${Object.entries(grouped).slice(0,60).map(([name,items])=>`
+        <div class="rel-node-card ${items[0].type.includes('pl')?'type-pl':'type-dynasty'}">
           <div class="rel-node-name">${esc(name)}</div>
           <div class="rel-node-sub">${items.length} connection${items.length!==1?'s':''}</div>
-          <span class="rel-node-type ${items[0].type.includes('pl') ? 'rel-type-pl' : 'rel-type-dynasty'}">${esc(items[0].label)}</span>
+          <span class="rel-node-type ${items[0].type.includes('pl')?'rel-type-pl':'rel-type-dynasty'}">${esc(items[0].label)}</span>
           <div class="rel-edge-list">
-            ${items.slice(0,4).map(e => relationshipEdgeHTML(e)).join("")}
-            ${items.length > 4 ? `<div style="font-size:11px;color:var(--text3);text-align:center;padding:6px">+${items.length-4} more</div>` : ""}
+            ${items.slice(0,4).map(e=>relationshipEdgeHTML(e)).join("")}
+            ${items.length>4?`<div style="font-size:11px;color:var(--text3);text-align:center;padding:6px">+${items.length-4} more</div>`:""}
           </div>
-        </div>
-      `).join("") || emptyState("🔗","No relationships match.")}
-    </div>
-  `;
+        </div>`).join("")||emptyState("🔗","No relationships match.")}
+    </div>`;
 }
 
 function relationshipEdgeHTML(e){
-  return `
-    <div class="rel-edge" onclick="${e.personId ? `openModal('${esc(e.personId)}')` : e.plId ? `openPartylistModal('${esc(e.plId)}')` : ''}">
-      <div class="rel-edge-from">${esc(e.from)}</div>
-      <div class="rel-edge-arrow">→</div>
-      <div class="rel-edge-to">${esc(e.to)}</div>
-      <span class="rel-edge-label">${esc(e.label)}</span>
-    </div>
-  `;
+  return `<div class="rel-edge" onclick="${e.personId?`openModal('${esc(e.personId)}')`:e.plId?`openPartylistModal('${esc(e.plId)}')`:''}">\
+    <div class="rel-edge-from">${esc(e.from)}</div>\
+    <div class="rel-edge-arrow">→</div>\
+    <div class="rel-edge-to">${esc(e.to)}</div>\
+    <span class="rel-edge-label">${esc(e.label)}</span>\
+  </div>`;
 }
 
-  
 function showView(view){
   currentView = view;
-
   ['search','districts','dynasties','congress','partylist','relationships'].forEach(v=>{
-    const section = $('view-' + v);
-    const nav = $('nav-' + v);
-
-    if(section) section.style.display = v === view ? '' : 'none';
-    if(nav) nav.classList.toggle('active', v === view);
+    const section=$('view-'+v),nav=$('nav-'+v);
+    if(section)section.style.display=v===view?'':'none';
+    if(nav)nav.classList.toggle('active',v===view);
   });
-
-  if(view === 'search'){
-    buildKPIs();
-    doSearch();
-  }
-
-  if(view === 'districts'){
-    buildKPIs();
-    renderDistricts();
-  }
-
-  if(view === 'dynasties'){
-    buildKPIs();
-    renderDynasties();
-  }
-
-  if(view === 'congress'){
-    buildKPIs();
-    renderCongressView();
-  }
-
-  if(view === 'partylist'){
-    renderPartylist();
-  }
-
-  if(view === 'relationships'){
-    renderRelationships();
-  }
+  if(view==='search'){buildKPIs();doSearch();}
+  if(view==='districts'){buildKPIs();renderDistricts();}
+  if(view==='dynasties'){buildKPIs();renderDynasties();}
+  if(view==='congress'){buildKPIs();renderCongressView();}
+  if(view==='partylist'){renderPartylist();}
+  if(view==='relationships'){renderRelationships();}
 }
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
