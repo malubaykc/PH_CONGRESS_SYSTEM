@@ -410,14 +410,193 @@ function congressNum(c){return parseInt(c)||0}
 function congressIndex(c){return ALL_CONGRESSES.indexOf(c)}
 function surnameOf(name){let s=String(name||'').trim();if(!s)return 'Unknown';let first=s.includes(',')?s.split(',')[0]:s.split(/\s+/)[0];return first.replace(/[^A-Za-zÀ-žÑñ' -]/g,'').trim()||'Unknown'}
 function memberLabel(p){return surnameOf(p.fn||p.name).slice(0,12)}
-async function loadJson(path){const r=await fetch(path);if(!r.ok)throw new Error(path+' failed');return r.json()}
+const DATA_PATHS = {
+  districts: "data/district-representatives.xlsx%20-%20reps.csv",
+  overview: "data/roster-legislators-expanded.xlsx%20-%20overview.csv",
+  partylist: "data/partylist.csv"
+};
+
+async function loadTextRequired(path){
+  const r = await fetch(path + "?v=" + Date.now());
+  if(!r.ok) throw new Error(path + " failed");
+  return await r.text();
+}
+
+async function loadTextOptional(path){
+  try{
+    const r = await fetch(path + "?v=" + Date.now());
+    if(!r.ok) return "";
+    return await r.text();
+  }catch(e){
+    return "";
+  }
+}
+
+function cleanCell(v){
+  return String(v ?? "").replace(/\uFEFF/g,"").replace(/\s+/g," ").trim();
+}
+
+function parseCSV(text){
+  const rows = [];
+  let row = [];
+  let cell = "";
+  let quoted = false;
+
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    const n = text[i + 1];
+
+    if(c === '"' && quoted && n === '"'){
+      cell += '"';
+      i++;
+    }else if(c === '"'){
+      quoted = !quoted;
+    }else if(c === "," && !quoted){
+      row.push(cell);
+      cell = "";
+    }else if((c === "\n" || c === "\r") && !quoted){
+      if(c === "\r" && n === "\n") i++;
+      row.push(cell);
+      if(row.some(x => cleanCell(x))) rows.push(row);
+      row = [];
+      cell = "";
+    }else{
+      cell += c;
+    }
+  }
+
+  row.push(cell);
+  if(row.some(x => cleanCell(x))) rows.push(row);
+
+  if(!rows.length) return [];
+
+  const headers = rows[0].map(h => cleanCell(h));
+
+  return rows.slice(1).map(r => {
+    const obj = {};
+    headers.forEach((h,i) => obj[h] = r[i] ?? "");
+    return obj;
+  });
+}
+
+function findKey(row, possibleNames){
+  const keys = Object.keys(row);
+
+  for(const name of possibleNames){
+    const found = keys.find(k => cleanCell(k).toLowerCase() === cleanCell(name).toLowerCase());
+    if(found) return found;
+  }
+
+  return "";
+}
+
+function splitRepresentativeNames(value){
+  const text = cleanCell(value);
+  if(!text) return [];
+
+  if(/^(n\/a|na|none|null|vacant|-|—)$/i.test(text)) return [];
+
+  return text
+    .split(/\s*;\s*/)
+    .map(x => cleanCell(x))
+    .filter(Boolean)
+    .filter(x => !/^(n\/a|na|none|null|vacant|-|—)$/i.test(x));
+}
+
+function csvRowsToDistrictObjects(rows){
+  if(!rows.length) return [];
+
+  const firstRow = rows[0];
+
+  const regionKey =
+    findKey(firstRow, ["Region"]) ||
+    Object.keys(firstRow).find(k => /region/i.test(k)) ||
+    Object.keys(firstRow)[0];
+
+  const districtKey =
+    findKey(firstRow, ["District"]) ||
+    Object.keys(firstRow).find(k => /district/i.test(k)) ||
+    Object.keys(firstRow)[1];
+
+  const congressKeys = Object.keys(firstRow).filter(k =>
+    ALL_CONGRESSES.includes(cleanCell(k)) || /congress/i.test(k)
+  );
+
+  return rows
+    .map(row => {
+      const region = cleanCell(row[regionKey]);
+      const district = cleanCell(row[districtKey]);
+
+      if(!region || !district) return null;
+
+      const history = {};
+
+      congressKeys.forEach(key => {
+        const congress = cleanCell(key);
+        const names = splitRepresentativeNames(row[key]);
+
+        if(names.length){
+          history[congress] = names;
+        }
+      });
+
+      return {
+        region,
+        district,
+        history
+      };
+    })
+    .filter(Boolean);
+}
 
 async function init(){
   try{
-    const [reps,districts,overview]=await Promise.all([loadJson('data/representatives.json'),loadJson('data/districts.json'),loadJson('data/congress_overview.json')]);
-    DB.d=districts;DB.o=overview;prepareRepresentatives(reps);buildDynastyModel();buildAnalytics();populateSelects();buildKPIs();doSearch();renderDistrictHeader();renderDistricts();
+    const districtCSV = await loadTextRequired(DATA_PATHS.districts);
+    const overviewCSV = await loadTextOptional(DATA_PATHS.overview);
+
+    const districtRows = parseCSV(districtCSV);
+    const overviewRows = overviewCSV ? parseCSV(overviewCSV) : [];
+
+    const districts = csvRowsToDistrictObjects(districtRows);
+
+    if(!districts.length){
+      throw new Error("The district CSV loaded, but no district rows were detected.");
+    }
+
+    const hasCongressData = districts.some(d => Object.keys(d.history || {}).length);
+    if(!hasCongressData){
+      throw new Error("The district CSV loaded, but no Congress columns were detected. Check that your columns include 20th Congress, 19th Congress, 18th Congress, etc.");
+    }
+
+    DB.d = districts;
+    DB.o = overviewRows;
+
+    /*
+      This builds representatives automatically from the district CSV.
+    */
+    prepareRepresentatives([]);
+
+    buildDynastyModel();
+    buildAnalytics();
+    populateSelects();
+    buildKPIs();
+    doSearch();
+    renderDistrictHeader();
+    renderDistricts();
+
   }catch(e){
-    $('kpiRow').innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--red)"><div style="font-size:26px;margin-bottom:10px">⚠️</div><div style="font-weight:700">Could not load local data files.</div><div style="font-size:12px;color:var(--text3);margin-top:6px">Make sure <code>data/representatives.json</code>, <code>data/districts.json</code>, and <code>data/congress_overview.json</code> are in the same folder.</div></div>`;
+    $('kpiRow').innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--red)">
+        <div style="font-size:26px;margin-bottom:10px">⚠️</div>
+        <div style="font-weight:700">Could not load CSV data files.</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.7">
+          Looking for:<br>
+          <code>${esc(DATA_PATHS.districts)}</code><br>
+          <code>${esc(DATA_PATHS.overview)}</code><br><br>
+          Partylist CSV is optional for now and is not required to load this page.
+        </div>
+      </div>
+    `;
     console.error(e);
   }
 }
